@@ -1,0 +1,45 @@
+@media (min-width: 1200px) {
+    .videogular-container {
+    margin: auto;
+    position: absolute;
+    width: 60%;
+    height: 658.125px;
+    background: black;
+    z-index: 100;
+    }
+}
+
+.videogular-music-container {
+    width: 100%;
+    height: 658.125px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.videogular-music-container.audio {
+    height: 658.125px;
+}
+
+@media (min-width: 1200px) {
+    .videogular-music-container {
+        width: 100%;
+        height: 658.125px;
+    }
+
+    .videogular-music-container.audio {
+        width: 100%;
+        height: 658.125px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .videogular-music-container {
+        width: 940px;
+        height: 528.75px;
+    }
+
+    .videogular-music-container.audio {
+        width: 940px;
+        height: 658.125px;
+    }
+}
