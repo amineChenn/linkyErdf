@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="src/linky.png" />
+    <title>Suivie Consommation - tension</title>
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="assets/css/basic.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link href="assets/css/datepicker3.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+    <script src="assets/js/jquery-1.10.2.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/jquery.metisMenu.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/bootstrap-datepicker.js"></script>
+
+
+</head>
+<body onload="$('.collapse').collapse()">
+<div id="wrapper">
+    <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand" href="index.html">
+                <img src="src/linky.png" style="width: 100%;height: 100%;"></a>
+        </div>
+        <div>
+            <span class="navbar-text"><h1>Suivis de consommation - tension</h1></span>
+        </div>
+    </nav>
+
+    <nav class="navbar-default navbar-side" role="navigation">
+
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+
+                <li>
+                    <a href="index.html"><i class="fa fa-home "></i>Accueil</a>
+                </li>
+                <li>
+                    <a href="print.html"><i class="fa fa-print "></i>Imprimer un rapport mensuel</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-area-chart "></i>Suivie de consommation <span class="fa arrow"></span></a>
+                    <ul  class="nav nav-second-level" >
+                        <li>
+                            <a href="kwh.html">kWh</a>
+                        </li>
+                        <li>
+                            <a href="tension.html">Tension</a>
+                        </li>
+                        <li>
+                            <a href="courant.html">Courant</a>
+                        </li>
+                        <li>
+                            <a href="suivieAvance.html">Avancée</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="anomalie.html"><i class="fa fa-chain-broken "></i>Suivie des anomalies</a>
+                </li>
+                <li>
+                    <a href="optimisation.html"><i class="fa fa-line-chart "></i>Optimisations</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div id="page-wrapper">
+
+        <div class="col-md-8">
+            <div class="panel with-nav-tabs panel-primary">
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab1primary" data-toggle="tab">En direct</a></li>
+                        <li><a href="#tab2primary" data-toggle="tab">Période définie</a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab1primary">
+                            <img src="src/tension.jpg" style="width: 100%">
+                        </div>
+                        <div class="tab-pane fade" id="tab2primary">
+                            <img src="src/tension.jpg" style="width: 100%">
+                            Paramètres :
+                            <div style="padding-left: 5%">
+                                    A partir de :
+                                    <div class="container">
+                                        <div class='col-sm-3'>
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+
+                                            <script>
+                                                $('.input-group.date').datepicker();
+                                            </script>
+                                        </div>
+                                    </div>
+                                    </br>Jusqu'à     :
+                                    <div class="container">
+                                        <div class='col-sm-3'>
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+
+                                            <script>
+                                                $('.input-group.date').datepicker();
+                                            </script>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-sec">
+        &copy; 2016 GROUPE 8 <!-- | Design By : CHENNAOUI SELMI-->
+    </div>
+</div>
+</body>
+</html>
