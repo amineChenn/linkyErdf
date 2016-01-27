@@ -20,6 +20,11 @@
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/bootstrap-datepicker.js"></script>
 
+    <script src="bower_components/highcharts/highstock.js"></script>
+    <script src="bower_components/highcharts/modules/exporting.js"></script>
+
+    <script src="assets/js/highcharts/liveKwh.js"></script>
+
 
 </head>
 <body onload="$('.collapse').collapse()">
@@ -76,7 +81,7 @@
     </nav>
     <div id="page-wrapper">
 
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="panel with-nav-tabs panel-primary">
                 <div class="panel-heading">
                     <ul class="nav nav-tabs">
@@ -87,45 +92,71 @@
                 <div class="panel-body">
                     <div class="tab-content">
                         <div class="tab-pane fade in active" id="tab1primary">
-                            <img src="src/graphkwhdirect.jpg" style="width: 100%">
-                            Paramètres :
-                            <div style="padding-left: 5%">
-                                <div class="checkbox">
-                                    <label><input type="checkbox">Voir les heures pleines et heures creuses</label>
+                            <div class="row">
+                                <div  class="col-md-6">
+                                    <div id="courbeKwh"></div>
+                                    <!--<img src="src/graphkwhdirect.jpg" style="width: 100%">-->
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="diagramme"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                Paramètres :
+                                <div style="padding-left: 5%">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox">Voir les heures pleines et heures creuses</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="tab2primary">
-                            <img src="src/graphkwhdirect.jpg" style="width: 100%">
-                            Paramètres :
-                            <div style="padding-left: 5%">
-                                <div class="checkbox">
-                                    <label><input type="checkbox">Voir les heures pleines et heures creuses</label>
-                                    </div>
-                                    </br>A partir de :
-                                    <div class="container">
-                                        <div class='col-sm-3'>
-                                            <div class="input-group date">
-                                                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                            </div>
+                            <div class="row">
+                                <div  class="col-md-6">
+                                    <div id="courbeKwh1"></div>
+                                    <!--<img src="src/graphkwhdirect.jpg" style="width: 100%">-->
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="diagramme1"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Paramètres :
+                                    <div style="padding-left: 5%">
+                                        <div class="checkbox">
+                                            <label><input type="checkbox">Voir les heures pleines et heures creuses</label>
+                                        </div>
+                                        </br>A partir de :
+                                        <div class="container">
+                                            <div class='col-sm-3'>
+                                                <div class="input-group date">
+                                                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
 
-                                            <script>
-                                                $('.input-group.date').datepicker();
-                                            </script>
+                                                <script>
+                                                    $('.input-group.date').datepicker();
+                                                </script>
+                                            </div>
+                                        </div>
+                                        </br>Jusqu'à     :
+                                        <div class="container">
+                                            <div class='col-sm-3'>
+                                                <div class="input-group date">
+                                                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+
+                                                <script>
+                                                    $('.input-group.date').datepicker();
+                                                </script>
+                                            </div>
                                         </div>
                                     </div>
-                                    </br>Jusqu'à     :
-                                    <div class="container">
-                                        <div class='col-sm-3'>
-                                            <div class="input-group date">
-                                                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                            </div>
-
-                                            <script>
-                                                $('.input-group.date').datepicker();
-                                            </script>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="barreKwh"></div>
+                                </div>
+                                </div>
                             </div>
                         </div>
                     </div>
