@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="src/linky.png" />
     <title>Suivie Consommation - kWh</title>
+
 
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <link href="assets/css/font-awesome.css" rel="stylesheet" />
@@ -14,13 +15,111 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 
-    <script src="assets/js/jquery-1.10.2.js"></script>
-    <script src="assets/js/bootstrap.js"></script>
-    <script src="assets/js/jquery.metisMenu.js"></script>
-    <script src="assets/js/custom.js"></script>
-    <script src="assets/js/bootstrap-datepicker.js"></script>
 
+    <script  type="text/javascript" src="assets/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.metisMenu.js"></script>
+    <script type="text/javascript" src="assets/js/custom.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
 
+    <script type="text/javascript">
+        $(function () {
+            $('#container').highcharts({
+                title: {
+                    text: 'Consomation en KW',
+                    x: -20 //center
+                },
+                subtitle: {
+                    text: 'Source: erdf.com',
+                    x: -20
+                },
+                xAxis: {
+                    categories: ['0', '1', '2', '3', '4']
+                },
+                yAxis: {
+                    title: {
+                        text: 'kWatt)'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: 'KW'
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: 'Heure pleine',
+                    data: [7.0, 6.9, 9.5, 14.5, 18.2]
+                }, {
+                    name: 'Heure creuse',
+                    data: [-0.2, 0.8, 5.7, 11.3, 17.0]
+                }]
+
+            });
+        });
+
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#pie').highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45,
+                        beta: 0
+                    }
+                },
+                title: {
+                    text: 'Répartition heures pleines/heures creuses',
+                    x: -20 //center
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        depth: 35,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.name}'
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Electricité',
+                    data: [
+                        ['Secteur 1', 45.0],
+                        ['Secteur 2', 26.8],
+                        {
+                            name: 'Secteur 2',
+                            y: 12.8,
+                            sliced: true,
+                            selected: true
+                        },
+                        ['Secteur 3', 8.5],
+                        ['Secteur 4', 6.2],
+                        ['Secteur 5', 0.7]
+                    ]
+                }]
+            });
+        });
+    </script>
+
+    <script src="bower_components/highcharts/highcharts.js"></script>
+    <script src="bower_components/highcharts/highcharts-3d.js"></script>
+    <script src="bower_components/highcharts/modules/exporting.js"></script>
 </head>
 <body onload="$('.collapse').collapse()">
 <div id="wrapper">
@@ -76,7 +175,7 @@
     </nav>
     <div id="page-wrapper">
 
-        <div class="col-md-8">
+        <div class="col-md-20">
             <div class="panel with-nav-tabs panel-primary">
                 <div class="panel-heading">
                     <ul class="nav nav-tabs">
@@ -87,56 +186,61 @@
                 <div class="panel-body">
                     <div class="tab-content">
                         <div class="tab-pane fade in active" id="tab1primary">
-                            <img src="src/graphkwhdirect.jpg" style="width: 100%">
-                            Paramètres :
-                            <div style="padding-left: 5%">
-                                <div class="checkbox">
-                                    <label><input type="checkbox">Voir les heures pleines et heures creuses</label>
-                                </div>
-                            </div>
+                            <div  id="container"  style="width: 500px; height: 300px; display: inline-block;"></div>
+                            <div id="pie" style="width: 400px; height: 300px; display: inline-block;  padding-left: 100px; margin-left: 50px; border-left: 1px solid grey;"></div>
                         </div>
                         <div class="tab-pane fade" id="tab2primary">
-                            <img src="src/graphkwhdirect.jpg" style="width: 100%">
+                            <img src="src/tension.jpg" style="width: 100%">
+
+                            <div>
+                                <hr>
                             Paramètres :
+                                <div style="padding-left: 5%">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox">Voir les heures pleines et heures creuses</label>
+                                    </div>
+                                    </div>
                             <div style="padding-left: 5%">
-                                <div class="checkbox">
-                                    <label><input type="checkbox">Voir les heures pleines et heures creuses</label>
-                                    </div>
-                                    </br>A partir de :
-                                    <div class="container">
-                                        <div class='col-sm-3'>
-                                            <div class="input-group date">
-                                                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                            </div>
-
-                                            <script>
-                                                $('.input-group.date').datepicker();
-                                            </script>
+                                A partir de :
+                                <div class="container">
+                                    <div class='col-sm-3'>
+                                        <div class="input-group date" >
+                                            <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                         </div>
-                                    </div>
-                                    </br>Jusqu'à     :
-                                    <div class="container">
-                                        <div class='col-sm-3'>
-                                            <div class="input-group date">
-                                                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                            </div>
 
-                                            <script>
-                                                $('.input-group.date').datepicker();
-                                            </script>
-                                        </div>
+                                        <script>
+                                            $('.input-group.date').datepicker();
+                                        </script>
                                     </div>
+                                </div>
+                                </br>Jusqu'à     :
+                                <div class="container" style="display: inline-block;">
+                                    <div class='col-sm-3'>
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+
+                                        <script>
+                                            $('.input-group.date').datepicker();
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
                             </div>
                         </div>
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
-    </div>
+        </div>
+
+
+
 
     <div id="footer-sec">
-        &copy; 2016 GROUPE 8 <!-- | Design By : CHENNAOUI SELMI-->
+        &copy; 2016 LINKY ERDF
     </div>
-</div>
+    </div>
+
 </body>
 </html>
