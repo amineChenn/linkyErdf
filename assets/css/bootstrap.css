@@ -3620,6 +3620,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .nav-tabs {
   border-bottom: 1px solid #ddd;
+  border:none
 }
 .nav-tabs > li {
   float: left;
@@ -4094,6 +4095,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default {
   background-color: #f8f8f8;
   border-color: #e7e7e7;
+  border: none;
 }
 .navbar-default .navbar-brand {
   color: #777;
