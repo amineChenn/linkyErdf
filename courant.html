@@ -20,6 +20,10 @@
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/bootstrap-datepicker.js"></script>
 
+    <script src="bower_components/highcharts/highstock.js"></script>
+    <script src="bower_components/highcharts/modules/exporting.js"></script>
+
+    <script src="assets/js/highcharts/courant.js"></script>
 
 </head>
 <body onload="$('.collapse').collapse()">
@@ -80,44 +84,57 @@
             <div class="panel with-nav-tabs panel-primary">
                 <div class="panel-heading">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab1primary" data-toggle="tab">En direct</a></li>
-                        <li><a href="#tab2primary" data-toggle="tab">Période définie</a></li>
+                        <li class="active"><a href="#tab1primaryCourant" data-toggle="tab">En direct</a></li>
+                        <li><a href="#tab2primaryCourant" data-toggle="tab">Période définie</a></li>
                     </ul>
                 </div>
                 <div class="panel-body">
                     <div class="tab-content">
-                        <div class="tab-pane fade in active" id="tab1primary">
-                            <img src="src/courant.jpg" style="width: 100%">
-                        </div>
-                        <div class="tab-pane fade" id="tab2primary">
-                            <img src="src/courant.jpg" style="width: 100%">
-                            Paramètres :
-                            <div style="padding-left: 5%">
-                                A partir de :
-                                <div class="container">
-                                    <div class='col-sm-3'>
-                                        <div class="input-group date">
-                                            <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                        </div>
-
-                                        <script>
-                                            $('.input-group.date').datepicker();
-                                        </script>
-                                    </div>
+                        <div class="tab-pane fade in active" id="tab1primaryCourant">
+                            <div class="row">
+                                <div  class="col-md-12">
+                                    <div id="courbeCourant"></div>
                                 </div>
-                                </br>Jusqu'à     :
-                                <div class="container">
-                                    <div class='col-sm-3'>
-                                        <div class="input-group date">
-                                            <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                        </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab2primaryCourant">
+                            <div class="row">
+                                <div  class="col-md-12">
+                                    <div id="courbeCourantPeriod"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div  class="col-md-6">
+                                    Paramètres :
+                                    <div style="padding-left: 5%">
+                                        A partir de :
+                                        <div class="container">
+                                            <div class='col-sm-3'>
+                                                <div class="input-group date">
+                                                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
 
-                                        <script>
-                                            $('.input-group.date').datepicker();
-                                        </script>
+                                                <script>
+                                                    $('.input-group.date').datepicker();
+                                                </script>
+                                            </div>
+                                        </div>
+                                        </br>Jusqu'à     :
+                                        <div class="container">
+                                            <div class='col-sm-3'>
+                                                <div class="input-group date">
+                                                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+
+                                                <script>
+                                                    $('.input-group.date').datepicker();
+                                                </script>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <!--<img src="src/courant.jpg" style="width: 100%">-->
                         </div>
                     </div>
                 </div>

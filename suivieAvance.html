@@ -21,6 +21,12 @@
     <script src="assets/js/bootstrap-datepicker.js"></script>
 
 
+    <script src="bower_components/highcharts/highstock.js"></script>
+    <script src="bower_components/highcharts/modules/exporting.js"></script>
+
+    <script src="assets/js/highcharts/avancee.js"></script>
+
+
 </head>
 <body onload="$('.collapse').collapse()">
 <div id="wrapper">
@@ -80,52 +86,80 @@
             <div class="panel with-nav-tabs panel-primary">
                 <div class="panel-heading">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab1primary" data-toggle="tab">En direct</a></li>
-                        <li><a href="#tab2primary" data-toggle="tab">Période définie</a></li>
+                        <li class="active"><a href="#tab1primaryAdvanced" data-toggle="tab">En direct</a></li>
+                        <li><a href="#tab2primaryAdvanced" data-toggle="tab">Période définie</a></li>
                     </ul>
                 </div>
                 <div class="panel-body">
                     <div class="tab-content">
-                        <div class="tab-pane fade in active" id="tab1primary">
-                            <img src="src/avancee.jpg" style="width: 100%">
-                            Paramètres :
-                            <div style="padding-left: 5%">
-                                <div class="checkbox">
-                                    <label><input type="checkbox">Alarme audio en cas de dépassement</label>
+                        <div class="tab-pane fade in active" id="tab1primaryAdvanced">
+                            <div class="row">
+                                <div  class="col-md-12">
+                                    <div id="courbeRelatedAdvanced"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div  class="col-md-12">
+                                    <div id="courbeActiveAdvanced"></div>
+                                </div>
+                            </div>
+                            <!--<img src="src/avancee.jpg" style="width: 100%">-->
+                            <div class="row">
+                                <div  class="col-md-6">
+                                    Paramètres :
+                                    <div style="padding-left: 5%">
+                                        <div class="checkbox">
+                                            <label><input type="checkbox">Alarme audio en cas de dépassement</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="tab2primary">
-                            <img src="src/avancee.jpg" style="width: 100%">
-                            Paramètres :
-                            <div style="padding-left: 5%">
-                                <div class="checkbox">
-                                    <label><input type="checkbox">Alarme audio en cas de dépassement</label>
+                        <div class="tab-pane fade" id="tab2primaryAdvanced">
+                            <div class="row">
+                                <div  class="col-md-12">
+                                    <div id="courbeRelativeAdvancedPeriod"></div>
                                 </div>
                             </div>
-                            <div style="padding-left: 5%">
-                                A partir de :
-                                <div class="container">
-                                    <div class='col-sm-3'>
-                                        <div class="input-group date">
-                                            <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                        </div>
-
-                                        <script>
-                                            $('.input-group.date').datepicker();
-                                        </script>
-                                    </div>
+                            <div class="row">
+                                <div  class="col-md-12">
+                                    <div id="courbeActiveAdvancedPeriod"></div>
                                 </div>
-                                </br>Jusqu'à     :
-                                <div class="container">
-                                    <div class='col-sm-3'>
-                                        <div class="input-group date">
-                                            <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                            <!--<img src="src/avancee.jpg" style="width: 100%">-->
+                            <div class="row">
+                                <div  class="col-md-6">
+                                    Paramètres :
+                                    <div style="padding-left: 5%">
+                                        <div class="checkbox">
+                                            <label><input type="checkbox">Alarme audio en cas de dépassement</label>
                                         </div>
+                                    </div>
+                                    <div style="padding-left: 5%">
+                                        A partir de :
+                                        <div class="container">
+                                            <div class='col-sm-3'>
+                                                <div class="input-group date">
+                                                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
 
-                                        <script>
-                                            $('.input-group.date').datepicker();
-                                        </script>
+                                                <script>
+                                                    $('.input-group.date').datepicker();
+                                                </script>
+                                            </div>
+                                        </div>
+                                        </br>Jusqu'à     :
+                                        <div class="container">
+                                            <div class='col-sm-3'>
+                                                <div class="input-group date">
+                                                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+
+                                                <script>
+                                                    $('.input-group.date').datepicker();
+                                                </script>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

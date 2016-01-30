@@ -139,7 +139,7 @@ $(function () {
         }]
     });
 
-    $('#courbeKwh1').highcharts('StockChart', {
+    $('#courbeKwhPeriod').highcharts('StockChart', {
             chart : {
                 type : 'spline',
                 events : {
@@ -215,7 +215,7 @@ $(function () {
               }]
         });
 
-        $('#diagramme1').highcharts({
+        $('#diagrammePeriod').highcharts({
             chart: {
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
