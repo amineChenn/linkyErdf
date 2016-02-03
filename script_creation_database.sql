@@ -112,13 +112,14 @@ DROP TABLE IF EXISTS `ProjetERDF_BDD`.`Values` ;
 
 CREATE TABLE IF NOT EXISTS `ProjetERDF_BDD`.`Values` (
   `Date` DATETIME NOT NULL,
-  `Ampere` FLOAT NULL,
-  `Volt` FLOAT NULL,
-  `Watt_Heure` FLOAT NULL,
-  `Papparente` FLOAT NULL,
-  `Pactive` FLOAT NULL,
-  `Preactive` FLOAT NULL,
-  `Watt` FLOAT NULL,
+  `Ampere` LONG NULL,
+  `Volt` LONG NULL,
+  `Watt_Heure_Base` LONG NULL,
+  `Watt_Heure_HP` LONG NULL,
+  `Watt_Heure_HC` LONG NULL,
+  `Papparente` LONG NULL,
+  `Pactive` LONG NULL,
+  `Preactive` LONG NULL,
   `HeurePleine` TINYINT(1) NULL,
   `HeureCreuse` TINYINT(1) NULL,
   `IdOptCompteur` INT NULL,
@@ -142,3 +143,19 @@ GRANT ALL ON `ProjetERDF_BDD`.* TO 'admin';
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+
+
+
+
+
+INSERT INTO `ProjetERDF_BDD`.`TypeAnomalie` (`IdTypeAnomalie`, `Label`) VALUES ('1', 'Depassement puissance');
+INSERT INTO `ProjetERDF_BDD`.`TypeAnomalie` (`IdTypeAnomalie`, `Label`) VALUES ('2', 'Coupure Systeme');
+INSERT INTO `ProjetERDF_BDD`.`TypeAnomalie` (`IdTypeAnomalie`, `Label`) VALUES ('3', 'Disjoncteur');
+INSERT INTO `ProjetERDF_BDD`.`TypeAnomalie` (`IdTypeAnomalie`, `Label`) VALUES ('4', 'PV455EF');
+
+
+
+

@@ -10,18 +10,38 @@ $(function () {
         }
     });
 
+    var gettedData ="";
+
+    function getRelatedLiveData() {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/api.php/opttarifaire",
+            cache: false,
+            async: true,
+            dataType: 'json',
+            success: function (data) {
+                console.log("data = ", data);
+                var dataBase = data[0].IdOptTarifaire;
+                console.log("dataBase = ", dataBase);
+                gettedData = dataBase;
+            }
+        });
+
+        //return gettedData;
+    }
     // Create the chart
     $('#courbeRelatedAdvanced').highcharts('StockChart', {
         chart : {
             type : 'spline',
             events : {
                 load : function () {
-
+                    console.log("related data = ", getRelatedLiveData());
                     // set up the updating of the chart each second
                     var series = this.series[0];
                     setInterval(function () {
+                        getRelatedLiveData();
                         var x = (new Date()).getTime(), // current time
-                            y = Math.round(Math.random() * (100 - 10) + 10);
+                            y = parseInt(gettedData);
                         series.addPoint([x, y], true, true);
                     }, 1000);
                 }
@@ -54,8 +74,10 @@ $(function () {
         },
 
         yAxis: {
+            max: 200,
+            tickInterval:50,
             plotLines:[{
-                value:100,
+                value:150,
                 color: '#000000',
                 width:2,
                 zIndex:4,
@@ -68,11 +90,10 @@ $(function () {
             data : (function () {
                 // generate an array of random data
                 var data = [], time = (new Date()).getTime(), i;
-
                 for (i = -999; i <= 0; i += 1) {
                     data.push([
                         time + i * 1000,
-                        Math.round(Math.random() * (100 - 10) + 10)
+                        Math.round(Math.random() * 100)
                     ]);
                 }
                 return data;
