@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html ng-app="appTechnophile">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="src/linky.png" />
+        <title>Rapport Mensuel</title>
+
+        <link href="assets/css/bootstrap.css" rel="stylesheet" />
+        <link href="assets/css/font-awesome.css" rel="stylesheet" />
+        <link href="assets/css/basic.css" rel="stylesheet" />
+        <link href="assets/css/custom.css" rel="stylesheet" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+        <script src="assets/js/jquery-1.10.2.js"></script>
+        <script src="assets/js/bootstrap.js"></script>
+        <script src="assets/js/jquery.metisMenu.js"></script>
+        <script src="assets/js/custom.js"></script>
+        <script src="assets/js/bootstrap-datepicker.js"></script>
+
+
+        <script src="bower_components/highcharts/highstock.js"></script>
+        <script src="bower_components/highcharts/modules/exporting.js"></script>
+
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="assets/js/highcharts/technoPhile.js"></script>
+
+        <script src="pdf/rapportEcophile.js"></script>
+        <script src="pdf/rapportEcophileSvg.php"></script>
+    </head>
+
+    <body ng-controller="technoPhileController">
+        <div id="wrapper">
+            <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">
+                        <img src="src/linky.png" style="width: 100%;height: 100%;"></a>
+                </div>
+                <div>
+                    <span class="navbar-text"><h1>Récapitulatif de consommation</h1></span>
+                </div>
+            </nav>
+
+            <nav class="navbar-default navbar-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="main-menu">
+                        <li>
+                            <a href="index.html"><i class="fa fa-home "></i>Accueil</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-print "></i>Imprimer un rapport mensuel<span class="fa arrow"></span></a>
+                            <ul  class="nav nav-second-level" >
+                                <li>
+                                    <a href="printEcophile.html">Rapport écophile</a>
+                                </li>
+                                <li>
+                                    <a href="printTechnophile.html">Rapport technophile</a>
+                                </li>
+                                <li>
+                                    <a href="printEnergiphile.html">Rapport énergiphile</a>
+                                </li>
+                                <li>
+                                    <a href="printEconome.html">Rapport économe</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-area-chart "></i>Suivie de consommation <span class="fa arrow"></span></a>
+                            <ul  class="nav nav-second-level" >
+                                <li>
+                                    <a href="kwh.html">KWh</a>
+                                </li>
+                                <li>
+                                    <a href="tension.html">Tension</a>
+                                </li>
+                                <li>
+                                    <a href="courant.html">Courant</a>
+                                </li>
+                                <li>
+                                    <a href="suivieAvance.html">Avancée</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="anomalie.html"><i class="fa fa-chain-broken "></i>Suivie des anomalies</a>
+                        </li>
+                        <li>
+                            <a href="optimisation.html"><i class="fa fa-line-chart "></i>Optimisations</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="page-wrapper">
+                <div class="table-responsive" style="width: 80%; margin-left: 10%">
+                    <div class="container col-md-12">
+                        <div class="panel panel-default ">
+                            <div class="panel-heading">
+                                Paramètres
+                            </div>
+                            <div class="panel-body">
+                                <form role="form"><br>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <span>A partir de :</span>
+                                            </td>
+                                            <td>
+                                                <div class="input-group date">
+                                                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+
+                                                <script>
+                                                    var date = new Date();
+                                                    var week = date.setDate(date.getDate() - 7);
+                                                    $('.input-group.date').datepicker("setDate", new Date(week));
+                                                </script>
+                                            </td>
+                                            <td>
+                                                <span> Jusqu'à :</span>
+                                            </td>
+                                            <td>
+                                                <div class="input-group date">
+                                                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+
+                                                <script>
+                                                    var date = new Date();
+                                                    var week = date.setDate(date.getDate() - 7);
+                                                    $('.input-group.date').datepicker("setDate", new Date(week));
+                                                </script>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="panel-body">
+                                        <form role="form">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" value="" selected="true" checked>Recevoir une alarme audio en cas de dépassement de la valeur max de mon contrat
+                                                    de la puissance apparente
+                                                </label>
+                                            </div>
+                                            <br>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" value="" checked>Recevoir une alarme audio en cas de pic de consommation</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <div class="col-md-12">
+                            <h1> Energie consommée entre jj/mm//aaaa et jj/mm/aaaa <span  >{{dateDebut}} </span></h1>
+                        </div>
+                        <div class="col-md-12">
+                            Heure pleine : xxx Wh / Heure creuse : xxx Wh <br><br>
+                        </div>
+                        <div>
+                            <div  class="col-md-12">
+                                <div id="cont"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h1> Energie consommée entre jj/mm//aaaa et jj/mm/aaaa <span  >{{dateDebut}} </span></h1>
+                        </div>
+                        <div class="col-md-12">
+                            <h1> Puissance consommée entre jj/mm//aaaa et jj/mm/aaaa <span  >{{dateDebut}} </span></h1>
+                        </div>
+                        <div class="col-md-12">
+                            <h1> Intensité soutirée entre jj/mm//aaaa et jj/mm/aaaa <span  >{{dateDebut}} </span></h1>
+                        </div>
+                        <div class="col-md-12">
+                            <h1> Tension soutirée entre jj/mm//aaaa et jj/mm/aaaa <span  >{{dateDebut}} </span></h1>
+                        </div>
+                        <div class="col-md-12">
+                            <h1> Puissance apparente entre jj/mm//aaaa et jj/mm/aaaa <span  >{{dateDebut}} </span></h1>
+                        </div>
+                        <div class="col-md-12">
+                            <h1> Puissance réactive entre jj/mm//aaaa et jj/mm/aaaa <span  >{{dateDebut}} </span></h1>
+                        </div>
+                        <div>
+                            <div  class="col-md-12">
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-success btn-lg btn-block"  onclick="test();" >
+                        <a href="pdf/rapportEnergiphile.php" style="color: white"> Télecharger rapport </a>
+                    </button>
+                </div>
+            </div>
+
+            <div id="footer-sec">
+                &copy; 2016 MIAGE
+            </div>
+        </div>
+
+    </body>
+</html>
