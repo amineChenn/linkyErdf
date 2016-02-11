@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html ng-app="appTechnophile">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="src/linky.png" />
+        <title>Rapport Mensuel</title>
+
+        <link href="assets/css/bootstrap.css" rel="stylesheet" />
+        <link href="assets/css/font-awesome.css" rel="stylesheet" />
+        <link href="assets/css/basic.css" rel="stylesheet" />
+        <link href="assets/css/custom.css" rel="stylesheet" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+        <script src="assets/js/jquery-1.10.2.js"></script>
+        <script src="assets/js/bootstrap.js"></script>
+        <script src="assets/js/jquery.metisMenu.js"></script>
+        <script src="assets/js/custom.js"></script>
+        <script src="assets/js/bootstrap-datepicker.js"></script>
+
+
+        <script src="bower_components/highcharts/highstock.js"></script>
+        <script src="bower_components/highcharts/modules/exporting.js"></script>
+
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="assets/js/highcharts/technoPhile.js"></script>
+
+        <script src="pdf/rapportEcophile.js"></script>
+        <script src="pdf/rapportEcophileSvg.php"></script>
+
+        <script src="tarifHoraire.js"></script>
+    </head>
+
+    <body ng-controller="technoPhileController">
+        <div id="wrapper">
+            <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">
+                        <img src="src/linky.png" style="width: 100%;height: 100%;"></a>
+                </div>
+                <div>
+                    <span class="navbar-text"><h1>Récapitulatif de consommation</h1></span>
+                </div>
+            </nav>
+
+            <nav class="navbar-default navbar-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="main-menu">
+                        <li>
+                            <a href="index.html"><i class="fa fa-home "></i>Accueil</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-print "></i>Imprimer un rapport mensuel<span class="fa arrow"></span></a>
+                            <ul  class="nav nav-second-level" >
+                                <li>
+                                    <a href="printEcophile.html">Rapport écophile</a>
+                                </li>
+                                <li>
+                                    <a href="printTechnophile.html">Rapport technophile</a>
+                                </li>
+                                <li>
+                                    <a href="printEnergiphile.html">Rapport énergiphile</a>
+                                </li>
+                                <li>
+                                    <a href="printEconome.html">Rapport économe</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-area-chart "></i>Suivie de consommation <span class="fa arrow"></span></a>
+                            <ul  class="nav nav-second-level" >
+                                <li>
+                                    <a href="kwh.html">KWh</a>
+                                </li>
+                                <li>
+                                    <a href="tension.html">Tension</a>
+                                </li>
+                                <li>
+                                    <a href="courant.html">Courant</a>
+                                </li>
+                                <li>
+                                    <a href="suivieAvance.html">Avancée</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="anomalie.html"><i class="fa fa-chain-broken "></i>Suivie des anomalies</a>
+                        </li>
+                        <li>
+                            <a href="optimisation.html"><i class="fa fa-line-chart "></i>Optimisations</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="page-wrapper">
+                <div class="table-responsive" style="width: 80%; margin-left: 10%">
+                    <div class="container col-md-12">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Puissance maximale</a>
+                                    </h4>
+                                </div>
+                                <div id="collapse1" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        Puissance maximale souscrite par mon contrat : 14VA.
+                                    </div>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <span>Période d'étude pour l'optimisation du :</span>
+                                                </td>
+                                                <td>
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                    </div>
+
+                                                    <script>
+                                                        var date = new Date();
+                                                        var week = date.setDate(date.getDate() - 7);
+                                                        $('.input-group.date').datepicker("setDate", new Date(week));
+                                                    </script>
+                                                </td>
+                                                <td>
+                                                    <span> à </span>
+                                                </td>
+                                                <td>
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" checked>Aujourd'hui</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    <div class="panel-body">
+                                        <button type="button" class="btn btn-primary">
+                                            Lancer analyse
+                                        </button>
+                                        <br>
+                                        <br>
+                                        Vous pourriez souscrire à une puissance maximum de 12kVA : 14VA.
+                                        <br>
+                                        Détails: .................
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Option base ou heures pleines/heures creuses</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse2" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Contrat actuellement souscrit : heures pleines/heures creuses.
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <span>Période d'étude pour l'optimisation du :</span>
+                                                </td>
+                                                <td>
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                    </div>
+
+                                                    <script>
+                                                        var date = new Date();
+                                                        var week = date.setDate(date.getDate() - 7);
+                                                        $('.input-group.date').datepicker("setDate", new Date(week));
+                                                    </script>
+                                                </td>
+                                                <td>
+                                                    <span> à </span>
+                                                </td>
+                                                <td>
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" checked>Aujourd'hui</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Paramètres</a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse3" class="panel-collapse collapse">
+                                            <div class="panel-body" >
+                                                <div class="panel-body">
+                                                    Configuration tarif-horaire : 14VA.
+                                                </div>
+                                                    <table class="table table-bordered table-hover" id="tab_logic">
+                                                        <thead>
+                                                            <tr >
+                                                                <th class="text-center">
+                                                                    Heure début
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    Heure Fin
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    Jour
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    Tarif
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr id='addr0'>
+                                                                <td>
+                                                                    <input type="text" name='heureDebut'  placeholder=' Entrez Heure début' class="form-control"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name='heureFin'  placeholder='Entrez heure Fin' class="form-control"/>
+                                                                </td>
+                                                                <td>
+                                                                    <select class="form-control" name='jour'>
+                                                                        <option>Lundi</option>
+                                                                        <option>Mardi</option>
+                                                                        <option>Mercredi</option>
+                                                                        <option>Jeudi</option>
+                                                                        <option>Vendredi</option>
+                                                                        <option>Samedi</option>
+                                                                        <option>Dimanche</option>
+                                                                        <option>Tous les jours</option>
+                                                                        <option>Weekend</option>
+                                                                        <option>Semaine</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name='tarif' placeholder='Entrez tarif' class="form-control"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr id='addr1'></tr>
+                                                        </tbody>
+                                                    </table>
+                                                <a id="add_row" class="btn btn-primary pull-left">Add Row</a>
+                                                <a id='delete_row' class="pull-right btn btn-danger">Delete Row</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div>
+                                <div class="col-md-12">
+                                    <h1>Comparaison au mois précedent</h1>
+                                </div>
+
+                                <div>
+                                    <div  class="col-md-12">
+                                        <div id="cont"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" >
+                                <br><br>
+                                <div>
+                                    Jusqu'à présent vous avez diminué votre facture de 20% par rapport à Janvier 2016.<br>
+                                </div>
+                                <br>
+                                <button type="button" class="btn btn-success btn-lg btn-block"  onclick="test();" >
+                                    <a href="pdf/rapportEconome.php" style="color: white"> Télecharger récapitulatif </a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="footer-sec">
+                &copy; 2016 MIAGE
+            </div>
+        </div>
+    </body>
+</html>
