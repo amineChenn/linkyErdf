@@ -3,9 +3,11 @@
 // create new PDF document
 include_once('tcpdf/tcpdf.php');
 
+
+
 // new object
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, false, 'ISO-8859-1', false);
-
+$pdf->IncludeJS('rapportEcophile.js');
 // set document information
 $pdf->SetCreator('TCPDF');
 $pdf->SetAuthor('ERDF');
@@ -45,18 +47,19 @@ $pdf->SetFont('helvetica', '', 10);
 //Add a page (start of content)
 $pdf->AddPage();
 
+
 //HTML content (the title)
 $html = '<div style="text-align:center; color: #33CC33"><h1>Comparaison consommation de deux mois</h1></div>';
 $pdf->writeHTML($html, true, false, true, false, '');
 
 //The SVG image for highcharts graphics
-$pdf->ImageSVG($file='img/img.svg', $x=25, $y=50, $w='', $link='', $h='', $palign='', $border=1, $fitonpage=false);
+$pdf->ImageSVG($file='img/img.svg', $x=20, $y=50, $w='', $link='', $h='', $palign='', $border=1, $fitonpage=false);
+$pdf->ImageSVG($file='img/test.png', $x=20, $y=50, $w='', $link='', $h='', $palign='', $border=1, $fitonpage=false);
 
 //New lines
 $pdf->Ln(140);
 
 //Declared variables
-$kwh = 27;
 $jours = 9;
 $mois = 'Janvier';
 $kwhMois = 460;
@@ -65,10 +68,12 @@ $watt = 1;
 
 //Html content
 $html = '<div style="color: black; font-size: 14px; border: 1px solid #33CC33; text-align: center; ">
-<br>Jusqu\'à présent vous avez consommé <b>'.$kwh.' kWh</b> en moins par rapport au mois dernier.<br>
+<br>Jusqu\'à présent vous avez consommé <span class="energie"></span> kWh en moins par rapport au mois dernier.<br>
 Cela represente <b>'.$jours.' jours</b> de production d\'électricité par panneau solaire de 1m sur 1m.<br><br>
 En <b>'.$mois.'</b> vous avez consommé au total <b>'.$kwhMois.'kWh</b>. Cela represente <b>'.$heureProduction.'h</b> de production d\'une eolienne terrestre de <b>'.$watt.' MegaWatt</b>.<br>
 </div>';
+
+
 $pdf->writeHTML($html, true, false, true, false, '');
 
 //End of page
