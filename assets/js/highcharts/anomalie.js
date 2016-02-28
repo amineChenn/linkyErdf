@@ -9,8 +9,10 @@ angular	.module("appAnomalie", [])
         $scope.json = "";
         $scope.dateAnomalies = [];
 
+        $(window).trigger('resize');
+
         $scope.getTarif = function (){
-        $http.get("http://localhost/api.php/anomalie").success(function (data) {
+        $http.get("http://localhost/projetERDF/api.php/anomalie").success(function (data) {
 
             if (data.length !== 0) {
                 $scope.json = data[data.length-1].Id;
@@ -26,7 +28,7 @@ angular	.module("appAnomalie", [])
         $interval($scope.getTarif, 1000);
 
         $scope.refreshTableAnomalies = function (){
-            $http.get("http://localhost/api.php/anomalie").success(function (data) {
+            $http.get("http://localhost/projetERDF/api.php/anomalie").success(function (data) {
                 if (data.length !== 0) {
                     $scope.dateAnomalies.length = 0;
                     var date = $('#dateAnomalie').datepicker("getDate");

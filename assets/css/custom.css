@@ -342,4 +342,8 @@ ul#filters {
 		float:left;
 		overflow:hidden;
 	}
-	
+
+.spinnerCustom {
+    width: 20%;
+    max-width:100px;
+}

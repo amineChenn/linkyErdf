@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="src/linky.png" />
+        <title>Rapport Mensuel</title>
+
+        <link href="assets/css/bootstrap.css" rel="stylesheet" />
+        <link href="assets/css/font-awesome.css" rel="stylesheet" />
+        <link href="assets/css/basic.css" rel="stylesheet" />
+        <link href="assets/css/custom.css" rel="stylesheet" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+        <script src="assets/js/jquery-1.10.2.js"></script>
+        <script src="assets/js/bootstrap.js"></script>
+        <script src="assets/js/jquery.metisMenu.js"></script>
+        <script src="assets/js/custom.js"></script>
+        <script src="assets/js/bootstrap-datepicker.js"></script>
+
+
+        <script src="bower_components/highcharts/highstock.js"></script>
+        <script src="bower_components/highcharts/modules/exporting.js"></script>
+
+        <script src="bower_components/angular/angular.js"></script>
+
+        <script src="pdf/rapportEnergiphile.js"></script>
+        <script src="pdf/rapportEcophileSvg.php"></script>
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">
+                        <img src="src/linky.png" style="width: 100%;height: 100%;"></a>
+                </div>
+                <div>
+                    <span class="navbar-text"><h1>Récapitulatif de consommation</h1></span>
+                </div>
+            </nav>
+
+            <nav class="navbar-default navbar-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="main-menu">
+                        <li>
+                            <a href="index.html"><i class="fa fa-home "></i>Accueil</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-print "></i>Imprimer un rapport mensuel<span class="fa arrow"></span></a>
+                            <ul  class="nav nav-second-level" >
+                                <li>
+                                    <a href="printEcophile.html">Rapport écophile</a>
+                                </li>
+                                <li>
+                                    <a href="printTechnophile.html">Rapport technophile</a>
+                                </li>
+                                <li>
+                                    <a href="printEnergiphile.html">Rapport énergiphile</a>
+                                </li>
+                                <li>
+                                    <a href="printEconome.html">Rapport économe</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-area-chart "></i>Suivie de consommation <span class="fa arrow"></span></a>
+                            <ul  class="nav nav-second-level" >
+                                <li>
+                                    <a href="kwh.html">KWh</a>
+                                </li>
+                                <li>
+                                    <a href="tension.html">Tension</a>
+                                </li>
+                                <li>
+                                    <a href="courant.html">Courant</a>
+                                </li>
+                                <li>
+                                    <a href="suivieAvance.html">Avancée</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="anomalie.html"><i class="fa fa-chain-broken "></i>Suivie des anomalies</a>
+                        </li>
+                        <li>
+                            <a href="optimisation.html"><i class="fa fa-line-chart "></i>Optimisations</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="page-wrapper">
+                <div class="table-responsive" style="width: 80%; margin-left: 10%">
+                    <div class="container col-md-12">
+                        <div class="panel panel-default ">
+                            <div class="panel-heading">
+                                Paramètres
+                            </div>
+                            <div class="panel-body">
+                                <form role="form"><br>
+                                    <div class="row">
+                                        <div  class="col-md-6">
+                                            <div style="padding-left: 5% ">
+                                                A partir de :
+
+                                                <div class="container">
+                                                    <div class='col-sm-3'>
+                                                        <div class="input-group date">
+                                                            <input id="dateStartAvancee" type="text" class="form-control dateStartAvanceePeriod"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </br>Jusqu'à     :
+                                                <div class="container">
+                                                    <div class='col-sm-3'>
+                                                        <div class="input-group date">
+                                                            <input id="dateEndAvancee" type="text" class="form-control dateEndAvanceePeriod"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div  class="col-md-12">
+                                                    <div id="#errorEmptyData" class="alert alert-warning collapse" style="display: none">
+                                                        <a href="#" class="close"  onclick="$('.alert').hide()">&times;</a>
+                                                        Aucune données n'est présente durant cette période.
+                                                    </div>
+                                                </div>
+                                                <input  type="button" class="pull-right btn btn-info " value="Valider"  onclick="newPuissanceChart(); newPreactiveChart(); newIntensiteChart(); newTensionChart(); newChartEnergie();actualiserGraphique(); ">
+                                            </div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form role="form">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" value="" selected="true" checked>Recevoir une alarme audio en cas de dépassement de la valeur max de mon contrat
+                                                    de la puissance apparente
+                                                </label>
+                                            </div>
+                                            <br>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" value="" checked>Recevoir une alarme audio en cas de pic de consommation</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="container col-md-12">
+                        <div class="panel panel-default " id="divi" style="display: none">
+                            <div class="panel-heading">
+                                Graphiques
+                                <a href="pdf/rapportEnergiphile.php"><input type="button" class="btn btn-danger pull-right" value="Récapitulatif" onclick="newPuissanceChart(); newPreactiveChart(); newIntensiteChart(); newTensionChart(); newChartEnergie()" > </a>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="row">
+                                <div class="panel-body">
+                                    <div  class="col-md-12">
+                                        <div id="apparenteEnergiphile"></div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div  class="col-md-12">
+                                        <div id="reactiveEnergiphile"></div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div  class="col-md-12">
+                                        <div id="intensiteEnergiphile"></div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div  class="col-md-12">
+                                        <div id="tensionEnergiphile"></div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div  class="col-md-12">
+                                        <div id="energiphileEnergie"></div>
+                                    </div>
+                                </div>
+                        </div>
+                    <!--<button type="button" class="btn btn-success btn-lg btn-block"  onclick="newPuissanceChart(); newPreactiveChart(); newIntensiteChart(); newTensionChart(); newChartEnergie()" >-->
+                        <!--<a href="pdf/rapportEnergiphile.php" style="color: white"> Télecharger récapitulatif </a>-->
+                    <!--</button>-->
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div id="footer-sec">
+                &copy; 2016 MIAGE
+            </div>
+        </div>
+
+    </body>
+</html>
