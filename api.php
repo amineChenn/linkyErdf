@@ -187,19 +187,19 @@ switch ($method) {
 		case 'SelectSumPapparente':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];
-			$sql = "select sum(Papparente) SumPapparente from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
+			$sql = "select max(Papparente) SumPapparente from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
 		case 'SelectSumPreactive':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];
-			$sql = "select sum(Preactive) SumPreactive from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
+			$sql = "select max(Preactive) SumPreactive from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
 		case 'SelectSumIntensite':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];
-			$sql = "select sum(Intensite) SumIntensite from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
+			$sql = "select max(Intensite) SumIntensite from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
 		case 'SelectSumTension':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];
-			$sql = "select sum(Tension) SumTension from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
+			$sql = "select max(Tension) SumTension from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
 		case 'EnergieConsommee':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];

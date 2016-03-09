@@ -73,10 +73,8 @@ function getPuissanceApparente() {
                 if(sumPapparente[0].SumPapparente == null){
                     sumPapparente[0].SumPapparente = '0';
                 }
-
+                sum.push(parseInt(sumPapparente[0].SumPapparente));
             }
-
-
         }
     }
     return sum;
@@ -289,10 +287,8 @@ function getPuissanceReactive() {
                 if(sumPreactive[0].SumPreactive == null){
                     sumPreactive[0].SumPreactive = '0';
                 }
-
+                sum.push(parseFloat(sumPreactive[0].SumPreactive));
             }
-
-
         }
     }
     return sum;
@@ -454,10 +450,8 @@ function getIntensite() {
                 if(sumIntensite[0].SumIntensite == null){
                     sumIntensite[0].SumIntensite = '0';
                 }
-
+                sum.push(parseInt(sumIntensite[0].SumIntensite));
             }
-
-
         }
     }
     return sum;
@@ -620,10 +614,8 @@ function getTension() {
                 if(sumTension[0].SumTension == null){
                     sumTension[0].SumTension = '0';
                 }
-
+                sum.push(parseInt(sumTension[0].SumTension));
             }
-
-
         }
     }
     return sum;
@@ -690,7 +682,7 @@ function newTensionChart() {
                 color: '#808050'
             },
                 {
-                    value: 400,
+                    value: 260,
                     color: '#ff0000',
                     width: 2,
                     zIndex: 4,
@@ -703,7 +695,7 @@ function newTensionChart() {
                     }
                 },
                 {
-                value: 100,
+                value: 216,
                 color: '#ff0000',
                 width: 2,
                 zIndex: 4,
@@ -811,7 +803,7 @@ function getEnergieTotalConsommee() {
                 if(energieConsommee[0].EnergieConsommee == null){
                     energieConsommee[0].EnergieConsommee = '0';
                 }
-
+                sum.push(parseFloat(energieConsommee[0].EnergieConsommee));
             }
 
 

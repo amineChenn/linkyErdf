@@ -77,10 +77,8 @@ function getPeriod() {
                 if(sumPapparente[0].SumPapparente == null){
                     sumPapparente[0].SumPapparente = '0';
                 }
-
+                sum.push(parseInt(sumPapparente[0].SumPapparente));
             }
-
-
         }
     }
     return sum;
@@ -283,10 +281,8 @@ function getEnergieTotalConsommee() {
                 if(energieConsommee[0].EnergieConsommee == null){
                     energieConsommee[0].EnergieConsommee = '0';
                 }
-
+                sum.push(parseFloat(energieConsommee[0].EnergieConsommee));
             }
-
-
         }
     }
     return sum;
