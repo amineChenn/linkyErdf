@@ -107,7 +107,7 @@ function newChart() {
         chart: { renderTo: 'technophile' },
 
         title: {
-            text: "Puissance consommée entre "+dateS+ " et "+ dateE ,
+            text: "Puissance consommee entre "+dateS+ " et "+ dateE ,
             x: -20 //center
         },
 
@@ -332,7 +332,7 @@ function newChartEnergie() {
         },
 
         title: {
-            text: "Energie consommée entre " + dateS + " et " + dateE,
+            text: "Energie consommee entre " + dateS + " et " + dateE,
             x: -20 //center
         },
 

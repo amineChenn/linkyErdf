@@ -6,7 +6,7 @@ include_once('tcpdf/tcpdf.php');
 
 
 // new object
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, false, 'ISO-8859-1', false);
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, false, 'UTF-8', false);
 $pdf->IncludeJS('rapportEcophile.js');
 // set document information
 $pdf->SetCreator('TCPDF');
@@ -15,7 +15,7 @@ $pdf->SetTitle('Suivi de consommation');
 $pdf->SetSubject('Suivi de consommation');
 
 // set default header data
-$pdf->SetHeaderData('linky.jpg', 30, 'Suivi de consommation', "Récapitulatif\nwww.geg.fr", array(2,64,128));
+$pdf->SetHeaderData('linky.jpg', 30, 'Suivi de consommation', "Rï¿½capitulatif\nwww.geg.fr", array(2,64,128));
 
 // set header and footer fonts
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -69,9 +69,9 @@ $watt = 1;
 
 //Html content
 //$html = '<div style="color: black; font-size: 14px; border: 1px solid #33CC33; text-align: center; ">
-//<br>Jusqu\'à présent vous avez consommé <span class="energie"></span> kWh en moins par rapport au mois dernier.<br>
-//Cela represente <b>'.$jours.' jours</b> de production d\'électricité par panneau solaire de 1m sur 1m.<br><br>
-//En <b>'.$mois.'</b> vous avez consommé au total <b>'.$kwhMois.'kWh</b>. Cela represente <b>'.$heureProduction.'h</b> de production d\'une eolienne terrestre de <b>'.$watt.' MegaWatt</b>.<br>
+//<br>Jusqu\'ï¿½ prï¿½sent vous avez consommï¿½ <span class="energie"></span> kWh en moins par rapport au mois dernier.<br>
+//Cela represente <b>'.$jours.' jours</b> de production d\'ï¿½lectricitï¿½ par panneau solaire de 1m sur 1m.<br><br>
+//En <b>'.$mois.'</b> vous avez consommï¿½ au total <b>'.$kwhMois.'kWh</b>. Cela represente <b>'.$heureProduction.'h</b> de production d\'une eolienne terrestre de <b>'.$watt.' MegaWatt</b>.<br>
 //</div>';
 //
 //

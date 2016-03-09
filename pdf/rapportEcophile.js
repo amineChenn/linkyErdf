@@ -496,17 +496,8 @@ function getEnergieConsommeeActuelDay() {
     var dateDebut = dateYear + "/" + dateMonth + "/" + 1;
     var dateFin = dateYear + "/" + dateMonth + "/" + dateDay;
 
-    //var d = dateDebut;
-    //while (d <= dateFin) {
-    //    var before = d.getDate() + 1;
-    //    d = new Date(before);
-    //    daysOfYear.push(new Date(d));
-    //}
-    //console.log("aaaaaaaaaaaaaaaaaaaaaaaaaabbbb", daysOfYear);
-
     for (var d = new Date(dateDebut); d <= new Date(dateFin); d.setDate(d.getDate() + 1)) {
 
-        console.log("ddddddddddddddddddddddddddd", d.getDate());
         daysOfYear.push(new Date(d));
     }
 
@@ -633,14 +624,6 @@ function getEnergieConsommeeMoisPrecedentDay() {
 
 
     }
-    //var d = new Date(dateDebut);
-    //dateFin = new Date(dateFin);
-    //while (d <= dateFin) {
-    //    var before = d.getDate() + 1;
-    //    d = new Date(before);
-    //    daysOfYear.push(new Date(d));
-    //}
-    //console.log("aaaaaaaaaaaaaa", daysOfYear);
 
     for (var d = new Date(dateDebut); d <= new Date(dateFin); d.setDate(d.getDate() + 1)) {
 
@@ -677,7 +660,8 @@ function newChart() {
 
     chartEnergy = new Highcharts.Chart({
         chart: {
-            renderTo: 'ecophile'
+            renderTo: 'ecophile',
+            type: 'column'
         },
 
         title: {
@@ -881,6 +865,7 @@ function displaySelection() {
     else {
         refreshGraphic();
         newChart();
+
     }
 }
 

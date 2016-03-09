@@ -131,7 +131,7 @@ $(function() {
         dataType: 'json',
         success: function(data){
 
-            var listItems= '<option value ="">Ann&eacute;e</option>';
+            var listItems= '<option value ="annee">Ann&eacute;e</option>';
             var jsonData = data;
             for (var i = 0; i < jsonData.length; i++){
 
@@ -145,6 +145,15 @@ $(function() {
 
 });
 function getMonth(){
+    var list = "";
+    var m;
+    m = $("#annee").val();
+    if (m == "annee") {
+        list = "<option value =''>Mois</option>";
+        $("#mois").html(list);
+
+    }
+
     $.ajax({
         type: 'GET',
         url: "http://localhost/projetERDF/api.php/SelectMonths?Annee="+$('#annee').val(),
@@ -343,16 +352,188 @@ function getDataChart() {
 
 }
 
+function getEnergieConsommeeActuelDay() {
+
+    var sum = [];
+    var daysOfYear = [];
+    var date = new Date();
+    var dateDay = date.getDate();
+    var dateYear = date.getFullYear();
+    var dateMonth = date.getMonth() + 1;
+
+    var dateDebut = dateYear + "/" + dateMonth + "/" + 1;
+    var dateFin = dateYear + "/" + dateMonth + "/" + dateDay;
+
+    for (var d = new Date(dateDebut); d <= new Date(dateFin); d.setDate(d.getDate() + 1)) {
+
+        daysOfYear.push(new Date(d));
+    }
+
+    for (var t = 0; t < daysOfYear.length; t++) {
+        var selectedDate = daysOfYear[t];
+        var day = selectedDate.getDate();
+        var month = selectedDate.getMonth() + 1; //Months are zero based
+        var year = selectedDate.getFullYear();
+        var constDateFin = year + "-" + month + "-" + day + " 00:00:00";
+        var constDateDebut = year + "-" + month + "-" + day + " 23:59:59";
+
+        console.log("Date debut", constDateDebut);
+        console.log("Date Fin", constDateFin);
+
+        var energieConsommee = getEnergieConsomme(constDateFin, constDateDebut);
+        energieConsommee = JSON.parse(energieConsommee);
+        console.log("reponse : ", energieConsommee[0]);
+        if (energieConsommee[0].EnergieConsommee == null) {
+            energieConsommee[0].EnergieConsommee = '0';
+        }
+        console.log(sum.push(parseFloat(energieConsommee[0].EnergieConsommee)));
+
+    }
+
+    console.log("energie consommeeeee", sum);
+    return sum;
+}
+
+function getEnergieConsommeeMoisPrecedentDay() {
+
+    var sum = [];
+    var daysOfYear = [];
+    annee = document.getElementById("annee").value;
+    mois = document.getElementById("mois").value;
+    switch (mois) {
+
+        case 'Janvier' :
+            mois = '1';
+            break;
+        case 'Fevrier' :
+            mois = '2';
+            break;
+        case 'Mars' :
+            mois = '3';
+            break;
+        case 'Avril':
+            mois = '4';
+            break;
+        case 'Mai' :
+            mois = '5';
+            break;
+        case 'Juin' :
+            mois = '6';
+            break;
+        case 'Juillet' :
+            mois = '7';
+            break;
+        case 'Aout' :
+            mois = '8';
+            break;
+        case 'Septembre' :
+            mois = '9';
+            break;
+        case 'Octobre' :
+            mois = '10';
+            break;
+        case 'Novembre' :
+            mois = '11';
+            break;
+        case 'Decembre' :
+            mois = '12';
+            break;
+        default :
+            mois = '0';
+            break;
+
+
+    }
+    jour = new Date(Date.parse(((mois % 12) + 1).toString() + "/01/" + annee) - 86400000).getDate();
+
+
+    var dateDebut = annee + "/" + mois + "/" + 1;
+    var dateFin = annee + "/" + mois + "/" + jour;
+
+    switch (mois) {
+        case '1' :
+            mois = 'Janvier';
+            break;
+        case '2' :
+            mois = 'Fevrier';
+            break;
+        case '3' :
+            mois = 'Mars';
+            break;
+        case '4':
+            mois = 'Avril';
+            break;
+        case '5' :
+            mois = 'Mai';
+            break;
+        case '6' :
+            mois = 'Juin';
+            break;
+        case '7' :
+            mois = 'Juillet';
+            break;
+        case '8' :
+            mois = 'Aout';
+            break;
+        case '9' :
+            mois = 'Septembre';
+            break;
+        case '10' :
+            mois = 'Octobre';
+            break;
+        case '11' :
+            mois = 'Novembre';
+            break;
+        case '12' :
+            mois = 'Decembre';
+            break;
+        default :
+            mois = 'vide'
+
+
+    }
+
+    for (var d = new Date(dateDebut); d <= new Date(dateFin); d.setDate(d.getDate() + 1)) {
+
+        console.log("ddddddddddddddddddddddddddd", d.getDate());
+        daysOfYear.push(new Date(d));
+    }
+
+    for (var t = 0; t < daysOfYear.length; t++) {
+        var selectedDate = daysOfYear[t];
+        var day = selectedDate.getDate();
+        var month = selectedDate.getMonth() + 1; //Months are zero based
+        var year = selectedDate.getFullYear();
+        var constDateFin = year + "-" + month + "-" + day + " 00:00:00";
+        var constDateDebut = year + "-" + month + "-" + day + " 23:59:59";
+
+        console.log("Date debut", constDateDebut);
+        console.log("Date Fin", constDateFin);
+
+        var energieConsommee = getEnergieConsomme(constDateFin, constDateDebut);
+        energieConsommee = JSON.parse(energieConsommee);
+        console.log("reponse : ", energieConsommee[0]);
+        if (energieConsommee[0].EnergieConsommee == null) {
+            energieConsommee[0].EnergieConsommee = '0';
+        }
+        console.log(sum.push(parseFloat(energieConsommee[0].EnergieConsommee)));
+
+    }
+
+    console.log("energie consommeeeee", sum);
+    return sum;
+}
+
 function newChart() {
 
-    var date = new Date();
-
-    chart = new Highcharts.Chart({
-        chart: { renderTo: 'ecophile',
-        type : 'column'
+    chartEnergy = new Highcharts.Chart({
+        chart: {
+            renderTo: 'ecophile',
+            type: 'column'
         },
+
         title: {
-            text: "Comparaison consommation au mois "+ document.getElementById("mois").value +" "+document.getElementById("annee").value,
+            text: "Comparaison energie consommee au mois " + document.getElementById("mois").value + " " + document.getElementById("annee").value,
             x: -20 //center
         },
 
@@ -360,51 +541,143 @@ function newChart() {
             title: {
                 text: 'Jours'
             },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
+            categories: (function () {
+                var i;
+                for (i = 0; i < 31; i += 1) {
+
+                    fin.push(i+1);
+                }
+                return fin;
+            })
+
         },
         exporting: {
             enabled: false
         },
         yAxis: {
             title: {
-                text: 'Watt'
+                text: 'KWH'
             },
             plotLines: [{
                 value: 0,
                 width: 1,
-                color: '#808080'
+                color: '#808050'
             }]
         },
         tooltip: {
-            valueSuffix: ' Watt'
+            valueSuffix: ' KWH'
         },
-        series : [{
-            name : 'Puissance apparente '+document.getElementById("mois").value,
-            data : (function () {
+        //plotOptions: {
+        //    series: {
+        //        color: '#91e8e1'
+        //    }
+        //},
+        series: [{
+            name: 'Energie consommee ' + document.getElementById("mois").value,
+            data: (function () {
                 // generate an array of random data
-                var data = [],  i, sum = getMonthDataChart();
-                for (i = 0; i < 31; i += 1) {
+                annee = document.getElementById("annee").value;
+                mois = document.getElementById("mois").value;
+                switch (mois) {
+
+                    case 'Janvier' :
+                        mois = '1';
+                        break;
+                    case 'Fevrier' :
+                        mois = '2';
+                        break;
+                    case 'Mars' :
+                        mois = '3';
+                        break;
+                    case 'Avril':
+                        mois = '4';
+                        break;
+                    case 'Mai' :
+                        mois = '5';
+                        break;
+                    case 'Juin' :
+                        mois = '6';
+                        break;
+                    case 'Juillet' :
+                        mois = '7';
+                        break;
+                    case 'Aout' :
+                        mois = '8';
+                        break;
+                    case 'Septembre' :
+                        mois = '9';
+                        break;
+                    case 'Octobre' :
+                        mois = '10';
+                        break;
+                    case 'Novembre' :
+                        mois = '11';
+                        break;
+                    case 'Decembre' :
+                        mois = '12';
+                        break;
+                    default :
+                        mois = '0';
+                        break;
+
+
+                }
+                jour = new Date(Date.parse(((mois % 12) + 1).toString() + "/01/" + annee) - 86400000).getDate();
+
+
+                var dateDebut = annee + "/" + mois + "/" + 1;
+                var dateFin = annee + "/" + mois + "/" + jour;
+                var data = [], i, sum = getEnergieConsommeeMoisPrecedentDay(), dateOfYear = [];
+                for (var d = new Date(dateDebut); d <= new Date(dateFin); d.setDate(d.getDate() + 1)) {
+
+                    dateOfYear.push(new Date(d));
+                }
+                for (i = 0; i < dateOfYear.length; i += 1) {
+                    console.log("length", dateOfYear.length);
+                    var selectedDate = dateOfYear[i];
+                    var day = selectedDate.getDate();
+                    var month = selectedDate.getMonth() + 1; //Months are zero based
+                    var year = selectedDate.getFullYear();
+                    var constDateFin = year + "/" + month + "/" + day;
+                    console.log("tteessttttt energiee", constDateFin);
                     data.push([
                         i+1,
-                        sum[i]
+                        (Math.round(sum[i]*1000)/1000)
                     ]);
+                    console.log("ddaaatte", data);
                 }
                 return data;
             }())
         },
-            {   name : 'Puissance apparente du mois actuel',
-                data : (function () {
+            {
+                name: 'Energie consommee du mois actuel',
+                data: (function () {
                     // generate an array of random data
-                    var data = [], i, somme = getDataChart();
-                    for (i = 0; i < 31; i += 1) {
+                    var date = new Date();
+                    var dateDay = date.getDate();
+                    var dateYear = date.getFullYear();
+                    var dateMonth = date.getMonth() + 1;
+
+                    var dateDebut = dateYear + "/" + dateMonth + "/" + 1;
+                    var dateFin = dateYear + "/" + dateMonth + "/" + dateDay;
+                    var data = [], i, sum = getEnergieConsommeeActuelDay(), dateOfYear = [];
+                    for (var d = new Date(dateDebut); d <= new Date(dateFin); d.setDate(d.getDate() + 1)) {
+
+                        dateOfYear.push(new Date(d));
+                    }
+                    for (i = 0; i < dateOfYear.length; i += 1) {
+                        console.log("length", dateOfYear.length);
+                        var selectedDate = dateOfYear[i];
+                        var day = selectedDate.getDate();
+                        var month = selectedDate.getMonth() + 1; //Months are zero based
+                        var year = selectedDate.getFullYear();
+                        var constDateFin = year + "/" + month + "/" + day;
+                        console.log("tteessttttt energiee", constDateFin);
                         data.push([
                             i+1,
-                            somme[i]
+                            (Math.round(sum[i]*1000)/1000)
                         ]);
+                        console.log("ddaaatte", data);
                     }
                     return data;
                 }())
@@ -413,13 +686,13 @@ function newChart() {
     });
 
     //on prend la charte, on la transforme en svg
-    var svg = chart.getSVG();
+    var svg = chartEnergy.getSVG();
 
     //et on la balance sur le serveur
     $.ajax({
         type: 'POST',
         url: 'pdf/rapportEcophileSvg.php',
-        data: {test  : svg} //le code "texte" du svg
+        data: {test: svg} //le code "texte" du svg
 
 
     });
@@ -609,7 +882,9 @@ function screenShotEcophile() {
 function displaySelection() {
     var m;
     m = $('#annee option:selected').val();
-    if (m == "") {
+    n = $('#mois option:selected').val();
+
+    if (m == "" || n == "") {
         document.getElementById("#errorMessage").style.display = 'block';
         $(".alert").delay(9000).slideUp(500, function () {
             document.getElementById("#errorMessage").style.display = "none";
