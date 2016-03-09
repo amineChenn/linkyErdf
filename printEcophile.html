@@ -92,6 +92,10 @@
             </nav>
 
             <div id="page-wrapper">
+                <div id="#errorMessage" class="alert alert-danger collapse" style="display: none">
+                <a href="#" class="close"  onclick="$('.alert').hide()">&times;</a>
+                <strong>Attention!</strong> Veuillez sélectionner l'année puis le mois.
+            </div>
                 <div class="table-responsive" style="width: 80%; margin-left: 10%">
                     <div class="container col-md-12">
                         <div class="panel panel-default ">
@@ -108,8 +112,9 @@
                                 <div class="checkbox">
                                     <label><input type="checkbox" value="" checked>Recevoir une alarme audio en cas de pic de consommation</label>
                                 </div><br>
+
                                 <div class="row">
-                                    <div class="col-md-3"> Selectionnez année puis mois :</div>
+                                    <div class="col-md-4"> Selectionnez année puis mois <span style="color: red">*</span></div>
                                     <div class="col-md-3">
                                         <select id="annee" class="form-control" onchange="getMonth();" required ></select>
                                     </div>
@@ -118,33 +123,42 @@
                                             <option value ="">Mois</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-3">
-                                        <input  type="button" class="btn btn-info" value="Valider"  onclick="newChart(); refreshGraphic(); "/>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-info"  onclick=" displaySelection();  ">Générer</button>
                                     </div>
                                 </div>
+                                <hr>
+                                <div class="col-md-3" style="color: red">* Champ obligatoire</div>
                             </div>
                         </div>
                     </div><br>
+                    <div class="col-md-12" style="text-align: center;">
+                        <div id="spinnerPeriodAdvanced" style="display: none">
+                            <img src="src/spinner.gif" class="spinnerCustom">
+                        </div>
+                    </div>
                     <div class="container col-md-12">
                         <div class="panel panel-default " id="divEcophile" style="display: none">
                             <div class="panel-heading">
                                 Graphique
-                                <a href="pdf/rapportEcophile.php"><input type="button" class="btn btn-danger pull-right" value="Récapitulatif" onclick="newChart(); screenShotEcophile();" > </a>
+                                <a href="pdf/rapportEcophile.php"><input type="button" class="btn btn-danger pull-right" value="Télécharger" onclick="screenShotEcophile();" > </a>
                             </div>
                             <br>
                             <br>
+
                             <div class="row">
                                 <div class="panel-body">
                                     <div>
                                         <div id="ecophile"></div>
                                     </div>
                                 </div>
+                                <hr>
                                 <div class="panel-body">
                                     <div  class="col-md-12"> <br><br>
                                         <div id="screenShotEcophile">Jusqu'à présent vous avez consommé <b><span class="energie"></span></b> par rapport au mois de <span class="mois"></span>.<br>
-                                             Cela represente <span>9jours</span> de production d'électricité par panneau solaire de 1m sur 1m.<br><br>
-                                             En <b><span class="mois"></span></b> vous avez consommé au total <b><span class="precedent"></span></b> Wh.<br>
-                                            Cela represente <span>1h</span> de production d'une eolienne terrestre de <span>1</span> MegaWatt.
+                                             Cela represente <b><span class="nbJours"></span> jours</b> de production d'électricité par panneau solaire de 1m sur 1m.<br><br>
+                                             En <b><span class="mois"></span></b> vous avez consommé au total <b><span class="precedent"></span></b> KWh.<br>
+                                            Cela represente <b><span class="nbHeure"></span> h</b> de production d'une eolienne terrestre de <b><span>2</span> MegaWatt</b>.
                                         </div>
                                         <br><br>
                                         <!--<button type="button" class="btn btn-success btn-lg btn-block" id="btnSave" onclick="newChart(); screenShotEcophile();" >-->

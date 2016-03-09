@@ -26,7 +26,8 @@ body {
 
 #page-wrapper {
     padding: 15px 15px;
-    min-height: 600px;
+    /*min-height: 600px;*/
+    overflow: scroll;
     background: #F3F3F3;
     position:relative;
 }
@@ -227,7 +228,7 @@ body {
         color:#fff;
     }
     #footer-sec a:hover,a:focus {
-        color:#fff;
+        color: inherit;
         text-decoration:none;
     }
 /*==============================================

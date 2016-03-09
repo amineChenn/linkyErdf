@@ -93,6 +93,10 @@
                 </div>
             </nav>
             <div id="page-wrapper">
+                <div id="#errorMessageDate" class="alert alert-danger collapse" style="display: none">
+                    <a href="#" class="close"  onclick="$('.alert').hide()">&times;</a>
+                    <strong>Attention!</strong> La date de début doit être inférieur à la date de fin.
+                </div>
                 <div class="table-responsive" style="width: 80%; margin-left: 10%">
                     <div class="container col-md-12">
                         <div class="panel panel-default ">
@@ -100,22 +104,37 @@
                                 Paramètres
                             </div>
                             <div class="panel-body">
+                                <form role="form">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="" selected="true" checked>Recevoir une alarme audio en cas de dépassement de la valeur max de mon contrat
+                                            de la puissance apparente
+                                        </label>
+                                    </div>
+                                    <br>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="" checked>Recevoir une alarme audio en cas de pic de consommation</label>
+                                    </div>
+                                </form>
+                            </div>
+                            <hr>
+                            <div class="panel-body">
                                 <form role="form"><br>
                                     <div class="row">
                                         <div  class="col-md-6">
-                                            <div style="padding-left: 5% ">
-                                                A partir de :
-
+                                            <div style="padding-left: 5%">
+                                                <div class="col-md-6">A partir de :</div>
                                                 <div class="container">
-                                                    <div class='col-sm-3'>
+                                                    <div class="col-md-4">
                                                         <div class="input-group date">
                                                             <input id="dateStartAvancee" type="text" class="form-control dateStartAvanceePeriod"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                </br>Jusqu'à     :
+                                                <br>
+                                                <div class="col-md-6">Jusqu'à :</div>
                                                 <div class="container">
-                                                    <div class='col-sm-3'>
+                                                    <div class="col-md-4">
                                                         <div class="input-group date">
                                                             <input id="dateEndAvancee" type="text" class="form-control dateEndAvanceePeriod"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                         </div>
@@ -127,25 +146,15 @@
                                                         Aucune données n'est présente durant cette période.
                                                     </div>
                                                 </div>
-                                                <input  type="button" class="pull-right btn btn-info " value="Valider"  onclick="newPuissanceChart(); newPreactiveChart(); newIntensiteChart(); newTensionChart(); newChartEnergie();actualiserGraphique(); ">
+
                                             </div>
-                                            </p>
+                                            <hr>
+                                            <button  type="button" class="pull-right btn btn-info"  onclick="actualiserGraphique(); ">
+                                                Générer
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="panel-body">
-                                        <form role="form">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" value="" selected="true" checked>Recevoir une alarme audio en cas de dépassement de la valeur max de mon contrat
-                                                    de la puissance apparente
-                                                </label>
-                                            </div>
-                                            <br>
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" value="" checked>Recevoir une alarme audio en cas de pic de consommation</label>
-                                            </div>
-                                        </form>
-                                    </div>
+
                                 </form>
                             </div>
                         </div>
@@ -155,7 +164,7 @@
                         <div class="panel panel-default " id="divi" style="display: none">
                             <div class="panel-heading">
                                 Graphiques
-                                <a href="pdf/rapportEnergiphile.php"><input type="button" class="btn btn-danger pull-right" value="Récapitulatif" onclick="newPuissanceChart(); newPreactiveChart(); newIntensiteChart(); newTensionChart(); newChartEnergie()" > </a>
+                                <a href="pdf/rapportEnergiphile.php"><input type="button" class="btn btn-danger pull-right" value="Télécharger" onclick="newPuissanceChart(); newPreactiveChart(); newIntensiteChart(); newTensionChart(); newChartEnergie()" > </a>
                             </div>
                             <br>
                             <br>
@@ -165,21 +174,25 @@
                                         <div id="apparenteEnergiphile"></div>
                                     </div>
                                 </div>
+                                <hr>
                                 <div class="panel-body">
                                     <div  class="col-md-12">
                                         <div id="reactiveEnergiphile"></div>
                                     </div>
                                 </div>
+                                <hr>
                                 <div class="panel-body">
                                     <div  class="col-md-12">
                                         <div id="intensiteEnergiphile"></div>
                                     </div>
                                 </div>
+                                <hr>
                                 <div class="panel-body">
                                     <div  class="col-md-12">
                                         <div id="tensionEnergiphile"></div>
                                     </div>
                                 </div>
+                                <hr>
                                 <div class="panel-body">
                                     <div  class="col-md-12">
                                         <div id="energiphileEnergie"></div>

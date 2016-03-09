@@ -131,7 +131,7 @@ $(function() {
         dataType: 'json',
         success: function(data){
 
-            var listItems= '<option value ="">Annee</option>';
+            var listItems= '<option value ="">Ann&eacute;e</option>';
             var jsonData = data;
             for (var i = 0; i < jsonData.length; i++){
 
@@ -248,7 +248,6 @@ function getAjax (dateFin,dateDebut) {
 
 function getMonthDataChart() {
     var sum = [];
-    var somme = [];
     annee = document.getElementById("annee").value;
     mois = document.getElementById("mois").value;
     switch (mois) {
@@ -349,7 +348,8 @@ function newChart() {
     var date = new Date();
 
     chart = new Highcharts.Chart({
-        chart: { renderTo: 'ecophile'
+        chart: { renderTo: 'ecophile',
+        type : 'column'
         },
         title: {
             text: "Comparaison consommation au mois "+ document.getElementById("mois").value +" "+document.getElementById("annee").value,
@@ -602,4 +602,21 @@ function screenShotEcophile() {
 
         }
     });
+}
+
+
+
+function displaySelection() {
+    var m;
+    m = $('#annee option:selected').val();
+    if (m == "") {
+        document.getElementById("#errorMessage").style.display = 'block';
+        $(".alert").delay(9000).slideUp(500, function () {
+            document.getElementById("#errorMessage").style.display = "none";
+        });
+    }
+    else{
+        actualiserGraphique();
+        newChart();
+    }
 }

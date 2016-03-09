@@ -30,7 +30,7 @@ function getAjax (dateFin,dateDebut) {
     }).responseText;
 }
 
-function getPowerPeriod() {
+function getPeriod() {
 
     var sum=[];
     var dateStart = $('#dateStartAvancee').datepicker("getDate");
@@ -88,6 +88,7 @@ function getPowerPeriod() {
 }
 function newChart() {
 
+
     var dateStart = $('#dateStartAvancee').datepicker("getDate");
     var dateEnd = $('#dateEndAvancee').datepicker("getDate");
 
@@ -106,7 +107,7 @@ function newChart() {
         chart: { renderTo: 'technophile' },
 
         title: {
-            text: "Puissance consommee entre "+dateS+ " et "+ dateE ,
+            text: "Puissance consommée entre "+dateS+ " et "+ dateE ,
             x: -20 //center
         },
 
@@ -152,11 +153,16 @@ function newChart() {
         tooltip: {
             valueSuffix: ' Watt'
         },
+        plotOptions: {
+            series: {
+                color: '#FF0000'
+            }
+        },
         series : [{
             name : 'Puissance apparente ',
             data : (function () {
                 // generate an array of random data
-                var data = [],  i, sum = getPowerPeriod(), dateOfYear = [];
+                var data = [],  i, sum = getPeriod(), dateOfYear = [];
                 for (var d = dateStart; d <= dateEnd; d.setDate(d.getDate() + 1)) {
 
                     dateOfYear.push(new Date(d));
@@ -199,28 +205,37 @@ function actualiserGraphique() {
 
     var dateStart = $('#dateStartAvancee').datepicker("getDate");
     var dateEnd = $('#dateEndAvancee').datepicker("getDate");
-    elems = document.getElementById("divi");
 
-
-    if (dateStart != null && dateEnd != null) {
-        var curr_date = dateStart.getDate();
-        var curr_month = dateStart.getMonth() + 1; //Months are zero based
-        var curr_year = dateStart.getFullYear();
-        dateStart =  curr_date+ "/" + curr_month + "/" + curr_year;
-
-        var curr_date = dateEnd.getDate() + 1;
-        var curr_month = dateEnd.getMonth() + 1; //Months are zero based
-        var curr_year = dateEnd.getFullYear();
-        dateEnd = curr_date + "/" + curr_month + "/" + curr_year;
-
-        $('.dateDebut').html(dateStart);
-        $('.dateFin').html(dateEnd);
+    if (dateEnd < dateStart) {
+        document.getElementById("#errorMessageDate").style.display = 'block';
+        $(".alert").delay(7000).slideUp(500, function () {
+            document.getElementById("#errorMessageDate").style.display = "none";
+        });
     }
-    console.log(dateStart);
-    console.log(dateEnd);
+    else {
+        elems = document.getElementById("divi");
+
+
+        if (dateStart != null && dateEnd != null) {
+            var curr_date = dateStart.getDate();
+            var curr_month = dateStart.getMonth() + 1; //Months are zero based
+            var curr_year = dateStart.getFullYear();
+            dateStart = curr_date + "/" + curr_month + "/" + curr_year;
+
+            var curr_date = dateEnd.getDate() + 1;
+            var curr_month = dateEnd.getMonth() + 1; //Months are zero based
+            var curr_year = dateEnd.getFullYear();
+            dateEnd = curr_date + "/" + curr_month + "/" + curr_year;
+
+            $('.dateDebut').html(dateStart);
+            $('.dateFin').html(dateEnd);
+        }
+        console.log(dateStart);
+        console.log(dateEnd);
 
 
         elems.style.display = 'block';
+    }
 }
 
 
@@ -311,11 +326,13 @@ function newChartEnergie() {
         var curr_year = dateEnd.getFullYear();
         var dateE = curr_date + "/" + curr_month + "/" + curr_year;
     }
-    chart = new Highcharts.Chart({
-        chart: {renderTo: 'technophileEnergie'},
+    chartEnergy = new Highcharts.Chart({
+        chart: {renderTo: 'technophileEnergie',
+                type : 'column'
+        },
 
         title: {
-            text: "Energie consommee entre " + dateS + " et " + dateE,
+            text: "Energie consommée entre " + dateS + " et " + dateE,
             x: -20 //center
         },
 
@@ -360,6 +377,11 @@ function newChartEnergie() {
         tooltip: {
             valueSuffix: ' KWH'
         },
+        plotOptions: {
+            series: {
+                color: '#91e8e1'
+            }
+        },
         series: [{
             name: 'Energie active ',
             data: (function () {
@@ -390,7 +412,7 @@ function newChartEnergie() {
     });
 
     //on prend la charte, on la transforme en svg
-    var svg = chart.getSVG();
+    var svg = chartEnergy.getSVG();
 
     //et on la balance sur le serveur
     $.ajax({

@@ -143,10 +143,28 @@ function newPuissanceChart() {
                 value: 0,
                 width: 1,
                 color: '#808050'
-            }]
+            },
+                {
+                    value: 5000,
+                    color: '#434348',
+                    width: 2,
+                    zIndex: 4,
+                    label: {
+                        text: 'Max',
+                        align: 'right',
+                        style: {
+                            color: 'gray'
+                        }
+                    }
+                }]
         },
         tooltip: {
             valueSuffix: ' Watt'
+        },
+        plotOptions: {
+            series: {
+                color:'#f7a35c'
+            }
         },
         series : [{
             name : 'Puissance apparente ',
@@ -195,6 +213,15 @@ function actualiserGraphique() {
 
     var dateStart = $('#dateStartAvancee').datepicker("getDate");
     var dateEnd = $('#dateEndAvancee').datepicker("getDate");
+
+    if (dateEnd<dateStart) {
+        document.getElementById("#errorMessageDate").style.display = 'block';
+        $(".alert").delay(7000).slideUp(500, function() {
+            document.getElementById("#errorMessageDate").style.display = "none";
+        });
+    }
+    else{
+
     elems = document.getElementById("divi");
 
 
@@ -217,6 +244,8 @@ function actualiserGraphique() {
 
 
     elems.style.display = 'block';
+        getAllCharts();
+}
 }
 
 
@@ -301,10 +330,11 @@ function newPreactiveChart() {
         var dateE = curr_date + "/" + curr_month + "/" + curr_year;
     }
     chart = new Highcharts.Chart({
-        chart: { renderTo: 'reactiveEnergiphile' },
+        chart: { renderTo: 'reactiveEnergiphile',
+            type: 'area'},
 
         title: {
-            text: "Puissance reactive entre "+dateS+ " et "+ dateE ,
+            text: "Puissance réactive entre "+dateS+ " et "+ dateE ,
             x: -20 //center
         },
 
@@ -348,6 +378,11 @@ function newPreactiveChart() {
         },
         tooltip: {
             valueSuffix: ' Watt'
+        },
+        plotOptions: {
+            series: {
+                color:'#8085e9'
+            }
         },
         series : [{
             name : 'Puissance reactive ',
@@ -472,10 +507,12 @@ function newIntensiteChart() {
         var dateE = curr_date + "/" + curr_month + "/" + curr_year;
     }
     chart = new Highcharts.Chart({
-        chart: { renderTo: 'intensiteEnergiphile' },
+        chart: { renderTo: 'intensiteEnergiphile',
+            type: 'area'
+        },
 
         title: {
-            text: "Intensite soutiree entre "+dateS+ " et "+ dateE ,
+            text: "Intensité soutirée entre "+dateS+ " et "+ dateE ,
             x: -20 //center
         },
 
@@ -519,6 +556,11 @@ function newIntensiteChart() {
         },
         tooltip: {
             valueSuffix: ' Ampere'
+        },
+        plotOptions: {
+            series: {
+                color:'#f15c80'
+            }
         },
         series : [{
             name : 'Intensite ',
@@ -646,7 +688,7 @@ function newTensionChart() {
         chart: { renderTo: 'tensionEnergiphile' },
 
         title: {
-            text: "Tension soutiree entre "+dateS+ " et "+ dateE ,
+            text: "Tension soutirée entre "+dateS+ " et "+ dateE ,
             x: -20 //center
         },
 
@@ -678,6 +720,7 @@ function newTensionChart() {
         exporting: {
             enabled: false
         },
+
         yAxis: {
             title: {
                 text: 'Volt'
@@ -686,7 +729,35 @@ function newTensionChart() {
                 value: 0,
                 width: 1,
                 color: '#808050'
-            }]
+            },
+                {
+                    value: 400,
+                    color: '#ff0000',
+                    width: 2,
+                    zIndex: 4,
+                    label: {
+                        text: 'Max',
+                        align: 'right',
+                        style: {
+                            color: 'gray'
+                        }
+                    }
+                },
+                {
+                value: 100,
+                color: '#ff0000',
+                width: 2,
+                zIndex: 4,
+                    label: {
+                        text: 'Min',
+                        align: 'right',
+                        style: {
+                            color: 'gray'
+                        }
+                    }
+            }
+        ]
+
         },
         tooltip: {
             valueSuffix: ' Volt'
@@ -819,11 +890,12 @@ function newChartEnergie() {
         var curr_year = dateEnd.getFullYear();
         var dateE = curr_date + "/" + curr_month + "/" + curr_year;
     }
-    chart = new Highcharts.Chart({
-        chart: {renderTo: 'energiphileEnergie'},
+    chartEnergy = new Highcharts.Chart({
+        chart: {renderTo: 'energiphileEnergie',
+            type : 'column'},
 
         title: {
-            text: "Energie consommee entre " + dateS + " et " + dateE,
+            text: "Energie consommée entre " + dateS + " et " + dateE,
             x: -20 //center
         },
 
@@ -868,6 +940,11 @@ function newChartEnergie() {
         tooltip: {
             valueSuffix: ' KWH'
         },
+        plotOptions: {
+            series: {
+                color: '#90ed7d'
+            }
+        },
         series: [{
             name: 'Energie active ',
             data: (function () {
@@ -898,7 +975,7 @@ function newChartEnergie() {
     });
 
     //on prend la charte, on la transforme en svg
-    var svg = chart.getSVG();
+    var svg = chartEnergy.getSVG();
 
     //et on la balance sur le serveur
     $.ajax({
@@ -908,4 +985,13 @@ function newChartEnergie() {
 
 
     });
+}
+
+function getAllCharts()
+{
+    newPuissanceChart();
+    newPreactiveChart();
+    newIntensiteChart();
+    newTensionChart();
+    newChartEnergie();
 }

@@ -159,42 +159,42 @@ angular	.module("appOptimisation", [])
                     $scope.plages = data;
                     $scope.coutEnergieCourante = 0;
                     $scope.diffEnergieCourante = 0;
-                    for(i=0;i<data.length;i++)
-                    {
-                        console.log("PlageCourante("+i+")", $scope.plages[i]);
-                        $scope.heureDebut = $scope.plages[i].HeureDebut;
-                        $scope.heureFin = $scope.plages[i].HeureFin;
-                        $scope.jour = $scope.plages[i].Jour;
-                        $scope.tarif = $scope.plages[i].Tarif;
-                        console.log("HeureD = ",$scope.heureDebut)
-                        console.log("HeureF = ",$scope.heureFin)
-                        $.ajax({
-                            type: "GET",
-                            url: "http://localhost/projetERDF/api.php/SelectDiffEnergieByDayAndHour?heureDebut="+$scope.heureDebut+"&heureFin="+$scope.heureFin+"&jour="+$scope.jour+"&dateDebut="+$scope.dateDebut+"&dateFin="+$scope.dateFin,
-                            cache: false,
-                            async: false,
-                            dataType: 'json',
-                            success: function (data2) {
-                                console.log("dataEnergiesConsommees = ", data2);
+                    for(i=0;i<data.length;i++) {
+                        if ($scope.plages[i] != null) {
+                            console.log("PlageCourante(" + i + ")", $scope.plages[i]);
+                            $scope.heureDebut = $scope.plages[i].HeureDebut;
+                            $scope.heureFin = $scope.plages[i].HeureFin;
+                            $scope.jour = $scope.plages[i].Jour;
+                            $scope.tarif = $scope.plages[i].Tarif;
+                            console.log("HeureD = ", $scope.heureDebut)
+                            console.log("HeureF = ", $scope.heureFin)
+                            $.ajax({
+                                type: "GET",
+                                url: "http://localhost/projetERDF/api.php/SelectDiffEnergieByDayAndHour?heureDebut=" + $scope.heureDebut + "&heureFin=" + $scope.heureFin + "&jour=" + $scope.jour + "&dateDebut=" + $scope.dateDebut + "&dateFin=" + $scope.dateFin,
+                                cache: false,
+                                async: false,
+                                dataType: 'json',
+                                success: function (data2) {
+                                    console.log("dataEnergiesConsommees = ", data2);
 
-                                for (j=0; j<data2.length ; j++) {
-                                    if (data2[j] !=null)
-                                    {
-                                        $scope.coutEnergieCourante +=  parseInt(data2[j].EnergieConsommee)* parseFloat($scope.tarif);
-                                        $scope.coutEnergieConsommee +=  parseInt(data2[j].EnergieConsommee)* parseFloat($scope.tarif);
-                                        $scope.diffEnergieCourante += parseInt(data2[j].EnergieConsommee);
-                                        $scope.diffEnergie += parseInt(data2[j].EnergieConsommee);
+                                    for (j = 0; j < data2.length; j++) {
+                                        if (data2[j] != null) {
+                                            $scope.coutEnergieCourante += parseInt(data2[j].EnergieConsommee) * parseFloat($scope.tarif);
+                                            $scope.coutEnergieConsommee += parseInt(data2[j].EnergieConsommee) * parseFloat($scope.tarif);
+                                            $scope.diffEnergieCourante += parseInt(data2[j].EnergieConsommee);
+                                            $scope.diffEnergie += parseInt(data2[j].EnergieConsommee);
+                                        }
                                     }
+                                    console.log("diffEnergie = ", $scope.diffEnergie);
+                                    console.log("coutEnergieConsommee = ", $scope.coutEnergieConsommee);
                                 }
-                                console.log("diffEnergie = ", $scope.diffEnergie);
-                                console.log("coutEnergieConsommee = ", $scope.coutEnergieConsommee);
-                            }
-                        });
-                        $scope.coutEnergieCourante = Math.round($scope.coutEnergieCourante*100)/100;
-                        $scope.energies.push([$scope.heureDebut,$scope.heureFin,$scope.ConvertirChiffreEnJour($scope.jour),$scope.tarif,$scope.diffEnergieCourante,$scope.coutEnergieCourante]);
-                        $scope.coutEnergieCourante = 0;
-                        $scope.diffEnergieCourante = 0;
-                        console.log("TotalEnergie = ",$scope.energies);
+                            });
+                            $scope.coutEnergieCourante = Math.round($scope.coutEnergieCourante * 100) / 100;
+                            $scope.energies.push([$scope.heureDebut, $scope.heureFin, $scope.ConvertirChiffreEnJour($scope.jour), $scope.tarif, $scope.diffEnergieCourante, $scope.coutEnergieCourante]);
+                            $scope.coutEnergieCourante = 0;
+                            $scope.diffEnergieCourante = 0;
+                            console.log("TotalEnergie = ", $scope.energies);
+                        }
                     }
 
 
@@ -266,46 +266,45 @@ angular	.module("appOptimisation", [])
                     $scope.plages = data;
                     $scope.coutEnergieCourante = 0;
                     $scope.diffEnergieCourante = 0;
-                    for(i=0;i<data.length;i++)
-                    {
-                        console.log("PlageCourante("+i+")", $scope.plages[i]);
-                        $scope.heureDebut = $scope.plages[i].HeureDebut;
-                        $scope.heureFin = $scope.plages[i].HeureFin;
-                        $scope.tarif = $scope.plages[i].Tarif;
-                        var listeJours = $scope.ConvertirJourEnChiffre("WeekEnd");
-                        for (d=0;d<listeJours.length;d++)
-                        {
-                            $scope.jour = listeJours[d];
-                            $.ajax({
-                                type: "GET",
-                                url: "http://localhost/projetERDF/api.php/SelectDiffEnergieByDayAndHour?heureDebut="+$scope.heureDebut+"&heureFin="+$scope.heureFin+"&jour="+$scope.jour+"&dateDebut="+$scope.dateDebut+"&dateFin="+$scope.dateFin,
-                                cache: false,
-                                async: false,
-                                dataType: 'json',
-                                success: function (data2) {
-                                    console.log("dataEnergiesConsommees = ", data2);
+                    for(i=0;i<data.length;i++) {
+                        if ($scope.plages[i] != null) {
+                            console.log("PlageCourante(" + i + ")", $scope.plages[i]);
+                            $scope.heureDebut = $scope.plages[i].HeureDebut;
+                            $scope.heureFin = $scope.plages[i].HeureFin;
+                            $scope.tarif = $scope.plages[i].Tarif;
+                            var listeJours = $scope.ConvertirJourEnChiffre("WeekEnd");
+                            for (d = 0; d < listeJours.length; d++) {
 
-                                    for (j=0; j<data2.length ; j++) {
-                                        if (data2[j] !=null)
-                                        {
-                                            $scope.coutEnergieCourante +=  parseInt(data2[j].EnergieConsommee)* parseFloat($scope.tarif);
-                                            $scope.coutEnergieConsommee +=  parseInt(data2[j].EnergieConsommee)* parseFloat($scope.tarif);
-                                            $scope.diffEnergieCourante += parseInt(data2[j].EnergieConsommee);
-                                            $scope.diffEnergie += parseInt(data2[j].EnergieConsommee);
+                                $scope.jour = listeJours[d];
+                                $.ajax({
+                                    type: "GET",
+                                    url: "http://localhost/projetERDF/api.php/SelectDiffEnergieByDayAndHour?heureDebut=" + $scope.heureDebut + "&heureFin=" + $scope.heureFin + "&jour=" + $scope.jour + "&dateDebut=" + $scope.dateDebut + "&dateFin=" + $scope.dateFin,
+                                    cache: false,
+                                    async: false,
+                                    dataType: 'json',
+                                    success: function (data2) {
+                                        console.log("dataEnergiesConsommees = ", data2);
+
+                                        for (j = 0; j < data2.length; j++) {
+                                            if (data2[j] != null) {
+                                                $scope.coutEnergieCourante += parseInt(data2[j].EnergieConsommee) * parseFloat($scope.tarif);
+                                                $scope.coutEnergieConsommee += parseInt(data2[j].EnergieConsommee) * parseFloat($scope.tarif);
+                                                $scope.diffEnergieCourante += parseInt(data2[j].EnergieConsommee);
+                                                $scope.diffEnergie += parseInt(data2[j].EnergieConsommee);
+                                            }
                                         }
+                                        console.log("diffEnergie = ", $scope.diffEnergie);
+                                        console.log("coutEnergieConsommee = ", $scope.coutEnergieConsommee);
                                     }
-                                    console.log("diffEnergie = ", $scope.diffEnergie);
-                                    console.log("coutEnergieConsommee = ", $scope.coutEnergieConsommee);
-                                }
-                            });
+                                });
+                            }
+                            $scope.coutEnergieCourante = Math.round($scope.coutEnergieCourante * 100) / 100;
+                            $scope.energies.push([$scope.heureDebut, $scope.heureFin, "WeekEnd", $scope.tarif, $scope.diffEnergieCourante, $scope.coutEnergieCourante]);
+                            $scope.coutEnergieCourante = 0;
+                            $scope.diffEnergieCourante = 0;
+                            console.log("TotalEnergie = ", $scope.energies);
                         }
-                        $scope.coutEnergieCourante = Math.round($scope.coutEnergieCourante*100)/100;
-                        $scope.energies.push([$scope.heureDebut,$scope.heureFin,"WeekEnd",$scope.tarif,$scope.diffEnergieCourante,$scope.coutEnergieCourante]);
-                        $scope.coutEnergieCourante = 0;
-                        $scope.diffEnergieCourante = 0;
-                        console.log("TotalEnergie = ",$scope.energies);
                     }
-
 
                 }
             });
@@ -320,46 +319,44 @@ angular	.module("appOptimisation", [])
                     $scope.plages = data;
                     $scope.coutEnergieCourante = 0;
                     $scope.diffEnergieCourante = 0;
-                    for(i=0;i<data.length;i++)
-                    {
-                        console.log("PlageCourante("+i+")", $scope.plages[i]);
-                        $scope.heureDebut = $scope.plages[i].HeureDebut;
-                        $scope.heureFin = $scope.plages[i].HeureFin;
-                        $scope.tarif = $scope.plages[i].Tarif;
-                        var listeJours = $scope.ConvertirJourEnChiffre("Tous les jours");
-                        for (d=0;d<listeJours.length;d++)
-                        {
-                            $scope.jour = listeJours[d];
-                            $.ajax({
-                                type: "GET",
-                                url: "http://localhost/projetERDF/api.php/SelectDiffEnergieByDayAndHour?heureDebut="+$scope.heureDebut+"&heureFin="+$scope.heureFin+"&jour="+$scope.jour+"&dateDebut="+$scope.dateDebut+"&dateFin="+$scope.dateFin,
-                                cache: false,
-                                async: false,
-                                dataType: 'json',
-                                success: function (data2) {
-                                    console.log("dataEnergiesConsommees = ", data2);
+                    for(i=0;i<data.length;i++) {
+                        if ($scope.plages[i] != null) {
+                            console.log("PlageCourante(" + i + ")", $scope.plages[i]);
+                            $scope.heureDebut = $scope.plages[i].HeureDebut;
+                            $scope.heureFin = $scope.plages[i].HeureFin;
+                            $scope.tarif = $scope.plages[i].Tarif;
+                            var listeJours = $scope.ConvertirJourEnChiffre("Tous les jours");
+                            for (d = 0; d < listeJours.length; d++) {
+                                $scope.jour = listeJours[d];
+                                $.ajax({
+                                    type: "GET",
+                                    url: "http://localhost/projetERDF/api.php/SelectDiffEnergieByDayAndHour?heureDebut=" + $scope.heureDebut + "&heureFin=" + $scope.heureFin + "&jour=" + $scope.jour + "&dateDebut=" + $scope.dateDebut + "&dateFin=" + $scope.dateFin,
+                                    cache: false,
+                                    async: false,
+                                    dataType: 'json',
+                                    success: function (data2) {
+                                        console.log("dataEnergiesConsommees = ", data2);
 
-                                    for (j=0; j<data2.length ; j++) {
-                                        if (data2[j] !=null)
-                                        {
-                                            $scope.coutEnergieCourante +=  parseInt(data2[j].EnergieConsommee)* parseFloat($scope.tarif);
-                                            $scope.coutEnergieConsommee +=  parseInt(data2[j].EnergieConsommee)* parseFloat($scope.tarif);
-                                            $scope.diffEnergieCourante += parseInt(data2[j].EnergieConsommee);
-                                            $scope.diffEnergie += parseInt(data2[j].EnergieConsommee);
+                                        for (j = 0; j < data2.length; j++) {
+                                            if (data2[j] != null) {
+                                                $scope.coutEnergieCourante += parseInt(data2[j].EnergieConsommee) * parseFloat($scope.tarif);
+                                                $scope.coutEnergieConsommee += parseInt(data2[j].EnergieConsommee) * parseFloat($scope.tarif);
+                                                $scope.diffEnergieCourante += parseInt(data2[j].EnergieConsommee);
+                                                $scope.diffEnergie += parseInt(data2[j].EnergieConsommee);
+                                            }
                                         }
+                                        console.log("diffEnergie = ", $scope.diffEnergie);
+                                        console.log("coutEnergieConsommee = ", $scope.coutEnergieConsommee);
                                     }
-                                    console.log("diffEnergie = ", $scope.diffEnergie);
-                                    console.log("coutEnergieConsommee = ", $scope.coutEnergieConsommee);
-                                }
-                            });
+                                });
+                            }
+                            $scope.coutEnergieCourante = Math.round($scope.coutEnergieCourante * 100) / 100;
+                            $scope.energies.push([$scope.heureDebut, $scope.heureFin, "Tous les jours", $scope.tarif, $scope.diffEnergieCourante, $scope.coutEnergieCourante]);
+                            $scope.coutEnergieCourante = 0;
+                            $scope.diffEnergieCourante = 0;
+                            console.log("TotalEnergie = ", $scope.energies);
                         }
-                        $scope.coutEnergieCourante = Math.round($scope.coutEnergieCourante*100)/100;
-                        $scope.energies.push([$scope.heureDebut,$scope.heureFin,"Tous les jours",$scope.tarif,$scope.diffEnergieCourante,$scope.coutEnergieCourante]);
-                        $scope.coutEnergieCourante = 0;
-                        $scope.diffEnergieCourante = 0;
-                        console.log("TotalEnergie = ",$scope.energies);
                     }
-
 
                 }
             });
