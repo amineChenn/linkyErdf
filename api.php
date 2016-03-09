@@ -130,30 +130,30 @@ switch ($method) {
 		case 'MaxPApparente':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];
-			$sql = "select max(Papparente) MaxPapparente from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
+			$sql = "select max(Papparente) MaxPapparente from `Values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
 		case 'NbPApparenteDepasse':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];
 			$pApparenteMax = $_GET['pApparenteMax'];
-			$sql = "select count(Papparente) NbPApparenteDepasse from `values`  WHERE Date >= '$date1' AND Date <='$date2' AND Papparente> '$pApparenteMax'";break;
+			$sql = "select count(Papparente) NbPApparenteDepasse from `Values`  WHERE Date >= '$date1' AND Date <='$date2' AND Papparente> '$pApparenteMax'";break;
 		case 'SelectAllPApparenteDepasse':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];
 			$pApparenteMax = $_GET['pApparenteMax'];
-			$sql = "select Date,Papparente  from `values`  WHERE Date >= '$date1' AND Date <='$date2' AND Papparente> '$pApparenteMax'";break;
+			$sql = "select Date,Papparente  from `Values`  WHERE Date >= '$date1' AND Date <='$date2' AND Papparente> '$pApparenteMax'";break;
 		case 'MoyPApparente':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];
-			$sql = "select avg(Papparente) MoyPApparente from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
+			$sql = "select avg(Papparente) MoyPApparente from `Values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
 		case 'SelectDiffEnergieByDayAndHour':
 			$jour = $_GET['jour'];
 			$heureDebut = $_GET['heureDebut'];
 			$heureFin = $_GET['heureFin'];
 			$dateDebut = $_GET['dateDebut'];
 			$dateFin = $_GET['dateFin'];
-			$sql = "select  Max(Energie)-Min(Energie)  EnergieConsommee FROM `values`   WHERE  TIME(Date) >= '$heureDebut' AND TIME(Date) <= '$heureFin' AND Date >= '$dateDebut' AND Date <='$dateFin' AND   WEEKDAY(Date) ='$jour' group by YEARWEEK(Date) ";break;
+			$sql = "select  Max(Energie)-Min(Energie)  EnergieConsommee FROM `Values`   WHERE  TIME(Date) >= '$heureDebut' AND TIME(Date) <= '$heureFin' AND Date >= '$dateDebut' AND Date <='$dateFin' AND   WEEKDAY(Date) ='$jour' group by YEARWEEK(Date) ";break;
 		case 'SelectYears':
-			$sql = "select distinct Year(`Date`) Annee FROM `values`";break;
+			$sql = "select distinct Year(`Date`) Annee FROM `Values`";break;
 		// TIME(Date) >= '$heureDebut' AND TIME(Date) <= '$heureFin' AND Date >= '$dateDebut' AND Date <='$dateFin' AND
 		case 'SelectAllTarifsOrderBy':
 			$sql = "select * FROM `tarifs` order BY `Jour`,`HeureDebut`";break;
@@ -183,27 +183,27 @@ switch ($method) {
 
 		case 'SelectMonths':
 			$year= $_GET['Annee'];
-			$sql = "select distinct MONTH(`Date`) as Mois FROM `values` where Year(`Date`)= ".$year;break;
+			$sql = "select distinct MONTH(`Date`) as Mois FROM `Values` where Year(`Date`)= ".$year;break;
 		case 'SelectSumPapparente':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];
-			$sql = "select max(Papparente) SumPapparente from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
+			$sql = "select max(Papparente) SumPapparente from `Values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
 		case 'SelectSumPreactive':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];
-			$sql = "select max(Preactive) SumPreactive from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
+			$sql = "select max(Preactive) SumPreactive from `Values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
 		case 'SelectSumIntensite':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];
-			$sql = "select max(Intensite) SumIntensite from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
+			$sql = "select max(Intensite) SumIntensite from `Values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
 		case 'SelectSumTension':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];
-			$sql = "select max(Tension) SumTension from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
+			$sql = "select max(Tension) SumTension from `Values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
 		case 'EnergieConsommee':
 			$date1 = $_GET['date1'];
 			$date2 = $_GET['date2'];
-			$sql = "select max(Energie)-min(Energie) EnergieConsommee from `values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
+			$sql = "select max(Energie)-min(Energie) EnergieConsommee from `Values`  WHERE Date >= '$date1' AND Date <='$date2'";break;
 
 	}
 	break;
