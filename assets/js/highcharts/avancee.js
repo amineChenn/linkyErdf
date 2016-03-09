@@ -62,7 +62,6 @@ $(function () {
                     courbeActiveAdvanced (data);
                 } else {
                     //TODO message d'erreur
-                    console.log("Erreur : impossible de récupérer Papparente ou Date");
                 }
             },
             error: function() {
@@ -182,8 +181,6 @@ function courbeActiveAdvanced (dataBase) {
                     setInterval(function () {
                         var liveData =  JSON.parse(getLiveData());
                         if (liveData[0].Pactive !== null) {
-                            console.log("date = " , liveData[0].Date);
-                            console.log("pactive = " , liveData[0].Pactive);
                             var x = new Date(liveData[0].Date).getTime(), // current time
                                 y = parseInt(liveData[0].Pactive);
                             series.addPoint([x, y], true, true);
@@ -404,7 +401,6 @@ function getRelativeAdvancedPeriod() {
         $('#dateEndAvancee').datepicker({
             startDate: $('#dateStartAvancee').datepicker("getDate")
         });
-        console.log("la date de fin doit etre avant la date de debut");
     }
     else {
         //TODO query
@@ -420,8 +416,6 @@ function getRelativeAdvancedPeriod() {
             var curr_year = dateEnd.getFullYear();
             dateEnd = curr_year + "-" + curr_month + "-" + curr_date;
 
-            console.log("DATE START = ", dateStart);
-            console.log("DATE END = ", dateEnd);
 
             $.ajax({
                 type: "GET",
@@ -430,7 +424,6 @@ function getRelativeAdvancedPeriod() {
                 dataType: 'json',
                 success: function (data) {
                     if (data[0] !== null) {
-                        console.log("Data = ",data);
                         courbeRelativeAdvancedPeriod(data);
                         courbeActiveAdvancedPeriod (data);
                     } else {

@@ -2,6 +2,18 @@
  * Created by Amine on 01/02/2016.
  */
 
+var url;
+var port;
+var projectDirectory;
+var api;
+
+$.getJSON("conf.json", function (data) {
+    url = data["url"];
+    port = data["port"];
+    projectDirectory = data["projectDirectory"];
+    api = data["api"];
+});
+
 angular	.module("appOptimisation", [])
     .controller	( "optimisationController", ['$scope', '$interval', '$timeout', '$http'
     , function($scope,$interval,$timeout,$http,$httpProvider)
@@ -23,18 +35,15 @@ angular	.module("appOptimisation", [])
             $scope.pApparenteSouscriteAnalyse = $scope.pApparenteSouscrite;
             $scope.date = $('#groupDebutPuissance').datepicker("getDate");
             $scope.dateDebut = $scope.date.getFullYear() +"-"+($scope.date.getMonth()+1) +"-" + $scope.date.getDate();
-            console.log("date1 = ", $scope.dateDebut);
             $scope.date = $('#groupFinPuissance').datepicker("getDate");
             $scope.dateFin = $scope.date.getFullYear() +"-"+($scope.date.getMonth()+1) +"-" + $scope.date.getDate();
-            console.log("date2 = ", $scope.dateFin);
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projetERDF/api.php/MaxPApparente?date1="+$scope.dateDebut+"&date2="+$scope.dateFin,
+                url: url + ":" + port + "/" + projectDirectory + "/" + api +"/MaxPApparente?date1="+$scope.dateDebut+"&date2="+$scope.dateFin,
                 cache: false,
                 async: false,
                 dataType: 'json',
                 success: function (data) {
-                    console.log("data = ", data);
 
                     if (data.length !== 0) {
                         $scope.PApparenteMax = Math.round(data[0].MaxPapparente*10)/10
@@ -42,59 +51,52 @@ angular	.module("appOptimisation", [])
                     } else {
                         $scope.PApparenteMax = 0;
                     }
-                    console.log("PApparenteMax = ", $scope.PApparenteMax);
                 }
             });
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projetERDF/api.php/MoyPApparente?date1="+$scope.dateDebut+"&date2="+$scope.dateFin,
+                url: url + ":" + port + "/" + projectDirectory + "/" + api + "/MoyPApparente?date1="+$scope.dateDebut+"&date2="+$scope.dateFin,
                 cache: false,
                 async: false,
                 dataType: 'json',
                 success: function (data) {
 
-                    console.log("data = ", data);
 
                     if (data.length !== 0) {
                         $scope.PApparenteMoy = Math.round(data[0].MoyPApparente*10)/10
                     } else {
                         $scope.PApparenteMoy = 0;
                     }
-                    console.log("PApparenteMoy = ", $scope.PApparenteMoy);
                 }
             });
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projetERDF/api.php/NbPApparenteDepasse?date1="+$scope.dateDebut+"&date2="+$scope.dateFin+"&pApparenteMax="+$scope.pApparenteSouscrite,
+                url: url + ":" + port + "/" + projectDirectory + "/" + api + "/NbPApparenteDepasse?date1="+$scope.dateDebut+"&date2="+$scope.dateFin+"&pApparenteMax="+$scope.pApparenteSouscrite,
                 cache: false,
                 async: false,
                 dataType: 'json',
                 success: function (data) {
-                    console.log("data = ", data);
 
                     if (data.length !== 0) {
                         $scope.NbPApparenteDepasse = data[0].NbPApparenteDepasse
                     } else {
                         $scope.NbPApparenteDepasse = 0;
                     }
-                    console.log("NbPApparenteDepasse = ", $scope.NbPApparenteDepasse);
                 }
             });
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projetERDF/api.php/SelectAllPApparenteDepasse?date1="+$scope.dateDebut+"&date2="+$scope.dateFin+"&pApparenteMax="+$scope.pApparenteSouscrite,
+                url: url + ":" + port + "/" + projectDirectory + "/" + api + "/SelectAllPApparenteDepasse?date1="+$scope.dateDebut+"&date2="+$scope.dateFin+"&pApparenteMax="+$scope.pApparenteSouscrite,
                 cache: false,
                 async: false,
                 dataType: 'json',
                 success: function (data) {
-                    console.log("data = ", data);
 
                     if (data.length !== 0) {
                         $scope.PApparenteDepasse = data
                     } else {
                         $scope.PApparenteDepasse = null;
                     }
-                    console.log("PApparenteDepasse = ", $scope.PApparenteDepasse);
                 }
             });
 
@@ -107,19 +109,17 @@ angular	.module("appOptimisation", [])
 
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projetERDF/api.php/SelectAttribut/optioncompteur?attribut=PApparenteSouscrite",
+                url: url + ":" + port + "/" + projectDirectory + "/" + api + "/SelectAttribut/optioncompteur?attribut=PApparenteSouscrite",
                 cache: false,
                 async: false,
                 dataType: 'json',
                 success: function (data) {
-                    console.log("data = ", data);
 
                     if (data.length !== 0) {
                         $scope.pApparenteSouscrite = data[0].PApparenteSouscrite
                     } else {
                         $scope.pApparenteSouscrite = null;
                     }
-                    console.log("PApparenteDepasse = ", $scope.pApparenteSouscrite);
                 }
             });
 
@@ -134,7 +134,6 @@ angular	.module("appOptimisation", [])
         }
         $scope.CalculPapparenteOPtimale = function (){
             $scope.PApparenteOptimal = Math.floor($scope.PApparenteMax) +1;
-            console.log("PApparenteOptimal = ", $scope.PApparenteOptimal);
 
         }
 
@@ -150,32 +149,27 @@ angular	.module("appOptimisation", [])
             $scope.dateFin = $scope.date.getFullYear() +"-"+($scope.date.getMonth()+1) +"-" + $scope.date.getDate();
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projetERDF/api.php/SelectTarifJour",
+                url: url + ":" + port + "/" + projectDirectory + "/" + api + "/SelectTarifJour",
                 cache: false,
                 async: false,
                 dataType: 'json',
                 success: function (data) {
-                    console.log("data tarifs = ", data);
                     $scope.plages = data;
                     $scope.coutEnergieCourante = 0;
                     $scope.diffEnergieCourante = 0;
                     for(i=0;i<data.length;i++) {
                         if ($scope.plages[i] != null) {
-                            console.log("PlageCourante(" + i + ")", $scope.plages[i]);
                             $scope.heureDebut = $scope.plages[i].HeureDebut;
                             $scope.heureFin = $scope.plages[i].HeureFin;
                             $scope.jour = $scope.plages[i].Jour;
                             $scope.tarif = $scope.plages[i].Tarif;
-                            console.log("HeureD = ", $scope.heureDebut)
-                            console.log("HeureF = ", $scope.heureFin)
                             $.ajax({
                                 type: "GET",
-                                url: "http://localhost/projetERDF/api.php/SelectDiffEnergieByDayAndHour?heureDebut=" + $scope.heureDebut + "&heureFin=" + $scope.heureFin + "&jour=" + $scope.jour + "&dateDebut=" + $scope.dateDebut + "&dateFin=" + $scope.dateFin,
+                                url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectDiffEnergieByDayAndHour?heureDebut=" + $scope.heureDebut + "&heureFin=" + $scope.heureFin + "&jour=" + $scope.jour + "&dateDebut=" + $scope.dateDebut + "&dateFin=" + $scope.dateFin,
                                 cache: false,
                                 async: false,
                                 dataType: 'json',
                                 success: function (data2) {
-                                    console.log("dataEnergiesConsommees = ", data2);
 
                                     for (j = 0; j < data2.length; j++) {
                                         if (data2[j] != null) {
@@ -185,15 +179,12 @@ angular	.module("appOptimisation", [])
                                             $scope.diffEnergie += parseInt(data2[j].EnergieConsommee);
                                         }
                                     }
-                                    console.log("diffEnergie = ", $scope.diffEnergie);
-                                    console.log("coutEnergieConsommee = ", $scope.coutEnergieConsommee);
                                 }
                             });
                             $scope.coutEnergieCourante = Math.round($scope.coutEnergieCourante * 100) / 100;
                             $scope.energies.push([$scope.heureDebut, $scope.heureFin, $scope.ConvertirChiffreEnJour($scope.jour), $scope.tarif, $scope.diffEnergieCourante, $scope.coutEnergieCourante]);
                             $scope.coutEnergieCourante = 0;
                             $scope.diffEnergieCourante = 0;
-                            console.log("TotalEnergie = ", $scope.energies);
                         }
                     }
 
@@ -202,18 +193,16 @@ angular	.module("appOptimisation", [])
             });
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projetERDF/api.php/SelectTarifSemaine",
+                url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectTarifSemaine",
                 cache: false,
                 async: false,
                 dataType: 'json',
                 success: function (data) {
-                    console.log("data tarifs = ", data);
                     $scope.plages = data;
                     $scope.coutEnergieCourante = 0;
                     $scope.diffEnergieCourante = 0;
                     for(i=0;i<data.length;i++)
                     {
-                        console.log("PlageCourante("+i+")", $scope.plages[i]);
                         $scope.heureDebut = $scope.plages[i].HeureDebut;
                         $scope.heureFin = $scope.plages[i].HeureFin;
 
@@ -224,12 +213,11 @@ angular	.module("appOptimisation", [])
                             $scope.jour = listeJours[d];
                             $.ajax({
                                 type: "GET",
-                                url: "http://localhost/projetERDF/api.php/SelectDiffEnergieByDayAndHour?heureDebut="+$scope.heureDebut+"&heureFin="+$scope.heureFin+"&jour="+$scope.jour+"&dateDebut="+$scope.dateDebut+"&dateFin="+$scope.dateFin,
+                                url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectDiffEnergieByDayAndHour?heureDebut="+$scope.heureDebut+"&heureFin="+$scope.heureFin+"&jour="+$scope.jour+"&dateDebut="+$scope.dateDebut+"&dateFin="+$scope.dateFin,
                                 cache: false,
                                 async: false,
                                 dataType: 'json',
                                 success: function (data2) {
-                                    console.log("dataEnergiesConsommees = ", data2);
 
                                     for (j=0; j<data2.length ; j++) {
                                         if (data2[j] !=null)
@@ -240,8 +228,6 @@ angular	.module("appOptimisation", [])
                                             $scope.diffEnergie += parseInt(data2[j].EnergieConsommee);
                                         }
                                     }
-                                    console.log("diffEnergie = ", $scope.diffEnergie);
-                                    console.log("coutEnergieConsommee = ", $scope.coutEnergieConsommee);
                                 }
                             });
                         }
@@ -249,7 +235,6 @@ angular	.module("appOptimisation", [])
                         $scope.energies.push([$scope.heureDebut,$scope.heureFin,"Semaine",$scope.tarif,$scope.diffEnergieCourante,$scope.coutEnergieCourante]);
                         $scope.coutEnergieCourante = 0;
                         $scope.diffEnergieCourante = 0;
-                        console.log("TotalEnergie = ",$scope.energies);
                     }
 
 
@@ -257,18 +242,16 @@ angular	.module("appOptimisation", [])
             });
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projetERDF/api.php/SelectTarifWeekEnd",
+                url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectTarifWeekEnd",
                 cache: false,
                 async: false,
                 dataType: 'json',
                 success: function (data) {
-                    console.log("data tarifs = ", data);
                     $scope.plages = data;
                     $scope.coutEnergieCourante = 0;
                     $scope.diffEnergieCourante = 0;
                     for(i=0;i<data.length;i++) {
                         if ($scope.plages[i] != null) {
-                            console.log("PlageCourante(" + i + ")", $scope.plages[i]);
                             $scope.heureDebut = $scope.plages[i].HeureDebut;
                             $scope.heureFin = $scope.plages[i].HeureFin;
                             $scope.tarif = $scope.plages[i].Tarif;
@@ -278,12 +261,11 @@ angular	.module("appOptimisation", [])
                                 $scope.jour = listeJours[d];
                                 $.ajax({
                                     type: "GET",
-                                    url: "http://localhost/projetERDF/api.php/SelectDiffEnergieByDayAndHour?heureDebut=" + $scope.heureDebut + "&heureFin=" + $scope.heureFin + "&jour=" + $scope.jour + "&dateDebut=" + $scope.dateDebut + "&dateFin=" + $scope.dateFin,
+                                    url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectDiffEnergieByDayAndHour?heureDebut=" + $scope.heureDebut + "&heureFin=" + $scope.heureFin + "&jour=" + $scope.jour + "&dateDebut=" + $scope.dateDebut + "&dateFin=" + $scope.dateFin,
                                     cache: false,
                                     async: false,
                                     dataType: 'json',
                                     success: function (data2) {
-                                        console.log("dataEnergiesConsommees = ", data2);
 
                                         for (j = 0; j < data2.length; j++) {
                                             if (data2[j] != null) {
@@ -293,8 +275,6 @@ angular	.module("appOptimisation", [])
                                                 $scope.diffEnergie += parseInt(data2[j].EnergieConsommee);
                                             }
                                         }
-                                        console.log("diffEnergie = ", $scope.diffEnergie);
-                                        console.log("coutEnergieConsommee = ", $scope.coutEnergieConsommee);
                                     }
                                 });
                             }
@@ -302,7 +282,6 @@ angular	.module("appOptimisation", [])
                             $scope.energies.push([$scope.heureDebut, $scope.heureFin, "WeekEnd", $scope.tarif, $scope.diffEnergieCourante, $scope.coutEnergieCourante]);
                             $scope.coutEnergieCourante = 0;
                             $scope.diffEnergieCourante = 0;
-                            console.log("TotalEnergie = ", $scope.energies);
                         }
                     }
 
@@ -310,18 +289,16 @@ angular	.module("appOptimisation", [])
             });
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projetERDF/api.php/SelectTarifSemaineEntiere",
+                url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectTarifSemaineEntiere",
                 cache: false,
                 async: false,
                 dataType: 'json',
                 success: function (data) {
-                    console.log("data tarifs = ", data);
                     $scope.plages = data;
                     $scope.coutEnergieCourante = 0;
                     $scope.diffEnergieCourante = 0;
                     for(i=0;i<data.length;i++) {
                         if ($scope.plages[i] != null) {
-                            console.log("PlageCourante(" + i + ")", $scope.plages[i]);
                             $scope.heureDebut = $scope.plages[i].HeureDebut;
                             $scope.heureFin = $scope.plages[i].HeureFin;
                             $scope.tarif = $scope.plages[i].Tarif;
@@ -330,12 +307,11 @@ angular	.module("appOptimisation", [])
                                 $scope.jour = listeJours[d];
                                 $.ajax({
                                     type: "GET",
-                                    url: "http://localhost/projetERDF/api.php/SelectDiffEnergieByDayAndHour?heureDebut=" + $scope.heureDebut + "&heureFin=" + $scope.heureFin + "&jour=" + $scope.jour + "&dateDebut=" + $scope.dateDebut + "&dateFin=" + $scope.dateFin,
+                                    url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectDiffEnergieByDayAndHour?heureDebut=" + $scope.heureDebut + "&heureFin=" + $scope.heureFin + "&jour=" + $scope.jour + "&dateDebut=" + $scope.dateDebut + "&dateFin=" + $scope.dateFin,
                                     cache: false,
                                     async: false,
                                     dataType: 'json',
                                     success: function (data2) {
-                                        console.log("dataEnergiesConsommees = ", data2);
 
                                         for (j = 0; j < data2.length; j++) {
                                             if (data2[j] != null) {
@@ -345,8 +321,6 @@ angular	.module("appOptimisation", [])
                                                 $scope.diffEnergie += parseInt(data2[j].EnergieConsommee);
                                             }
                                         }
-                                        console.log("diffEnergie = ", $scope.diffEnergie);
-                                        console.log("coutEnergieConsommee = ", $scope.coutEnergieConsommee);
                                     }
                                 });
                             }
@@ -354,7 +328,6 @@ angular	.module("appOptimisation", [])
                             $scope.energies.push([$scope.heureDebut, $scope.heureFin, "Tous les jours", $scope.tarif, $scope.diffEnergieCourante, $scope.coutEnergieCourante]);
                             $scope.coutEnergieCourante = 0;
                             $scope.diffEnergieCourante = 0;
-                            console.log("TotalEnergie = ", $scope.energies);
                         }
                     }
 
@@ -446,12 +419,11 @@ angular	.module("appOptimisation", [])
                         HeureFinJ2 = $scope.HeureFinPlage;
                         $.ajax({
                             type: "GET",
-                            url: "http://localhost/projetERDF/api.php/IsTarifExist?heureDebut="+HeureDebutJ1+"&heureFin="+HeureFinJ2+"&jour="+jour2,
+                            url: url + ":" + port + "/" + projectDirectory + "/" + api +"/IsTarifExist?heureDebut="+HeureDebutJ1+"&heureFin="+HeureFinJ2+"&jour="+jour2,
                             cache: false,
                             async: false,
                             dataType: 'json',
                             success: function (data) {
-                                console.log("Plage existante : ",data)
                                 if (data!= null && data.length >0 && data[0] != null)
                                 {
                                     testPlageExistante &= (parseInt(data[0].nbPlages)==0);
@@ -461,12 +433,11 @@ angular	.module("appOptimisation", [])
                         });
                         $.ajax({
                             type: "GET",
-                            url: "http://localhost/projetERDF/api.php/IsTarifExist?heureDebut="+HeureDebutJ2+"&heureFin="+HeureFinJ2+"&jour="+jour2,
+                            url: url + ":" + port + "/" + projectDirectory + "/" + api +"/IsTarifExist?heureDebut="+HeureDebutJ2+"&heureFin="+HeureFinJ2+"&jour="+jour2,
                             cache: false,
                             async: false,
                             dataType: 'json',
                             success: function (data) {
-                                console.log("Plage existante : ",data)
                                 if (data!= null && data.length >0 && data[0] != null)
                                 {
                                     testPlageExistante &= (parseInt(data[0].nbPlages)==0);
@@ -481,12 +452,11 @@ angular	.module("appOptimisation", [])
                         $scope.jour = listeJours[i];
                         $.ajax({
                             type: "GET",
-                            url: "http://localhost/projetERDF/api.php/IsTarifExist?heureDebut="+$scope.HeureDebutPlage+"&heureFin="+$scope.HeureFinPlage+"&jour="+$scope.jour,
+                            url: url + ":" + port + "/" + projectDirectory + "/" + api +"/IsTarifExist?heureDebut="+$scope.HeureDebutPlage+"&heureFin="+$scope.HeureFinPlage+"&jour="+$scope.jour,
                             cache: false,
                             async: false,
                             dataType: 'json',
                             success: function (data) {
-                                console.log("Plage existante : ",data)
                                 if (data!= null && data.length >0 && data[0] != null)
                                 {
                                     testPlageExistante &= (parseInt(data[0].nbPlages)==0);
@@ -522,19 +492,17 @@ angular	.module("appOptimisation", [])
                         $.ajax({
                             type: "POST",
                             async: false,
-                            url: "http://localhost/projetERDF/api.php/insertTarif",
+                            url: url + ":" + port + "/" + projectDirectory + "/" + api +"/insertTarif",
                             data: "heureDebut="+HeureDebutJ1+"&heureFin="+HeureFinJ1+"&jour="+jour1+"&tarif="+$scope.TarifPlage,
                             success: function (data) {
-                                console.log("data = ", data);
                             }
                         });
                         $.ajax({
                             type: "POST",
                             async: false,
-                            url: "http://localhost/projetERDF/api.php/insertTarif",
+                            url: url + ":" + port + "/" + projectDirectory + "/" + api +"/insertTarif",
                             data: "heureDebut="+HeureDebutJ2+"&heureFin="+HeureFinJ2+"&jour="+jour2+"&tarif="+$scope.TarifPlage,
                             success: function (data) {
-                                console.log("data = ", data);
                             }
                         });
 
@@ -546,10 +514,9 @@ angular	.module("appOptimisation", [])
                         $.ajax({
                             type: "POST",
                             async: false,
-                            url: "http://localhost/projetERDF/api.php/insertTarif",
+                            url: url + ":" + port + "/" + projectDirectory + "/" + api +"/insertTarif",
                             data: "heureDebut="+$scope.HeureDebutPlage+"&heureFin="+$scope.HeureFinPlage+"&jour="+$scope.jour+"&tarif="+$scope.TarifPlage,
                             success: function (data) {
-                                console.log("data = ", data);
                             }
                         });
                     }
@@ -581,7 +548,7 @@ angular	.module("appOptimisation", [])
             $scope.listePlagesSemaineEntiere = null;
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projetERDF/api.php/SelectTarifJour",
+                url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectTarifJour",
                 cache: false,
                 async: false,
                 dataType: 'json',
@@ -589,13 +556,12 @@ angular	.module("appOptimisation", [])
                     if (data!= null && data.length >0 && data[0] != null)
                     {
                         $scope.listePlagesJour = data;
-                        console.log("listePlagesJour",data)
                     }
                 }
             });
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projetERDF/api.php/SelectTarifSemaine",
+                url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectTarifSemaine",
                 cache: false,
                 async: false,
                 dataType: 'json',
@@ -603,13 +569,12 @@ angular	.module("appOptimisation", [])
                     if (data!= null && data.length >0 && data[0] != null)
                     {
                         $scope.listePlagesSemaine = data;
-                        console.log("listePlagesSemaine",data)
                     }
                 }
             });
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projetERDF/api.php/SelectTarifWeekEnd",
+                url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectTarifWeekEnd",
                 cache: false,
                 async: false,
                 dataType: 'json',
@@ -617,13 +582,12 @@ angular	.module("appOptimisation", [])
                     if (data!= null && data.length >0 && data[0] != null)
                     {
                         $scope.listePlagesWeekEnd = data;
-                        console.log("listePlagesWeekEnd",data)
                     }
                 }
             });
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projetERDF/api.php/SelectTarifSemaineEntiere",
+                url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectTarifSemaineEntiere",
                 cache: false,
                 async: false,
                 dataType: 'json',
@@ -631,7 +595,6 @@ angular	.module("appOptimisation", [])
                     if (data!= null && data.length >0 && data[0] != null)
                     {
                         $scope.listePlagesSemaineEntiere = data;
-                        console.log("listePlagesSemaineEntiere",data)
                     }
                 }
             });
@@ -722,11 +685,9 @@ angular	.module("appOptimisation", [])
             {
                 listeJours = $scope.ConvertirJourEnChiffre(type);
             }
-            console.log("ListeJours",listeJours)
             //$scope.Donnees[1] = "heureFin="+$scope.DateFinConso;
             //$scope.Donnees[2] = "jour="+$scope.jour;
             //$scope.Donnees[3] = "tarif="+$scope.tarif;
-            console.log("Liste jours : ",listeJours)
             for (i=0;i<listeJours.length;i++)
             {
                 $scope.jour = listeJours[i];
@@ -734,10 +695,9 @@ angular	.module("appOptimisation", [])
                     type: "POST",
                     cache : false,
                     async: false,
-                    url: "http://localhost/projetERDF/api.php/deleteTarif",
+                    url: url + ":" + port + "/" + projectDirectory + "/" + api +"/deleteTarif",
                     data: "heureDebut="+plage.HeureDebut+"&heureFin="+plage.HeureFin+"&jour="+$scope.jour,
                     success: function (data) {
-                        console.log("data = ", data);
                     }
                 });
             }

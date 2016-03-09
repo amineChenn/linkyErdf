@@ -1,7 +1,15 @@
 
 
-$(function () {
+var url;
+var port;
+var projectDirectory;
+var api;
 
+$.getJSON("conf.json", function (data) {
+    url = data["url"];
+    port = data["port"];
+    projectDirectory = data["projectDirectory"];
+    api = data["api"];
     var yesterday = new Date();
     yesterday.setDate(yesterday.getDate() -1 );
     $('.dateEndAvanceePeriod').datepicker("setDate", new Date());
@@ -16,13 +24,12 @@ $(function () {
         $('.datepicker').hide();
 
     });
-
 });
 
 function getAjax (dateFin,dateDebut) {
     return $.ajax({
         type: "GET",
-        url: "http://localhost/projetERDF/api.php/SelectSumPapparente?date1="+dateFin+"&date2="+dateDebut,
+        url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectSumPapparente?date1="+dateFin+"&date2="+dateDebut,
         dataType: 'json',
         async: false,
         success: function(data) {
@@ -43,7 +50,6 @@ function getPeriod() {
         $('#dateEndAvancee').datepicker({
             startDate: $('#dateStartAvancee').datepicker("getDate")
         });
-        console.log("la date de fin doit etre avant la date de debut");
     }
     else {
         //TODO query
@@ -52,14 +58,11 @@ function getPeriod() {
         if (dateStart != null && dateEnd != null) {
 
             var daysOfYear = [];
-            console.log("DATE START = ", dateStart);
-            console.log("DATE END = ", dateEnd);
             for (var d = dateStart; d <= dateEnd; d.setDate(d.getDate() + 1)) {
 
                 daysOfYear.push(new Date(d));
             }
             //var test = daysOfYear[0];
-            //console.log(test.getDate());
             for(var t=0 ; t < daysOfYear.length; t++){
                 var selectedDate = daysOfYear[t];
                 var day = selectedDate.getDate();
@@ -68,16 +71,12 @@ function getPeriod() {
                 var constDateFin = year + "-" + month + "-" + day+ " 00:00:00";
                 var constDateDebut = year + "-" + month + "-" + day + " 23:59:59";
 
-                console.log("Date debut", constDateDebut);
-                console.log("Date Fin", constDateFin);
 
                 var sumPapparente = getAjax(constDateFin,constDateDebut);
                 sumPapparente = JSON.parse(sumPapparente);
-                console.log("reponse : ",sumPapparente[0]);
                 if(sumPapparente[0].SumPapparente == null){
                     sumPapparente[0].SumPapparente = '0';
                 }
-                console.log(sum.push(parseInt(sumPapparente[0].SumPapparente)));
 
             }
 
@@ -124,7 +123,6 @@ function newChart() {
                 }
 
                 for (i = 0; i < b.length; i += 1) {
-                    console.log("length", b.length);
                     var selectedDate = b[i];
                     var day = selectedDate.getDate();
                     var month = selectedDate.getMonth() + 1; //Months are zero based
@@ -132,7 +130,6 @@ function newChart() {
                     te = year + "/" + month + "/" + day;
                     fin.push(te);
                 }
-                console.log("dddddddddddddddddddddddddddd", fin);
                 return fin;
             })
 
@@ -168,18 +165,15 @@ function newChart() {
                     dateOfYear.push(new Date(d));
                 }
                 for (i = 0; i < dateOfYear.length; i += 1) {
-                    console.log("length", dateOfYear.length);
                     var selectedDate = dateOfYear[i];
                     var day = selectedDate.getDate();
                     var month = selectedDate.getMonth() + 1; //Months are zero based
                     var year = selectedDate.getFullYear();
                     var constDateFin = year + "/" + month + "/" + day;
-                    console.log("tteessttttt", constDateFin);
                     data.push([
                         constDateFin,
                         sum[i]
                     ]);
-                    console.log("ddaaatte", data);
                 }
                 return data;
             }())
@@ -230,8 +224,6 @@ function actualiserGraphique() {
             $('.dateDebut').html(dateStart);
             $('.dateFin').html(dateEnd);
         }
-        console.log(dateStart);
-        console.log(dateEnd);
 
 
         elems.style.display = 'block';
@@ -243,11 +235,10 @@ function actualiserGraphique() {
 function getEnergieConsomme(dateFin, dateDebut) {
     return $.ajax({
         type: "GET",
-        url: "http://localhost/projetERDF/api.php/EnergieConsommee?date1="+dateFin+"&date2="+dateDebut,
+        url: url + ":" + port + "/" + projectDirectory + "/" + api +"/EnergieConsommee?date1="+dateFin+"&date2="+dateDebut,
         dataType: 'json',
         async: false,
         success: function(data) {
-            console.log("energieConsommee :"+data);
         }
     }).responseText;
 }
@@ -265,7 +256,6 @@ function getEnergieTotalConsommee() {
         $('#dateEndAvancee').datepicker({
             startDate: $('#dateStartAvancee').datepicker("getDate")
         });
-        console.log("la date de fin doit etre avant la date de debut");
     }
     else {
         //TODO query
@@ -274,14 +264,11 @@ function getEnergieTotalConsommee() {
         if (dateStart != null && dateEnd != null) {
 
             var daysOfYear = [];
-            console.log("DATE START = ", dateStart);
-            console.log("DATE END = ", dateEnd);
             for (var d = dateStart; d <= dateEnd; d.setDate(d.getDate() + 1)) {
 
                 daysOfYear.push(new Date(d));
             }
             //var test = daysOfYear[0];
-            //console.log(test.getDate());
             for(var t=0 ; t < daysOfYear.length; t++){
                 var selectedDate = daysOfYear[t];
                 var day = selectedDate.getDate();
@@ -290,23 +277,18 @@ function getEnergieTotalConsommee() {
                 var constDateFin = year + "-" + month + "-" + day+ " 00:00:00";
                 var constDateDebut = year + "-" + month + "-" + day + " 23:59:59";
 
-                console.log("Date debut", constDateDebut);
-                console.log("Date Fin", constDateFin);
 
                 var energieConsommee = getEnergieConsomme(constDateFin,constDateDebut);
                 energieConsommee = JSON.parse(energieConsommee);
-                console.log("reponse : ",energieConsommee[0]);
                 if(energieConsommee[0].EnergieConsommee == null){
                     energieConsommee[0].EnergieConsommee = '0';
                 }
-                console.log(sum.push(parseFloat(energieConsommee[0].EnergieConsommee)));
 
             }
 
 
         }
     }
-    console.log("energie consommeeeee", sum);
     return sum;
 }
 
@@ -349,7 +331,6 @@ function newChartEnergie() {
                 }
 
                 for (i = 0; i < b.length; i += 1) {
-                    console.log("length", b.length);
                     var selectedDate = b[i];
                     var day = selectedDate.getDate();
                     var month = selectedDate.getMonth() + 1; //Months are zero based
@@ -392,18 +373,15 @@ function newChartEnergie() {
                     dateOfYear.push(new Date(d));
                 }
                 for (i = 0; i < dateOfYear.length; i += 1) {
-                    console.log("length", dateOfYear.length);
                     var selectedDate = dateOfYear[i];
                     var day = selectedDate.getDate();
                     var month = selectedDate.getMonth() + 1; //Months are zero based
                     var year = selectedDate.getFullYear();
                     var constDateFin = year + "/" + month + "/" + day;
-                    console.log("tteessttttt energiee", constDateFin);
                     data.push([
                         constDateFin,
                         (Math.round(sum[i]*1000)/1000)
                     ]);
-                    console.log("ddaaatte", data);
                 }
                 return data;
             }())

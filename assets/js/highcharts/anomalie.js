@@ -21,7 +21,6 @@ angular	.module("appAnomalie", [])
             }
         }).error( function (error,status) {
             $scope.data.error = { message: error, status: status};
-            console.log($scope.data.error.status);
         });
         }
 
@@ -51,7 +50,6 @@ angular	.module("appAnomalie", [])
                 }
             }).error( function (error,status) {
                 $scope.data.error = { message: error, status: status};
-                console.log($scope.data.error.status);
             });
         }
         $interval($scope.refreshTableAnomalies, 1000);

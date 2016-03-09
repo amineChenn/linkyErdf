@@ -2,13 +2,20 @@
  * Function to execute at loading page printEcophile.html
  */
 
-$(function () {
+var url="";
+var port="";
+var projectDirectory="";
+var api="";
 
+//get year
+$.getJSON("conf.json", function (data) {
+    url = data["url"];
+    port = data["port"];
+    projectDirectory = data["projectDirectory"];
+    api = data["api"];
     $.ajax({
         type: "GET",
-        url: "http://localhost/projetERDF/api.php/SelectYears",//API calls
-        cache: false,
-        async: true,
+        url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectYears",//API calls
         dataType: 'json',
         success: function (data) {
 
@@ -23,7 +30,6 @@ $(function () {
 
         }
     })
-
 });
 
 /**
@@ -42,7 +48,7 @@ function getMonth() {
     else {
         $.ajax({
             type: 'GET',
-            url: "http://localhost/projetERDF/api.php/SelectMonths?Annee=" + $('#annee').val(),
+            url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectMonths?Annee=" + $('#annee').val(),
             cache: false,
             async: true,
             dataType: 'json',
@@ -50,7 +56,6 @@ function getMonth() {
 
                 var jsonDatas = data;
 
-                console.log(jsonDatas[0].Mois);
                 //Convert months from int to string
                 for (var i = 0; i < jsonDatas.length; i++) {
                     switch (jsonDatas[i].Mois) {
@@ -144,7 +149,7 @@ function refreshGraphic() {
 function getAjax(dateFin, dateDebut) {
     return $.ajax({
         type: "GET",
-        url: "http://localhost/projetERDF/api.php/SelectSumPapparente?date1=" + dateFin + "&date2=" + dateDebut,
+        url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectSumPapparente?date1=" + dateFin + "&date2=" + dateDebut,
         dataType: 'json',
         async: false,
         success: function (data) {
@@ -204,20 +209,16 @@ function getMonthDataChart() {
     for (i = 0; i < 31; i += 1) {
         var day = annee + "-" + mois + "-" + (i + 1);
         var dateFin = day + " 00:00:00";
-        console.log("dateFin   " + dateFin);
         //var dateDebut = dateYear+"-"+dateMonth+"-"+dateDay+" 23:59:59";
         var dateDebut = day + " 23:59:59";
-        console.log("dateDebut  " + dateDebut);
         var sumPapparente = getAjax(dateFin, dateDebut);
         sumPapparente = JSON.parse(sumPapparente);
-        console.log("reponse : ", sumPapparente[0]);
         if (sumPapparente[0].SumPapparente == null) {
             sumPapparente[0].SumPapparente = '0';
         }
 
         sum.push(parseInt(sumPapparente[0].SumPapparente));
     }
-    console.log(sum);
     return sum;
 
 }
@@ -231,20 +232,16 @@ function getDataChart() {
     var i;
     for (i = 0; i < 31; i += 1) {
         var dateFin = dateYear + "-" + dateMonth + "-" + (i + 1) + " 00:00:00";
-        console.log("dateFin   " + dateFin);
         //var dateDebut = dateYear+"-"+dateMonth+"-"+dateDay+" 23:59:59";
         var dateDebut = dateYear + "-" + dateMonth + "-" + (i + 1) + " 23:59:59";
-        console.log("dateDebut  " + dateDebut);
         var sumPapparente = getAjax(dateFin, dateDebut);
         sumPapparente = JSON.parse(sumPapparente);
-        console.log("reponse : ", sumPapparente[0]);
         if (sumPapparente[0].SumPapparente == null) {
             sumPapparente[0].SumPapparente = '0';
         }
 
         somme.push(parseInt(sumPapparente[0].SumPapparente));
     }
-    console.log(somme);
     return somme;
 
 }
@@ -331,11 +328,10 @@ function getDataChart() {
 function getEnergieConsomme(dateFin, dateDebut) {
     return $.ajax({
         type: "GET",
-        url: "http://localhost/projetERDF/api.php/EnergieConsommee?date1=" + dateFin + "&date2=" + dateDebut,
+        url: url + ":" + port + "/" + projectDirectory + "/" + api +"/EnergieConsommee?date1=" + dateFin + "&date2=" + dateDebut,
         dataType: 'json',
         async: false,
         success: function (data) {
-            console.log("energieConsommee :" + data);
         }
     }).responseText;
 }
@@ -353,7 +349,6 @@ function getEnergieConsommeeActuel() {
 
     var energieConsomme = JSON.parse(getEnergieConsomme(dateDebut, dateFin));
 
-    console.log("reponse : ", energieConsomme[0]);
 
     if (energieConsomme[0].EnergieConsommee == null) {
         energieConsomme[0].EnergieConsommee = '0';
@@ -361,7 +356,6 @@ function getEnergieConsommeeActuel() {
     var energie = parseInt(energieConsomme[0].EnergieConsommee);
 
 
-    console.log("energie actuelle :", energie);
 
     return energie;
 }
@@ -464,7 +458,6 @@ function getEnergieConsommeeMoisPrecedent() {
     }
     var energieConsomme = JSON.parse(getEnergieConsomme(dateDebut, dateFin));
 
-    console.log("reponse : ", energieConsomme[0]);
 
     if (energieConsomme[0].EnergieConsommee == null) {
         energieConsomme[0].EnergieConsommee = '0';
@@ -472,14 +465,12 @@ function getEnergieConsommeeMoisPrecedent() {
     var energie = parseInt(energieConsomme[0].EnergieConsommee);
 
 
-    console.log("energie precedentteeee :", energie);
 
     return energie;
 }
 
 function getEnergieTotalConsommee() {
 
-    console.log(getEnergieConsommeeActuel() - getEnergieConsommeeMoisPrecedent());
 
     return getEnergieConsommeeActuel() - getEnergieConsommeeMoisPrecedent();
 }
@@ -509,20 +500,15 @@ function getEnergieConsommeeActuelDay() {
         var constDateFin = year + "-" + month + "-" + day + " 00:00:00";
         var constDateDebut = year + "-" + month + "-" + day + " 23:59:59";
 
-        console.log("Date debut", constDateDebut);
-        console.log("Date Fin", constDateFin);
 
         var energieConsommee = getEnergieConsomme(constDateFin, constDateDebut);
         energieConsommee = JSON.parse(energieConsommee);
-        console.log("reponse : ", energieConsommee[0]);
         if (energieConsommee[0].EnergieConsommee == null) {
             energieConsommee[0].EnergieConsommee = '0';
         }
-        console.log(sum.push(parseFloat(energieConsommee[0].EnergieConsommee)));
 
     }
 
-    console.log("energie consommeeeee", sum);
     return sum;
 }
 
@@ -627,7 +613,6 @@ function getEnergieConsommeeMoisPrecedentDay() {
 
     for (var d = new Date(dateDebut); d <= new Date(dateFin); d.setDate(d.getDate() + 1)) {
 
-        console.log("ddddddddddddddddddddddddddd", d.getDate());
         daysOfYear.push(new Date(d));
     }
 
@@ -639,20 +624,15 @@ function getEnergieConsommeeMoisPrecedentDay() {
         var constDateFin = year + "-" + month + "-" + day + " 00:00:00";
         var constDateDebut = year + "-" + month + "-" + day + " 23:59:59";
 
-        console.log("Date debut", constDateDebut);
-        console.log("Date Fin", constDateFin);
 
         var energieConsommee = getEnergieConsomme(constDateFin, constDateDebut);
         energieConsommee = JSON.parse(energieConsommee);
-        console.log("reponse : ", energieConsommee[0]);
         if (energieConsommee[0].EnergieConsommee == null) {
             energieConsommee[0].EnergieConsommee = '0';
         }
-        console.log(sum.push(parseFloat(energieConsommee[0].EnergieConsommee)));
 
     }
 
-    console.log("energie consommeeeee", sum);
     return sum;
 }
 
@@ -765,18 +745,15 @@ function newChart() {
                     dateOfYear.push(new Date(d));
                 }
                 for (i = 0; i < dateOfYear.length; i += 1) {
-                    console.log("length", dateOfYear.length);
                     var selectedDate = dateOfYear[i];
                     var day = selectedDate.getDate();
                     var month = selectedDate.getMonth() + 1; //Months are zero based
                     var year = selectedDate.getFullYear();
                     var constDateFin = year + "/" + month + "/" + day;
-                    console.log("tteessttttt energiee", constDateFin);
                     data.push([
                         i+1,
                         (Math.round(sum[i]*1000)/1000)
                     ]);
-                    console.log("ddaaatte", data);
                 }
                 return data;
             }())
@@ -798,18 +775,15 @@ function newChart() {
                         dateOfYear.push(new Date(d));
                     }
                     for (i = 0; i < dateOfYear.length; i += 1) {
-                        console.log("length", dateOfYear.length);
                         var selectedDate = dateOfYear[i];
                         var day = selectedDate.getDate();
                         var month = selectedDate.getMonth() + 1; //Months are zero based
                         var year = selectedDate.getFullYear();
                         var constDateFin = year + "/" + month + "/" + day;
-                        console.log("tteessttttt energiee", constDateFin);
                         data.push([
                             i+1,
                             (Math.round(sum[i]*1000)/1000)
                         ]);
-                        console.log("ddaaatte", data);
                     }
                     return data;
                 }())
@@ -844,7 +818,6 @@ function screenShotEcophile() {
                 url: 'pdf/ecophileShotSVG.php',
                 data: Parameters,
                 success: function (data) {
-                    console.log("screenshot done");
                 }
             })
 

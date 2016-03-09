@@ -77,7 +77,6 @@ $(function () {
                     livePower(data);
                 } else {
                     //TODO message d'erreur
-                    console.log("Erreur : impossible de récupérer Papparente ou Date");
                 }
             },
             error: function() {
@@ -400,7 +399,6 @@ function getPowerPeriod() {
         $('#dateEndAvancee').datepicker({
             startDate: $('#dateStartAvancee').datepicker("getDate")
         });
-        console.log("la date de fin doit etre avant la date de debut");
     }
     else {
         //TODO query
@@ -416,8 +414,6 @@ function getPowerPeriod() {
             var curr_year = dateEnd.getFullYear();
             dateEnd = curr_year + "-" + curr_month + "-" + curr_date;
 
-            console.log("DATE START = ", dateStart);
-            console.log("DATE END = ", dateEnd);
 
             $.ajax({
                 type: "GET",
@@ -480,7 +476,6 @@ function getFullPeakTime() {
         $('#dateEndAvancee').datepicker({
             startDate: $('#dateStartAvancee').datepicker("getDate")
         });
-        console.log("la date de fin doit etre avant la date de debut");
     }
     else {
         //TODO query
@@ -495,10 +490,7 @@ function getFullPeakTime() {
             var curr_year = dateEnd.getFullYear();
             dateEnd = curr_year + "-" + curr_month + "-" + curr_date;
 
-            console.log("DATE START = ", dateStart);
-            console.log("DATE END = ", dateEnd);
             //var test = getPowerAtNight();
-            //console.log("toto", test);
             var powerFullTime = JSON.parse(getHourDateQuery(dateStart,dateEnd, "SelectByDateAndHourAtNight", "21:00:00", "06:00:00"));
             var powerPeakTime = JSON.parse(getHourDateQuery(dateStart,dateEnd, "SelectByDateAndHourAtNight", "06:00:00", "21:00:00"));
             var fullMode = getFullMode(mode);
@@ -523,7 +515,6 @@ function getDayNight() {
         $('#dateEndAvancee').datepicker({
             startDate: $('#dateStartAvancee').datepicker("getDate")
         });
-        console.log("la date de fin doit etre avant la date de debut");
     }
     else {
         //TODO query
@@ -589,7 +580,6 @@ function getHourDateQuery (dateStart, dateEnd, query, startHour, endHour) {
             }
         },
         error: function() {
-            console.log("url = ",url + ":" + port + "/" + projectDirectory + "/" + api + '/' + query + '/Values?date1=' + dateStart + '&date2=' + dateEnd+'&heureDebut=' + startHour + '&heureFin=' + endHour);
             document.getElementById('spinnerPeriodAdvanced').style.display = "none";
             document.getElementById("#errorMessageConnection").style.display = "block";
             $(".alert").delay(4000).slideUp(500, function() {
@@ -613,7 +603,6 @@ function getWeekWE() {
         $('#dateEndAvancee').datepicker({
             startDate: $('#dateStartAvancee').datepicker("getDate")
         });
-        console.log("la date de fin doit etre avant la date de debut");
     }
     else {
         //TODO query
@@ -679,7 +668,6 @@ function getSeason() {
         $('#dateEndAvancee').datepicker({
             startDate: $('#dateStartAvancee').datepicker("getDate")
         });
-        console.log("la date de fin doit etre avant la date de debut");
     }
     else {
         //TODO query
@@ -753,7 +741,6 @@ function getDayOfWeekQuery(dateStart, dateEnd, query, dayOfWeek){
         dataType: 'json',
         async: false,
         success: function (data) {
-            console.log("url = ", url + ":" + port + "/" + projectDirectory + "/" + api + '/' + query + '/Values?date1=' + dateStart + '&date2=' + dateEnd + '&dayOfWeek=' + dayOfWeek);
             if (data[0] == null) {
                 return 0;
             } else {
@@ -761,7 +748,6 @@ function getDayOfWeekQuery(dateStart, dateEnd, query, dayOfWeek){
             }
         },
         error: function() {
-            console.log("url = ", url + ":" + port + "/" + projectDirectory + "/" + api + '/' + query + '/Values?date1=' + dateStart + '&date2=' + dateEnd + '&dayOfWeek=' + dayOfWeek);
             document.getElementById('spinnerPeriodAdvanced').style.display = "none";
             document.getElementById("#errorMessageConnection").style.display = "block";
             $(".alert").delay(4000).slideUp(500, function() {
