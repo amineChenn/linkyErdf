@@ -507,6 +507,7 @@ function getEnergieConsommeeActuelDay() {
             energieConsommee[0].EnergieConsommee = '0';
         }
 
+        sum.push(parseFloat(energieConsommee[0].EnergieConsommee))
     }
 
     return sum;
@@ -630,6 +631,7 @@ function getEnergieConsommeeMoisPrecedentDay() {
         if (energieConsommee[0].EnergieConsommee == null) {
             energieConsommee[0].EnergieConsommee = '0';
         }
+        sum.push(parseFloat(energieConsommee[0].EnergieConsommee));
 
     }
 
