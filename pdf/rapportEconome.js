@@ -247,106 +247,6 @@ function actualiserGraphique() {
     }
 }
 
-function getAjax (dateFin,dateDebut) {
-    return $.ajax({
-        type: "GET",
-        url: url + ":" + port + "/" + projectDirectory + "/" + api +"/SelectSumPapparente?date1="+dateFin+"&date2="+dateDebut,
-        dataType: 'json',
-        async: false,
-        success: function(data) {
-        }
-    }).responseText;
-}
-
-function getMonthDataChart() {
-    var sum = [];
-    annee = document.getElementById("annee").value;
-    mois = document.getElementById("mois").value;
-    switch (mois) {
-
-        case 'Janvier' :
-            mois = '1';
-            break;
-        case 'Fevrier' :
-            mois = '2';
-            break;
-        case 'Mars' :
-            mois = '3';
-            break;
-        case 'Avril':
-            mois = '4';
-            break;
-        case 'Mai' :
-            mois = '5';
-            break;
-        case 'Juin' :
-            mois = '6';
-            break;
-        case 'Juillet' :
-            mois = '7';
-            break;
-        case 'Aout' :
-            mois = '8';
-            break;
-        case 'Septembre' :
-            mois = '9';
-            break;
-        case 'Octobre' :
-            mois = '10';
-            break;
-        case 'Novembre' :
-            mois = '11';
-            break;
-        case 'Decembre' :
-            mois = '12';
-            break;
-        default :
-            mois = '0';
-            break;
-
-
-    }
-    var i;
-    for( i = 0; i < 31; i += 1){
-        var day = annee +"-"+mois+"-"+(i+1);
-        var dateFin = day+" 00:00:00";
-        //var dateDebut = dateYear+"-"+dateMonth+"-"+dateDay+" 23:59:59";
-        var dateDebut = day+" 23:59:59";
-        var sumPapparente = getAjax(dateFin,dateDebut);
-        sumPapparente = JSON.parse(sumPapparente);
-        if(sumPapparente[0].SumPapparente == null){
-            sumPapparente[0].SumPapparente = '0';
-        }
-
-        sum.push(parseInt(sumPapparente[0].SumPapparente));
-    }
-    return sum;
-
-}
-
-function getDataChart() {
-    var somme = [];
-    var date = new Date();
-    var dateDay = date.getDate();
-    var dateYear = date.getFullYear();
-    var dateMonth = date.getMonth()+1;
-    var i;
-    for( i = 0; i < 31; i += 1){
-        var dateFin = dateYear+"-"+dateMonth+"-"+(i+1)+" 00:00:00";
-        //var dateDebut = dateYear+"-"+dateMonth+"-"+dateDay+" 23:59:59";
-        var dateDebut = dateYear+"-"+dateMonth+"-"+(i+1)+" 23:59:59";
-        var sumPapparente = getAjax(dateFin,dateDebut);
-        sumPapparente = JSON.parse(sumPapparente);
-        if(sumPapparente[0].SumPapparente == null){
-            sumPapparente[0].SumPapparente = '0';
-        }
-
-        somme.push(parseInt(sumPapparente[0].SumPapparente));
-    }
-    return somme;
-
-}
-
 function getEnergieConsommeeActuelDay() {
 
     var sum = [];
@@ -378,7 +278,7 @@ function getEnergieConsommeeActuelDay() {
         if (energieConsommee[0].EnergieConsommee == null) {
             energieConsommee[0].EnergieConsommee = '0';
         }
-
+        sum.push(parseFloat(energieConsommee[0].EnergieConsommee));
     }
 
     return sum;
@@ -502,7 +402,7 @@ function getEnergieConsommeeMoisPrecedentDay() {
         if (energieConsommee[0].EnergieConsommee == null) {
             energieConsommee[0].EnergieConsommee = '0';
         }
-
+        sum.push(parseFloat(energieConsommee[0].EnergieConsommee));
     }
 
     return sum;

@@ -232,7 +232,6 @@ function getDataChart() {
     var i;
     for (i = 0; i < 31; i += 1) {
         var dateFin = dateYear + "-" + dateMonth + "-" + (i + 1) + " 00:00:00";
-        //var dateDebut = dateYear+"-"+dateMonth+"-"+dateDay+" 23:59:59";
         var dateDebut = dateYear + "-" + dateMonth + "-" + (i + 1) + " 23:59:59";
         var sumPapparente = getAjax(dateFin, dateDebut);
         sumPapparente = JSON.parse(sumPapparente);
@@ -245,85 +244,6 @@ function getDataChart() {
     return somme;
 
 }
-
-//function newChart() {
-//
-//    chart = new Highcharts.Chart({
-//        chart: { renderTo: 'ecophile'
-//        },
-//        title: {
-//            text: "Comparaison consommation au mois "+ document.getElementById("mois").value +" "+document.getElementById("annee").value,
-//            x: -20 //center
-//        },
-//
-//        xAxis: {
-//            title: {
-//                text: 'Jours'
-//            },
-//            plotLines: [{
-//                value: 0,
-//                width: 1,
-//                color: '#808080'
-//            }]
-//        },
-//        exporting: {
-//            enabled: false
-//        },
-//        yAxis: {
-//            title: {
-//                text: 'Watt'
-//            },
-//            plotLines: [{
-//                value: 0,
-//                width: 1,
-//                color: '#808080'
-//            }]
-//        },
-//        tooltip: {
-//            valueSuffix: ' Watt'
-//        },
-//        series : [{
-//            name : 'Puissance apparente '+document.getElementById("mois").value,
-//            data : (function () {
-//                // generate an array of random data
-//                var data = [],  i, sum = getMonthDataChart();
-//                for (i = 0; i < 31; i += 1) {
-//                    data.push([
-//                        i+1,
-//                        sum[i]
-//                    ]);
-//                }
-//                return data;
-//            }())
-//        },
-//            {   name : 'Puissance apparente du mois actuel',
-//                data : (function () {
-//                    // generate an array of random data
-//                    var data = [], i, somme = getDataChart();
-//                    for (i = 0; i < 31; i += 1) {
-//                        data.push([
-//                            i+1,
-//                            somme[i]
-//                        ]);
-//                    }
-//                    return data;
-//                }())
-//            }]
-//
-//    });
-//
-//    //on prend la charte, on la transforme en svg
-//    var svg = chart.getSVG();
-//
-//    //et on la balance sur le serveur
-//    $.ajax({
-//        type: 'POST',
-//        url: 'pdf/rapportEcophileSvg.php',
-//        data: {test  : svg} //le code "texte" du svg
-//
-//
-//    });
-//}
 
 function getEnergieConsomme(dateFin, dateDebut) {
     return $.ajax({
@@ -506,8 +426,7 @@ function getEnergieConsommeeActuelDay() {
         if (energieConsommee[0].EnergieConsommee == null) {
             energieConsommee[0].EnergieConsommee = '0';
         }
-
-        sum.push(parseFloat(energieConsommee[0].EnergieConsommee))
+        sum.push(parseFloat(energieConsommee[0].EnergieConsommee));
     }
 
     return sum;
@@ -632,7 +551,6 @@ function getEnergieConsommeeMoisPrecedentDay() {
             energieConsommee[0].EnergieConsommee = '0';
         }
         sum.push(parseFloat(energieConsommee[0].EnergieConsommee));
-
     }
 
     return sum;
