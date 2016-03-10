@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="src/linky.png" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="src/linky.png"/>
     <title>Suivie Consommation - courant</title>
 
 
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <link href="assets/css/basic.css" rel="stylesheet" />
-    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap.css" rel="stylesheet"/>
+    <link href="assets/css/font-awesome.css" rel="stylesheet"/>
+    <link href="assets/css/basic.css" rel="stylesheet"/>
+    <link href="assets/css/custom.css" rel="stylesheet"/>
     <link href="assets/css/datepicker3.css" rel="stylesheet">
     <!--<link href="assets/css/bootstrap.min.css" rel="stylesheet" />-->
-    <link href='assets/css/openSans.css' rel='stylesheet' type='text/css' />
+    <link href='assets/css/openSans.css' rel='stylesheet' type='text/css'/>
 
     <script src="assets/js/jquery-1.10.2.js"></script>
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/jquery.metisMenu.js"></script>
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/bootstrap-datepicker.js"></script>
-
 
 
     <script src="bower_components/highcharts/highstock.js"></script>
@@ -55,8 +54,9 @@
                     <a href="index.html"><i class="fa fa-home "></i>Accueil</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-print "></i>Imprimer un rapport mensuel<span class="fa arrow"></span></a>
-                    <ul  class="nav nav-second-level" >
+                    <a href="#"><i class="fa fa-print "></i>Imprimer un rapport mensuel<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
                         <li>
                             <a href="printEcophile.html">Rapport écophile</a>
                         </li>
@@ -72,8 +72,9 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-area-chart "></i>Suivie de consommation <span class="fa arrow"></span></a>
-                    <ul  class="nav nav-second-level" >
+                    <a href="#"><i class="fa fa-area-chart "></i>Suivie de consommation <span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
                         <li>
                             <a href="kwh.html">KWh</a>
                         </li>
@@ -99,7 +100,7 @@
     </nav>
     <div id="page-wrapper">
         <div id="#errorMessageDate" class="alert alert-danger collapse" style="display: none">
-            <a href="#" class="close"  onclick="$('.alert').hide()">&times;</a>
+            <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
             <strong>Attention!</strong> La date de début doit être inférieur à la date de fin.
         </div>
         <div class="table-responsive" style="width: 80%;  margin-left: 10%">
@@ -111,48 +112,59 @@
                     <div class="panel-body">
                         <form role="form">
                             <div class="row">
-                                <div  class="col-md-6">
+                                <div class="col-md-6">
                                     <div style="padding-left: 5%">
                                         <div class="col-md-6">A partir de :</div>
                                         <div class="container">
                                             <div class="col-md-4">
                                                 <div class="input-group date">
-                                                    <input id="dateStartAvancee" type="text" class="form-control dateStartAvanceePeriod"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                    <input id="dateStartAvancee" type="text"
+                                                           class="form-control dateStartAvanceePeriod"><span
+                                                        class="input-group-addon"><i
+                                                        class="glyphicon glyphicon-calendar"></i></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <br>
+
                                         <div class="col-md-6">Jusqu'à :</div>
                                         <div class="container">
                                             <div class="col-md-4">
                                                 <div class="input-group date">
-                                                    <input id="dateEndAvancee" type="text" class="form-control dateEndAvanceePeriod"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                    <input id="dateEndAvancee" type="text"
+                                                           class="form-control dateEndAvanceePeriod"><span
+                                                        class="input-group-addon"><i
+                                                        class="glyphicon glyphicon-calendar"></i></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div  class="col-md-12">
-                                            <div id="#errorEmptyData" class="alert alert-warning collapse" style="display: none">
-                                                <a href="#" class="close"  onclick="$('.alert').hide()">&times;</a>
+                                        <div class="col-md-12">
+                                            <div id="#errorEmptyData" class="alert alert-warning collapse"
+                                                 style="display: none">
+                                                <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
                                                 Aucune données n'est présente durant cette période.
                                             </div>
                                         </div>
-                                        </div>
-                                        <hr>
-                                        <button  type="button" class="pull-right btn btn-info"  onclick="newChart(); newChartEnergie(); actualiserGraphique(); ">
-                                            Générer
-                                        </button>
                                     </div>
+                                    <hr>
+                                    <button type="button" class="pull-right btn btn-info"
+                                            onclick="newChart(); newChartEnergie(); actualiserGraphique(); ">
+                                        Générer
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
             <br>
+
             <div class="container col-md-12">
                 <div class="panel panel-default " id="divi" style="display: none">
                     <div class="panel-heading">
                         Graphiques
-                        <a href="pdf/rapportTechnophile.php"><input type="button" class="btn btn-danger pull-right" value="Télécharger"> </a>
+                        <a href="pdf/rapportTechnophile.php"><input type="button" class="btn btn-danger pull-right"
+                                                                    value="Télécharger"> </a>
                     </div>
                     <div class="panel-body">
                         <div>
@@ -160,7 +172,7 @@
                         </div>
                     </div>
                     <hr>
-                    <div  class="panel-body">
+                    <div class="panel-body">
                         <div>
                             <div id="technophileEnergie"></div>
                         </div>
@@ -170,18 +182,25 @@
                         <div style="text-align: justify">
                             <h1> Explications sur le projet</h1>
                             Taillé sur le patron des gens de tous les vieux soldats, que la lettre du docteur.
-                            Arrêter le service et pour rendre sa bonne humeur ; elle me vient dans l'esprit en creusant ce sujet passionnant.
+                            Arrêter le service et pour rendre sa bonne humeur ; elle me vient dans l'esprit en creusant
+                            ce sujet passionnant.
                             Contente-toi de ce que devaient surtout craindre les deux familles.
-                            Onze ans passés depuis notre départ de cinq jours j'atteignis la surface comme un seul homme de qui on n'ait rien dit ?
+                            Onze ans passés depuis notre départ de cinq jours j'atteignis la surface comme un seul homme
+                            de qui on n'ait rien dit ?
                             Logique pour son temps, son argent, il est chargé d'opérer sur le platonisme.
                             Remarque que je lui inspirais.
-                            Content d'avoir l'oreille du guichetier ; mais celui-ci, sans me parler elle me prend les mains, calmez-vous, je vous distrairai, moi.
+                            Content d'avoir l'oreille du guichetier ; mais celui-ci, sans me parler elle me prend les
+                            mains, calmez-vous, je vous distrairai, moi.
                             Vu le contexte, pèse lourd.
-                            Vainqueur des nations les entraînaient, pour de l'amour, au fond nous avons tous décollé à la même heure demain.
+                            Vainqueur des nations les entraînaient, pour de l'amour, au fond nous avons tous décollé à
+                            la même heure demain.
                             Ignores-tu donc, mon chéri. Stupéfaite, elle s'avança près de la pelouse.
-                            Assise près de lui sur le plancher une douzaine de bouteilles pareilles, du pain frais, du miel jaune et blanc, ne pouvait être qu'un homme galant ?
-                            Borgne et boiteux, c'était notre ami le sénateur ? Allongé dans un fauteuil antique, j'attends, moi...
-                            Voyez-vous cette lumière parmi les arbres. Diverses variétés du poirier se greffent même plus ou moins bizarres.<br> <br>
+                            Assise près de lui sur le plancher une douzaine de bouteilles pareilles, du pain frais, du
+                            miel jaune et blanc, ne pouvait être qu'un homme galant ?
+                            Borgne et boiteux, c'était notre ami le sénateur ? Allongé dans un fauteuil antique,
+                            j'attends, moi...
+                            Voyez-vous cette lumière parmi les arbres. Diverses variétés du poirier se greffent même
+                            plus ou moins bizarres.<br> <br>
                         </div>
                     </div>
                 </div>
@@ -189,7 +208,7 @@
         </div>
     </div>
     <div id="footer-sec">
-        &copy; 2016 MIAGE
+        &copy; Master 2 MIAGE - 2016 - Grenoble
     </div>
 </div>
 </body>

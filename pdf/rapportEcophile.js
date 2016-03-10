@@ -129,14 +129,15 @@ function refreshGraphic() {
         $('.mois').html(mois);
         if (energie < 0) {
             $('.energie').html(-((Math.round(energie * 1000) / 1000)) + " KWh en moins");
+            $('.nbJours').html(parseInt(-(energie / 125) / 24));
         }
         else {
             $('.energie').html(((Math.round(energie * 1000) / 1000)) + " KWh en plus");
+            $('.nbJours').html(parseInt((energie / 125) / 24));
         }
         var total = Math.round(energiePrecedent * 1000) / 1000;
         //var kwh = total * 1000;
         $('.precedent').html(total);
-        $('.nbJours').html(parseInt((energie / 125) / 24));
         $('.nbHeure').html(Math.round(total / 2000));
 
         if (elems.style.display = 'none') {

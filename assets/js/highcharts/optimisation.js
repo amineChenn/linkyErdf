@@ -21,6 +21,15 @@ angular	.module("appOptimisation", [])
         var date = new Date();
         var weekDebut = date.setDate(date.getDate() - 7);
         var weekFin = date.setDate(date.getDate());
+        $('.dateDebut').on('changeDate', function () {
+            $('.datepicker').hide();
+
+        });
+
+        $('.dateFin').on('changeDate', function () {
+            $('.datepicker').hide();
+
+        });
         $('.dateDebut').datepicker("setDate", new Date(weekDebut));
         $('.dateFin').datepicker("setDate", new Date());
         $scope.PApparenteMax;

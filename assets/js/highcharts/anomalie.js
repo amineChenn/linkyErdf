@@ -6,6 +6,13 @@ angular	.module("appAnomalie", [])
     .controller	( "anomlieController", ['$scope', '$interval', '$timeout', '$http'
     , function($scope,$interval,$timeout,$http,$httpProvider)
     {
+
+        $('#dateAnomalie').on('changeDate', function () {
+            $('.datepicker').hide();
+
+        });
+
+        $('#dateAnomalie').datepicker("setDate", new Date());
         $scope.json = "";
         $scope.dateAnomalies = [];
 
@@ -30,9 +37,11 @@ angular	.module("appAnomalie", [])
             $http.get("http://localhost/projetERDF/api.php/anomalie").success(function (data) {
                 if (data.length !== 0) {
                     $scope.dateAnomalies.length = 0;
-                    var date = $('#dateAnomalie').datepicker("getDate");
-                    date = new Date(date);
-                    date.setDate(date.getDate() - 1);
+                    //var date = $('#dateAnomalie').datepicker("getDate");
+                    //date = new Date(date);
+
+
+                    //date.setDate(date.getDate() - 1);
                     angular.forEach( data, function(value) {
                         var dateBase = new Date(value.Date);
                         if (dateBase > date) {

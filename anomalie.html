@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html  ng-app="appAnomalie">
+<html ng-app="appAnomalie">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="src/linky.png" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="src/linky.png"/>
     <title>Suivis des anomalies</title>
 
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <link href="assets/css/basic.css" rel="stylesheet" />
-    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap.css" rel="stylesheet"/>
+    <link href="assets/css/font-awesome.css" rel="stylesheet"/>
+    <link href="assets/css/basic.css" rel="stylesheet"/>
+    <link href="assets/css/custom.css" rel="stylesheet"/>
     <link href="assets/css/datepicker3.css" rel="stylesheet">
-    <link href='assets/css/openSans.css' rel='stylesheet' type='text/css' />
+    <link href='assets/css/openSans.css' rel='stylesheet' type='text/css'/>
 
     <script src="assets/js/jquery-1.10.2.js"></script>
     <script src="assets/js/bootstrap.js"></script>
@@ -47,11 +47,27 @@
                     <a href="index.html"><i class="fa fa-home "></i>Accueil</a>
                 </li>
                 <li>
-                    <a href="print.html"><i class="fa fa-print "></i>Imprimer un rapport mensuel</a>
+                    <a href="#"><i class="fa fa-print "></i>Imprimer un rapport mensuel<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="printEcophile.html">Rapport écophile</a>
+                        </li>
+                        <li>
+                            <a href="printTechnophile.html">Rapport technophile</a>
+                        </li>
+                        <li>
+                            <a href="printEnergiphile.html">Rapport énergiphile</a>
+                        </li>
+                        <li>
+                            <a href="printEconome.html">Rapport économe</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-area-chart "></i>Suivie de consommation <span class="fa arrow"></span></a>
-                    <ul  class="nav nav-second-level" >
+                    <a href="#"><i class="fa fa-area-chart "></i>Suivie de consommation <span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
                         <li>
                             <a href="kwh.html">kWh</a>
                         </li>
@@ -76,51 +92,57 @@
         </div>
     </nav>
     <div id="page-wrapper">
-        Coupures de courant :</br>
-        <div width="10%">
-            <table>
-                <tr>
-                    <td>
-                        <span>Total depuis le </span>
-                    </td>
-                    <td>
-                        <div class="input-group date">
-                            <input id="dateAnomalie" type="text" class="form-control" ng-blur="refreshTableAnomalies()"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+        <div class="table-responsive" style="width: 80%; margin-left: 10%">
+            <div class="container col-md-12">
+                <div class="panel panel-default ">
+                    <div class="panel-heading">
+                        Coupures de courant
+                    </div>
+                    </br>
+                    <div class="table table-bordered table-hover"  style="padding-right: 10px">
+                        <div style="padding-left: 5%">
+                            <div class="col-md-6">Total depuis le :</div>
+                            <div class="container">
+                                <div class="col-md-4">
+                                    <div class="input-group date">
+                                        <input id="dateAnomalie" type="text" class="form-control"
+                                               ng-blur="refreshTableAnomalies()"><span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
                         </div>
 
-                        <script>
-                            $('.input-group.date').datepicker("setDate", new Date());
-                        </script>
-                    </td>
-                    <td>
-                         : <span class="label label-primary" style="margin-left:5px;font-size:100%" ng-init="getTarif()">{{json}}</span>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="table-responsive" style="width: 66%; margin-left: 10%">
-            <table class="table" ng-init="refreshTableAnomalies()">
-                <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Heure</th>
-                    <th>Provenance</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="loop in dateAnomalies">
-                    <td>{{loop.date | date:'dd/MM/yyyy'}}</td>
-                    <td>{{loop.time | date:'HH:mm'}}</td>
-                    <td>{{loop.data.Provenance}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+                        </br>
+                        <div class="table-responsive">
+                            <table ng-init="refreshTableAnomalies();" class="table table-bordered table-hover ">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Heure</th>
+                                    <th class="text-center">Provenance</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="loop in dateAnomalies">
+                                    <td class="text-center">{{loop.date | date:'dd/MM/yyyy'}}</td>
+                                    <td class="text-center">{{loop.time | date:'HH:mm'}}</td>
+                                    <td class="text-center">{{loop.data.Provenance}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <div id="footer-sec">
-        &copy; 2016 GROUPE 8 <!-- | Design By : CHENNAOUI SELMI-->
+        &copy; Master 2 MIAGE - 2016 - Grenoble
     </div>
 </div>
 </body>

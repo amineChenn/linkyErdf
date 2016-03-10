@@ -95,7 +95,7 @@ function newChart() {
         var curr_y = dateStart.getFullYear();
         var dateS = curr_d + "/" + curr_m + "/" + curr_y;
 
-        var curr_date = dateEnd.getDate() + 1;
+        var curr_date = dateEnd.getDate();
         var curr_month = dateEnd.getMonth() + 1; //Months are zero based
         var curr_year = dateEnd.getFullYear();
         var dateE = curr_date + "/" + curr_month + "/" + curr_year;
@@ -299,7 +299,7 @@ function newChartEnergie() {
         var curr_y = dateStart.getFullYear();
         var dateS = curr_d + "/" + curr_m + "/" + curr_y;
 
-        var curr_date = dateEnd.getDate() + 1;
+        var curr_date = dateEnd.getDate();
         var curr_month = dateEnd.getMonth() + 1; //Months are zero based
         var curr_year = dateEnd.getFullYear();
         var dateE = curr_date + "/" + curr_month + "/" + curr_year;

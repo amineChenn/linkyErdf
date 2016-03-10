@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="src/linky.png" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="src/linky.png"/>
     <title>Suivie Consommation - kWh</title>
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <link href="assets/css/basic.css" rel="stylesheet" />
-    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap.css" rel="stylesheet"/>
+    <link href="assets/css/font-awesome.css" rel="stylesheet"/>
+    <link href="assets/css/basic.css" rel="stylesheet"/>
+    <link href="assets/css/custom.css" rel="stylesheet"/>
     <link href="assets/css/datepicker3.css" rel="stylesheet">
-    <link href='assets/css/openSans.css' rel='stylesheet' type='text/css' />
+    <link href='assets/css/openSans.css' rel='stylesheet' type='text/css'/>
 
     <script src="assets/js/jquery-1.10.2.js"></script>
     <script src="assets/js/bootstrap.js"></script>
@@ -24,10 +24,10 @@
     <script src="assets/js/highcharts/liveKwh.js"></script>
 
     <script>
-        $(function(){
+        $(function () {
             $("#header").load("menuGeneral.html");
             $("#navbarHeader").load("navbarHeader.html");
-            $("#footer").load("footer.html");
+//            $("#footer").load("footer.html");
 
         });
     </script>
@@ -47,11 +47,11 @@
     <div id="header"></div>
     <div id="page-wrapper">
         <div id="#errorMessageDate" class="alert alert-danger collapse" style="display: none">
-            <a href="#" class="close"  onclick="$('.alert').hide()">&times;</a>
+            <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
             <strong>Attention!</strong> La date de début doit être inférieur à la date de fin.
         </div>
         <div id="#errorMessageConnection" class="alert alert-danger collapse" style="display: none">
-            <a href="#" class="close"  onclick="$('.alert').hide()">&times;</a>
+            <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
             <strong>Attention!</strong> Problème de connexion avec la base de données.
         </div>
         <div class="col-md-12">
@@ -66,12 +66,12 @@
                     <div class="tab-content">
                         <div class="tab-pane fade in active" id="tab1primaryKwh">
                             <div class="row">
-                                    <div style="padding-left: 5%">
-                                        Paramètres :
-                                        <div class="checkbox">
-                                            <label><input type="checkbox">Voir les heures pleines et heures creuses</label>
-                                        </div>
+                                <div style="padding-left: 5%">
+                                    Paramètres :
+                                    <div class="checkbox">
+                                        <label><input type="checkbox">Voir les heures pleines et heures creuses</label>
                                     </div>
+                                </div>
                             </div>
                             <div class="col-md-12" style="text-align: center;">
                                 <div id="spinnerLiveAdvanced" style="display: block">
@@ -79,11 +79,11 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div  class="col-md-12">
+                                <div class="col-md-12">
                                     <div id="courbeKwh"></div>
                                 </div>
                                 <!--<div class="col-md-6">-->
-                                    <!--<div id="diagramme"></div>-->
+                                <!--<div id="diagramme"></div>-->
                                 <!--</div>-->
                             </div>
                         </div>
@@ -100,21 +100,28 @@
                                             <div class="container">
                                                 <div class='col-sm-3'>
                                                     <div class="input-group date">
-                                                        <input id="dateStartAvancee" type="text" class="form-control dateStartAvanceePeriod"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        <input id="dateStartAvancee" type="text"
+                                                               class="form-control dateStartAvanceePeriod"><span
+                                                            class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-calendar"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            </br>Jusqu'à     :
+                                            </br>Jusqu'à :
                                             <div class="container">
                                                 <div class='col-sm-3'>
                                                     <div class="input-group date">
-                                                        <input id="dateEndAvancee" type="text" class="form-control dateEndAvanceePeriod"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                        <input id="dateEndAvancee" type="text"
+                                                               class="form-control dateEndAvanceePeriod"><span
+                                                            class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-calendar"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div  class="col-md-12">
-                                                <div id="#errorEmptyData" class="alert alert-warning collapse" style="display: none">
-                                                    <a href="#" class="close"  onclick="$('.alert').hide()">&times;</a>
+                                            <div class="col-md-12">
+                                                <div id="#errorEmptyData" class="alert alert-warning collapse"
+                                                     style="display: none">
+                                                    <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
                                                     Aucune données n'est présente durant cette période.
                                                 </div>
                                             </div>
@@ -122,7 +129,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label>Sélectionner le mode :</label>
-                                        <select id ="selectedMode" class="form-control" id="sel1">
+                                        <select id="selectedMode" class="form-control" id="sel1">
                                             <option>HP/HC</option>
                                             <option>Jour/Nuit</option>
                                             <option>Semaine/WE</option>
@@ -159,7 +166,9 @@
         </div>
     </div>
 
-    <div id="footer"></div>
+    <div id="footer-sec">
+        &copy; Master 2 MIAGE - 2016 - Grenoble
+    </div>
 </div>
 </body>
 </html>

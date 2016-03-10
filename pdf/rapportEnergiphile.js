@@ -90,7 +90,7 @@ function newPuissanceChart() {
         var curr_y = dateStart.getFullYear();
         var dateS = curr_d + "/" + curr_m + "/" + curr_y;
 
-        var curr_date = dateEnd.getDate() + 1;
+        var curr_date = dateEnd.getDate();
         var curr_month = dateEnd.getMonth() + 1; //Months are zero based
         var curr_year = dateEnd.getFullYear();
         var dateE = curr_date + "/" + curr_month + "/" + curr_year;
@@ -132,7 +132,7 @@ function newPuissanceChart() {
         },
         yAxis: {
             title: {
-                text: 'Watt'
+                text: 'VA'
             },
             plotLines: [{
                 value: 0,
@@ -140,12 +140,12 @@ function newPuissanceChart() {
                 color: '#808050'
             },
                 {
-                    value: 5000,
+                    value: 150,
                     color: '#434348',
                     width: 2,
                     zIndex: 4,
                     label: {
-                        text: 'Max',
+                        text: 'Puissance souscrite',
                         align: 'right',
                         style: {
                             color: 'gray'
@@ -154,7 +154,7 @@ function newPuissanceChart() {
                 }]
         },
         tooltip: {
-            valueSuffix: ' Watt'
+            valueSuffix: ' VA'
         },
         plotOptions: {
             series: {
@@ -223,7 +223,7 @@ function actualiserGraphique() {
         var curr_year = dateStart.getFullYear();
         dateStart =  curr_date+ "/" + curr_month + "/" + curr_year;
 
-        var curr_date = dateEnd.getDate() + 1;
+        var curr_date = dateEnd.getDate();
         var curr_month = dateEnd.getMonth() + 1; //Months are zero based
         var curr_year = dateEnd.getFullYear();
         dateEnd = curr_date + "/" + curr_month + "/" + curr_year;
@@ -304,7 +304,7 @@ function newPreactiveChart() {
         var curr_y = dateStart.getFullYear();
         var dateS = curr_d + "/" + curr_m + "/" + curr_y;
 
-        var curr_date = dateEnd.getDate() + 1;
+        var curr_date = dateEnd.getDate();
         var curr_month = dateEnd.getMonth() + 1; //Months are zero based
         var curr_year = dateEnd.getFullYear();
         var dateE = curr_date + "/" + curr_month + "/" + curr_year;
@@ -347,7 +347,7 @@ function newPreactiveChart() {
         },
         yAxis: {
             title: {
-                text: 'Watt'
+                text: 'VA'
             },
             plotLines: [{
                 value: 0,
@@ -356,7 +356,7 @@ function newPreactiveChart() {
             }]
         },
         tooltip: {
-            valueSuffix: ' Watt'
+            valueSuffix: ' VA'
         },
         plotOptions: {
             series: {
@@ -467,7 +467,7 @@ function newIntensiteChart() {
         var curr_y = dateStart.getFullYear();
         var dateS = curr_d + "/" + curr_m + "/" + curr_y;
 
-        var curr_date = dateEnd.getDate() + 1;
+        var curr_date = dateEnd.getDate();
         var curr_month = dateEnd.getMonth() + 1; //Months are zero based
         var curr_year = dateEnd.getFullYear();
         var dateE = curr_date + "/" + curr_month + "/" + curr_year;
@@ -631,7 +631,7 @@ function newTensionChart() {
         var curr_y = dateStart.getFullYear();
         var dateS = curr_d + "/" + curr_m + "/" + curr_y;
 
-        var curr_date = dateEnd.getDate() + 1;
+        var curr_date = dateEnd.getDate();
         var curr_month = dateEnd.getMonth() + 1; //Months are zero based
         var curr_year = dateEnd.getFullYear();
         var dateE = curr_date + "/" + curr_month + "/" + curr_year;
@@ -823,7 +823,7 @@ function newChartEnergie() {
         var curr_y = dateStart.getFullYear();
         var dateS = curr_d + "/" + curr_m + "/" + curr_y;
 
-        var curr_date = dateEnd.getDate() + 1;
+        var curr_date = dateEnd.getDate();
         var curr_month = dateEnd.getMonth() + 1; //Months are zero based
         var curr_year = dateEnd.getFullYear();
         var dateE = curr_date + "/" + curr_month + "/" + curr_year;
