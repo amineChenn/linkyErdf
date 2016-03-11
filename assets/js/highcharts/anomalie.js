@@ -19,7 +19,7 @@ angular	.module("appAnomalie", [])
         $(window).trigger('resize');
 
         $scope.getTarif = function (){
-        $http.get("http://localhost/projetERDF/api.php/anomalie").success(function (data) {
+        $http.get("http://localhost/projetERDF/api.php/SelectAll/anomalie").success(function (data) {
 
             if (data.length !== 0) {
                 $scope.json = data[data.length-1].Id;
@@ -34,14 +34,14 @@ angular	.module("appAnomalie", [])
         $interval($scope.getTarif, 1000);
 
         $scope.refreshTableAnomalies = function (){
-            $http.get("http://localhost/projetERDF/api.php/anomalie").success(function (data) {
+            $http.get("http://localhost/projetERDF/api.php/SelectAll/anomalie").success(function (data) {
                 if (data.length !== 0) {
                     $scope.dateAnomalies.length = 0;
-                    //var date = $('#dateAnomalie').datepicker("getDate");
-                    //date = new Date(date);
+                    var date = $('#dateAnomalie').datepicker("getDate");
+                    date = new Date(date);
 
 
-                    //date.setDate(date.getDate() - 1);
+                    date.setDate(date.getDate() - 1);
                     angular.forEach( data, function(value) {
                         var dateBase = new Date(value.Date);
                         if (dateBase > date) {
