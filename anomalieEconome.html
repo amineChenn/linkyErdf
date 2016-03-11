@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html ng-app="appAnomalie">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="src/linky.png"/>
+    <title>Suivis des anomalies</title>
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet"/>
+    <link href="assets/css/font-awesome.css" rel="stylesheet"/>
+    <link href="assets/css/basic.css" rel="stylesheet"/>
+    <link href="assets/css/custom.css" rel="stylesheet"/>
+    <link href="assets/css/datepicker3.css" rel="stylesheet">
+    <link href='assets/css/openSans.css' rel='stylesheet' type='text/css'/>
+
+    <script src="assets/js/jquery-1.10.2.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/jquery.metisMenu.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/bootstrap-datepicker.js"></script>
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="assets/js/highcharts/anomalie.js"></script>
+
+</head>
+<body ng-controller="anomlieController">
+<div id="wrapper">
+    <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand" href="accueilEconome.html">
+                <img src="src/linky.png" style="width: 100%;height: 100%;"></a>
+        </div>
+        <div>
+            <span class="navbar-text"><h1>Suivis des anomalies</h1></span>
+        </div>
+    </nav>
+
+    <nav class="navbar-default navbar-side" role="navigation">
+
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+                <li>
+                    <a href="accueilEconome.html"><i class="fa fa-home "></i>Accueil</a>
+                </li>
+                <li>
+                    <a href="index.html"><i class="fa fa-user "></i>Changer de profil</a>
+                </li>
+                <li>
+                    <a href="printEconome.html"><i class="fa fa-print "></i>Imprimer un rapport</a>
+                </li>
+                <li>
+                    <a href="econome.html"><i class="fa fa-search "></i>Suivi de consommation</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-chain-broken "></i>Suivie des anomalies</a>
+                </li>
+                <li>
+                    <a href="optimisationEconome.html"><i class="fa fa-line-chart "></i>Bonnes pratiques</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div id="page-wrapper">
+        <div class="table-responsive" style="width: 80%; margin-left: 10%">
+            <div class="container col-md-12">
+                <div class="panel panel-default ">
+                    <div class="panel-heading">
+                        Coupures de courant
+                    </div>
+                    </br>
+                    <div class="table table-bordered table-hover"  style="padding-right: 10px">
+                        <div style="padding-left: 5%">
+                            <div class="col-md-6">Total depuis le :</div>
+                            <div class="container">
+                                <div class="col-md-4">
+                                    <div class="input-group date">
+                                        <input id="dateAnomalie" type="text" class="form-control"
+                                               ng-blur="refreshTableAnomalies()"><span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+
+                        </br>
+                        <div class="table-responsive">
+                            <table ng-init="refreshTableAnomalies();" class="table table-bordered table-hover ">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Heure</th>
+                                    <th class="text-center">Provenance</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="loop in dateAnomalies">
+                                    <td class="text-center">{{loop.date | date:'dd/MM/yyyy'}}</td>
+                                    <td class="text-center">{{loop.time | date:'HH:mm'}}</td>
+                                    <td class="text-center">{{loop.data.Nature}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="footer-sec">
+        &copy; Master 2 MIAGE - 2016 - Grenoble
+    </div>
+</div>
+</body>
+</html>

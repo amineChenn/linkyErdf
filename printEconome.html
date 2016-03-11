@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html ng-app="appOptimisation">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="src/linky.png"/>
+    <title>Rapport Mensuel</title>
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet"/>
+    <link href="assets/css/font-awesome.css" rel="stylesheet"/>
+    <link href="assets/css/basic.css" rel="stylesheet"/>
+    <link href="assets/css/custom.css" rel="stylesheet"/>
+    <link href="assets/css/datepicker3.css" rel="stylesheet">
+    <link href='assets/css/openSans.css' rel='stylesheet' type='text/css'/>
+
+    <script src="assets/js/jquery-1.10.2.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/jquery.metisMenu.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/bootstrap-datepicker.js"></script>
+
+
+    <script src="bower_components/highcharts/highstock.js"></script>
+    <script src="bower_components/highcharts/modules/exporting.js"></script>
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="assets/js/highcharts/optimisation.js"></script>
+
+    <script src="pdf/rapportEconome.js"></script>
+    <script src="pdf/rapportEcophileSvg.php"></script>
+
+    <script src="tarifHoraire.js"></script>
+</head>
+
+<body ng-controller="optimisationController">
+<div id="wrapper">
+    <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand" href="accueilEconome.html">
+                <img src="src/linky.png" style="width: 100%;height: 100%;"></a>
+        </div>
+        <div>
+            <span class="navbar-text"><h1>Récapitulatif de consommation</h1></span>
+        </div>
+    </nav>
+
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+                <li>
+                    <a href="accueilEconome.html"><i class="fa fa-home "></i>Accueil</a>
+                </li>
+                <li>
+                    <a href="index.html"><i class="fa fa-user "></i>Changer de profil</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-print "></i>Imprimer un rapport</a>
+                </li>
+                <li>
+                    <a href="econome.html"><i class="fa fa-search "></i>Suivi de consommation</a>
+                </li>
+                <li>
+                    <a href="anomalieEconome.html"><i class="fa fa-chain-broken "></i>Suivie des anomalies</a>
+                </li>
+                <li>
+                    <a href="optimisationEconome.html"><i class="fa fa-line-chart "></i>Bonnes pratiques</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div id="page-wrapper">
+        <div id="#errorMessage" class="alert alert-danger collapse" style="display: none">
+            <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
+            <strong>Attention!</strong> Veuillez sélectionner l'année puis le mois.
+        </div>
+        <div class="table-responsive" style="width: 80%; margin-left: 10%">
+            <div class="container col-md-12">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Puissance
+                                    maximale</a>
+                            </h4>
+                        </div>
+
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="panel-body" id="PuissanceInitale" ng-init="SelectPSouscrite()">
+                                            Puissance maximum soucrite par mon contrat :
+                                            <div id="ChoisirPuissance" class="input-group" style="display: none"><input
+                                                    name="ChoixPuissance" type="text" placeholder="Puissance"
+                                                    ng-model="PSous">
+                                                <button class="btn btn-info btn-circle" type="button"
+                                                        onclick="AffichagePuissance()" ng-click="ModifierMaximum()"><i
+                                                        class="fa fa-check"></i></button>
+                                            </div>
+                                            <b> <a id="PuissanceChoisie"
+                                                   onclick="InverserAffichage('PuissanceChoisie','ChoisirPuissance')"
+                                                   href="#" alt="Changer la puissance" title="Changer la puissance">{{pApparenteSouscrite}}
+                                                kVA </a> </b>
+                                        </div>
+                                        <div class="panel-body" id="PuissanceTheorique" style="display: none">
+                                            Puissance théorique :
+                                            <div id="ChoisirPuissanceTh" class="input-group" style="display: none">
+                                                <input name="ChoixPuissance" type="text" placeholder="Puissance"
+                                                       ng-model="PSous">
+                                                <button class="btn btn-info btn-circle" type="button"
+                                                        onclick="InverserAffichage('ChoisirPuissanceTh','PuissanceChoisieTh')"
+                                                        ng-click="ModifierMaximum()"><i class="fa fa-check"></i>
+                                                </button>
+                                            </div>
+                                            <b> <a id="PuissanceChoisieTh"
+                                                   onclick="InverserAffichage('PuissanceChoisieTh','ChoisirPuissanceTh')"
+                                                   href="#" alt="Changer la puissance" title="Changer la puissance">{{pApparenteSouscrite}}
+                                                kVA </a> </b>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div>
+                                        <div class="col-md-4">Période d'étude pour l'optimisation :</div>
+                                        <div class="col-md-3">
+                                            <div class="input-group date">
+                                                <input id="groupDebutPuissance" type="text"
+                                                       class="form-control dateDebut"><span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">à</div>
+                                        <div class="col-md-3">
+                                            <div id="AUJOptPuissance" class="checkbox">
+                                                <label><input id="CheckBoxOptPuissance"
+                                                              onchange="togglerDate('DateFinOptPuissance','CheckBoxOptPuissance','AUJOptPuissance')"
+                                                              type="checkbox" value="" checked>Aujourd'hui</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group date" style="display: none"
+                                                 id="DateFinOptPuissance">
+                                                <input id="groupFinPuissance" type="text"
+                                                       class="form-control dateFin"><span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="panel-body">
+                                    <div class="col-md-2" style="padding-left: 40%">
+                                        <button type="button" class="btn btn-success"
+                                                onclick="toggler('analysePuissance')" ng-click="LancerAnalyse()">
+                                            Lancer analyse
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="panel-body">
+                                    <b> Résultats : </b>
+                                </div>
+                                <p id="analysePuissance" style="display: none;margin-left: 5%" style="margin-left: 5%">
+                                    Vous avez consommé au maximum une puissance de<span
+                                        style="color: black; font-weight : bold">&nbsp;{{PApparenteMax}} kVA.</span>
+                                    <br> Vous avez consommé en moyenne une puissance de<span
+                                        style="color: black; font-weight : bold">&nbsp;{{PApparenteMoy}} kVA.</span>
+                                    <br> Vous avez depassé <a href="#" alt="Voir le detail" title="Voir le detail"
+                                                              data-toggle="modal" data-target="#ModalPuissance"
+                                                              ng-click="AfficherDetails()"><b> {{NbPApparenteDepasse}}
+                                    fois</b></a>
+                                    <span> la puissance souscrite ({{pApparenteSouscriteAffichee}} kVA).</span>
+                                    <br> On vous propose un contrat optimal de<span
+                                        style="color: black; font-weight : bold; ">&nbsp;{{PApparenteOptimal}} kVA.</span>
+
+                                </p>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Option base ou
+                                        heures pleines/heures creuses</a>
+                                </h4>
+                            </div>
+                            <div id="collapse2" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    Contrat actuellement souscrit : heures pleines/heures creuses.
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div>
+                                            <div class="col-md-4">Période d'étude pour l'optimisation :</div>
+                                            <div class="col-md-3">
+                                                <div class="input-group date">
+                                                    <input id="groupDebutTarif" type="text"
+                                                           class="form-control dateDebut"><span
+                                                        class="input-group-addon"><i
+                                                        class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">à</div>
+                                            <div class="col-md-3">
+                                                <div id="AUJOptTarif" class="checkbox">
+                                                    <label><input id="CheckBoxOptTarif"
+                                                                  onchange="togglerDate('DateFinOptTarif','CheckBoxOptTarif','AUJOptTarif')"
+                                                                  type="checkbox" value="" checked>Aujourd'hui</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="input-group date" style="display: none"
+                                                     id="DateFinOptTarif">
+                                                    <input id="groupFinTarif" type="text"
+                                                           class="form-control dateFin"><span class="input-group-addon"><i
+                                                        class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="panel-body">
+                                        <div class="col-md-2" style="padding-left: 40%">
+                                            <button type="button" class="btn btn-success"
+                                                    onclick="toggler('analyseTarif')"
+                                                    ng-click="CalculerConsommation()">
+                                                Lancer analyse
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="panel-body">
+                                        <b> Résultats : </b>
+                                    </div>
+                                    <div id="analyseTarif" style="display: none;margin-left: 5%">
+                                        Vous avez consommé <span style="color: black; font-weight : bold">&nbsp;{{diffEnergie}} kWh .</span>
+                                        <br> Le coût de cette consommation est <span
+                                            style="color: black; font-weight : bold">&nbsp;{{coutEnergieConsommee}} € .</span>
+                                        <br>
+                                        <!-- 	                                        	<button type="button" class="btn btn-primary" class="btn btn-primary"  data-toggle="modal" data-target="#ModalTarif"> -->
+                                        <!-- 	                                            Details -->
+                                        <!-- 	                                        	</button> -->
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion"
+                                                       href="#collapseDetails">Détails</a>
+                                                </h4>
+
+                                                <div id="collapseDetails" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class="text-center">
+                                                                        Heure Début
+                                                                    </th>
+                                                                    <th class="text-center">
+                                                                        Heure Fin
+                                                                    </th>
+                                                                    <th class="text-center">
+                                                                        Jour
+                                                                    </th>
+                                                                    <th class="text-center">
+                                                                        Tarif
+                                                                    </th>
+                                                                    <th class="text-center">
+                                                                        Energie (WH)
+                                                                    </th>
+                                                                    <th class="text-center">
+                                                                        Coût
+                                                                    </th>
+                                                                    <th class="text-center">
+                                                                        Energie (%)
+                                                                    </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr ng-repeat="ligne in energies" colspan="2"
+                                                                    style="height:2px; ">
+                                                                    <td class="text-center">
+                                                                        {{ligne[0]}}
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        {{ligne[1]}}
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        {{ligne[2]}}
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        {{ligne[3]}} €
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        {{ligne[4]}}
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        {{ligne[5]}} €
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        {{ligne[6]}}%
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion"
+                                           href="#collapse3">Paramètres</a>
+                                    </h4>
+                                </div>
+                                <div id="collapse3" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="panel-body">
+                                            <b> Liste des plages tarifaires </b>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table ng-init="AfficherPlagesHoraires()"
+                                                   class="table table-bordered table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th class="text-center">
+                                                        Heure début
+                                                    </th>
+                                                    <th class="text-center">
+                                                        Heure Fin
+                                                    </th>
+                                                    <th class="text-center">
+                                                        Jour
+                                                    </th>
+                                                    <th class="text-center">
+                                                        Tarif
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="ligne in listePlagesJour" colspan="2"
+                                                    style="height:2px; ">
+                                                    <td class="text-center">
+                                                        {{ligne.HeureDebut}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ligne.HeureFin}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ConvertirChiffreEnJour(ligne.Jour)}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ligne.Tarif}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button id="supPlage" type="button"
+                                                                class="btn btn-danger btn-circle"
+                                                                ng-click="SupprimerTarif(ligne,'Tous les jours')"><i
+                                                                class="fa fa-times"></i></button>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-repeat="ligne in listePlagesSemaine" colspan="2"
+                                                    style="height:2px; ">
+                                                    <td class="text-center">
+                                                        {{ligne.HeureDebut}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ligne.HeureFin}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        Semaine
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ligne.Tarif}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button id="supPlage" type="button"
+                                                                class="btn btn-danger btn-circle"
+                                                                ng-click="SupprimerTarif(ligne,'Tous les jours')"><i
+                                                                class="fa fa-times"></i></button>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-repeat="ligne in listePlagesWeekEnd" colspan="2"
+                                                    style="height:2px; ">
+                                                    <td class="text-center">
+                                                        {{ligne.HeureDebut}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ligne.HeureFin}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        WeekEnd
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ligne.Tarif}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button id="supPlage" type="button"
+                                                                class="btn btn-danger btn-circle"
+                                                                ng-click="SupprimerTarif(ligne,'Tous les jours')"><i
+                                                                class="fa fa-times"></i></button>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-repeat="ligne in listePlagesSemaineEntiere" colspan="2"
+                                                    style="height:2px; ">
+                                                    <td class="text-center">
+                                                        {{ligne.HeureDebut}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ligne.HeureFin}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        Tous les jours
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ligne.Tarif}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button id="supPlage" type="button"
+                                                                class="btn btn-danger btn-circle"
+                                                                ng-click="SupprimerTarif(ligne,'Tous les jours')"><i
+                                                                class="fa fa-times"></i></button>
+                                                    </td>
+                                                </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="panel-body">
+                                            <b> Ajouter une plage </b>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table" id="tab_logic">
+                                                <form>
+                                                    <tr id='addr0'>
+                                                        <td>
+                                                            <input id="SelectionHeureDebut" type="text"
+                                                                   name='heureDebut' placeholder='Heure début (HH:MM)'
+                                                                   class="form-control" ng-model="HeureDebutPlage"
+                                                                   required/>
+                                                        </td>
+                                                        <td>
+                                                            <input id="SelectionHeureFin" type="text" name='heureFin'
+                                                                   placeholder='Heure Fin (HH:MM)' class="form-control"
+                                                                   ng-model="HeureFinPlage" required/>
+                                                        </td>
+                                                        <td>
+                                                            <select id="SelectionJour" class="form-control" name='jour'
+                                                                    ng-model="JourPlage" required>
+                                                                <option value=''>Période</option>
+                                                                <option>Lundi</option>
+                                                                <option>Mardi</option>
+                                                                <option>Mercredi</option>
+                                                                <option>Jeudi</option>
+                                                                <option>Vendredi</option>
+                                                                <option>Samedi</option>
+                                                                <option>Dimanche</option>
+                                                                <option>Tous les jours</option>
+                                                                <option>WeekEnd</option>
+                                                                <option>Semaine</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <input id="SelectionTarif" type="text" name='tarif'
+                                                                   placeholder='Entrez tarif' class="form-control"
+                                                                   ng-model="TarifPlage" required/>
+                                                        </td>
+                                                        <td>
+                                                            <button id="add_row" type="submit"
+                                                                    class="btn btn-info btn-circle"
+                                                                    ng-click="AjouterTarif()"
+                                                                    onclick="ReinitialiserSelections('SelectionHeureDebut','SelectionHeureFin','SelectionJour','SelectionTarif')">
+                                                                <i class="fa fa-check"></i></button>
+                                                        </td>
+                                                </form>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div id="ErreurInsertion" class="alert alert-danger fade in"
+                                             ng-show="AfficherErreur">
+                                            <a href="#" class="close" ng-click="MasquerErreur()">&times;</a>
+                                            <strong> {{ErreurInsertionPlage}} </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="panel panel-default ">
+                        <div class="panel-heading">
+                            Selection mois de comparaison
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-4"> Selectionnez l'année puis le mois <span
+                                        style="color: red">*</span></div>
+                                <div class="col-md-3">
+                                    <select id="annee" class="form-control" onchange="getMonth();" required></select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select id="mois" class="form-control " required>
+                                        <option value="">Mois</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-info" onclick="displaySelection();"
+                                            ng-click="calculerTotalFacture()">Générer
+                                    </button>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-md-3" style="color: red">* Champ obligatoire</div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="container col-md-12">
+                        <div class="panel panel-default " id="divi" style="display: none">
+                            <div class="panel-heading">
+                                Graphique
+                                <a href="pdf/rapportEconome.php"><input type="button" class="btn btn-danger pull-right"
+                                                                        value="Télécharger" onclick="newChart();"> </a>
+                            </div>
+                            <br>
+                            <br>
+
+                            <div class="row">
+                                <div class="panel-body">
+                                    <div>
+                                        <div id="ecophile"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ModalPuissance" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Détails dépassement puissance</h4>
+            </div>
+            <div class="modal-body">
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Puissance apparente
+                        </th>
+                    <tr/>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="ligne in PApparenteDepasse" colspan="2" style="height:2px; ">
+                        <td>
+                            {{ligne.Date}}
+                        </td>
+                        <td>
+                            {{ligne.Papparente}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="ModalTarif" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Détails consommation</h4>
+            </div>
+            <div class="modal-body">
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="text-center">
+                            Heure Debut
+                        </th>
+                        <th class="text-center">
+                            Heure Fin
+                        </th>
+                        <th class="text-center">
+                            Jour
+                        </th>
+                        <th class="text-center">
+                            Tarif
+                        </th>
+                        <th class="text-center">
+                            Energie Consommee
+                        </th>
+                        <th class="text-center">
+                            Coût energie consommee
+                        </th>
+                        <th class="text-center">
+                            Pourcentage energie Consommee
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="ligne in energies" colspan="2" style="height:2px; ">
+                        <td class="text-center">
+                            {{ligne[0]}}
+                        </td>
+                        <td class="text-center">
+                            {{ligne[1]}}
+                        </td>
+                        <td class="text-center">
+                            {{ligne[2]}}
+                        </td>
+                        <td class="text-center">
+                            {{ligne[3]}} €
+                        </td>
+                        <td class="text-center">
+                            {{ligne[4]}}
+                        </td>
+                        <td class="text-center">
+                            {{ligne[5]}} €
+                        </td>
+                        <td class="text-center">
+                            {{ligne[6]}}%
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function toggler(pId) {
+        var el = document.getElementById(pId);
+
+        if (el.style.display = 'none') {
+            el.style.display = '';
+        }
+    }
+    function ReinitialiserSelections(pIdHeureDebut, pIdHeureFin, pIdJour, pIdTarif) {
+//             var selectHeureDebut = document.getElementById(pIdHeureDebut);
+//             var selectHeureFin = document.getElementById(pIdHeureFin);
+//             var selectJour = document.getElementById(pIdJour);
+//             var selectTarif = document.getElementById(pIdTarif);
+
+//             selectHeureDebut.value = '';
+//             selectHeureFin.value = '';
+//             selectJour.value = '';
+//             selectTarif.value = '';
+    }
+
+    function togglerDate(pIdDate, pIdCheckBox, pIdDateFin) {
+        var el = document.getElementById(pIdDate);
+        var check = document.getElementById(pIdCheckBox).checked;
+        var checkAujourdhui = document.getElementById(pIdDateFin);
+        if (check) {
+            el.style.display = 'none';
+            checkAujourdhui.style.display = '';
+        }
+        else {
+            el.style.display = '';
+            checkAujourdhui.style.display = 'none';
+        }
+
+    }
+
+    function AffichagePuissance() {
+        var el1 = document.getElementById("PuissanceInitale");
+        var el2 = document.getElementById("PuissanceTheorique");
+        el1.style.display = 'none';
+        el2.style.display = '';
+    }
+
+    function InverserAffichage(idAffichage1, idAffichage2) {
+        var el1 = document.getElementById(idAffichage1);
+        var el2 = document.getElementById(idAffichage2);
+        el1.style.display = 'none';
+        el2.style.display = 'inline';
+    }
+
+    function ModifMaximum(pId) {
+        PSousc = document.getElementById(pId);
+
+
+    }
+    // 	    function AfficherErreur(idErreur,texteErreur)
+    // 	    {
+    // 	    	var affErreur = document.getElementById(idErreur);
+    // 	    	alert(texteErreur);
+    // 	    	if (texteErreur!= "")
+    // 	    	{
+
+    // 	    		affErreur.style.display = '';
+    // 	    	}
+    // 	    	else
+    // 	    	{
+    // 	    		affErreur.style.display = 'none';
+    // 	    	}
+    // 	    }
+</script>
+<div id="footer-sec">
+    &copy; Master 2 MIAGE - 2016 - Grenoble
+</div>
+</body>
+</html>

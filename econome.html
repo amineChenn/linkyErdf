@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="src/linky.png"/>
+    <title>Suivie Consommation - kWh</title>
+    <link href="assets/css/bootstrap.css" rel="stylesheet"/>
+    <link href="assets/css/font-awesome.css" rel="stylesheet"/>
+    <link href="assets/css/basic.css" rel="stylesheet"/>
+    <link href="assets/css/custom.css" rel="stylesheet"/>
+    <link href="assets/css/datepicker3.css" rel="stylesheet">
+    <link href='assets/css/openSans.css' rel='stylesheet' type='text/css'/>
+
+    <script src="assets/js/jquery-1.10.2.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/jquery.metisMenu.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/bootstrap-datepicker.js"></script>
+
+    <script src="bower_components/highcharts/highstock.js"></script>
+    <script src="bower_components/highcharts/modules/exporting.js"></script>
+
+    <script src="assets/js/highcharts/ecophile.js"></script>
+
+    <!--<script>-->
+    <!--$(function () {-->
+    <!--$("#header").load("menuGeneral.html");-->
+    <!--$("#navbarHeader").load("navbarHeader.html");-->
+    <!--//            $("#footer").load("footer.html");-->
+
+    <!--});-->
+    <!--</script>-->
+
+
+</head>
+<body onload="$('.collapse').collapse()">
+<div id="wrapper">
+    <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand" href="accueilEconome.html">
+                <img src="src/linky.png" style="width: 100%;height: 100%;"></a>
+        </div>
+        <div>
+            <span class="navbar-text"><h1>Suivis de consommation</h1></span>
+        </div>
+    </nav>
+
+
+    <nav class="navbar-default navbar-side" role="navigation">
+
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+                <li>
+                    <a href="accueilEconome.html"><i class="fa fa-home "></i>Accueil</a>
+                </li>
+                <li>
+                    <a href="index.html"><i class="fa fa-user "></i>Changer de profil</a>
+                </li>
+                <li>
+                    <a href="printEconome.html"><i class="fa fa-print "></i>Imprimer un rapport</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-search "></i>Suivi de consommation</a>
+                </li>
+                <li>
+                    <a href="anomalieEconome.html"><i class="fa fa-chain-broken "></i>Suivie des anomalies</a>
+                </li>
+                <li>
+                    <a href="optimisationEconome.html"><i class="fa fa-line-chart "></i>Bonnes pratiques</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div id="page-wrapper">
+        <div id="#errorMessageDate" class="alert alert-danger collapse" style="display: none">
+            <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
+            <strong>Attention!</strong> La date de début doit être inférieur à la date de fin.
+        </div>
+        <div id="#errorMessageConnection" class="alert alert-danger collapse" style="display: none">
+            <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
+            <strong>Attention!</strong> Problème de connexion avec la base de données.
+        </div>
+
+        <!--kwh-->
+        <div class="col-md-12">
+            <div class="panel with-nav-tabs panel-primary">
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab1primaryKwh" data-toggle="tab">En direct</a></li>
+                        <li><a href="#tab2primaryKwh" data-toggle="tab">Période définie</a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab1primaryKwh">
+                            <div class="row">
+                                <div style="padding-left: 5%">
+                                    Paramètres :
+                                    <div class="checkbox">
+                                        <label><input type="checkbox">Voir les heures pleines et heures creuses</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="text-align: center;">
+                                <div id="spinnerLiveKwh" style="display: block">
+                                    <img src="src/spinner.gif" class="spinnerCustom">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="courbeKwh"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab2primaryKwh">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        Paramètres :
+                                        <div style="padding-left: 5%">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox">Voir les heures pleines et heures creuses</label>
+                                            </div>
+                                            </br>A partir de :
+                                            <div class="container">
+                                                <div class='col-sm-3'>
+                                                    <div class="input-group date">
+                                                        <input id="dateStartKwh" type="text"
+                                                               class="form-control dateStartKwhPeriod"><span
+                                                            class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-calendar"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </br>Jusqu'à :
+                                            <div class="container">
+                                                <div class='col-sm-3'>
+                                                    <div class="input-group date">
+                                                        <input id="dateEndKwh" type="text"
+                                                               class="form-control dateEndKwhPeriod"><span
+                                                            class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-calendar"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div id="#errorEmptyDataKwh" class="alert alert-warning collapse"
+                                                     style="display: none">
+                                                    <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
+                                                    Aucune données n'est présente durant cette période.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Sélectionner le mode :</label>
+                                        <select id="selectedMode" class="form-control" id="sel1">
+                                            <option>HP/HC</option>
+                                            <option>Jour/Nuit</option>
+                                            <option>Semaine/WE</option>
+                                            <option>Saisons</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="text-align: center;">
+                                <div id="spinnerPeriodKwh" style="display: none">
+                                    <img src="src/spinner.gif" class="spinnerCustom">
+                                </div>
+                            </div>
+                            <div id="wattPeriodCharts" style="display: none">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="courbeKwhPeriod"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div id="diagrammePeriod"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div id="barreKwh"></div>
+                                        <div id="barreKwhSeason"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer-sec">
+        &copy; Master 2 MIAGE - 2016 - Grenoble
+    </div>
+</div>
+</body>
+</html>
