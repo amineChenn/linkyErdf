@@ -2,7 +2,7 @@
 
 // create new PDF document
 include_once('tcpdf/tcpdf.php');
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, false, 'ISO-8859-1', false);
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT,true, 'UTF-8', false);
 
 // set document information
 $pdf->SetCreator('TCPDF');
@@ -11,7 +11,7 @@ $pdf->SetTitle('Suivi de consommation Econome');
 $pdf->SetSubject('Suivi de consommation');
 
 // set default header data
-$pdf->SetHeaderData('linky.jpg', 30, 'Suivi de consommation', "Récapitulatif\nwww.geg.fr", array(2,64,128));
+$pdf->SetHeaderData('linky.jpg', 30, 'Suivi de consommation', "Rï¿½capitulatif\nwww.geg.fr", array(2,64,128));
 
 // set header and footer fonts
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -54,14 +54,6 @@ $pdf->ImageSVG($file='img/img.svg', $x=25, $y=50, $w='', $link='', $h='', $palig
 
 $pdf->Ln(140);
 
-//variables
-$pourcentage = 20;
-$moisPrecedent = 'Janvier';
-$annee = '2016';
-
-$html = '<div style="color: black; font-size: 14px; border: 1px solid #33CC33; text-align: center;">
-        Jusqu\'à présent vous avez diminué votre facture de '.$pourcentage.'% par rapport à '.$moisPrecedent.' '.$annee.'.</div>';
-$pdf->writeHTML($html, true, false, true, false, '');
 
 
 

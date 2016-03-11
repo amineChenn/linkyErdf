@@ -6,7 +6,7 @@ include_once('tcpdf/tcpdf.php');
 
 
 // new object
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, false, 'UTF-8', false);
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 $pdf->IncludeJS('rapportEcophile.js');
 // set document information
 $pdf->SetCreator('TCPDF');
@@ -15,7 +15,7 @@ $pdf->SetTitle('Suivi de consommation');
 $pdf->SetSubject('Suivi de consommation');
 
 // set default header data
-$pdf->SetHeaderData('linky.jpg', 30, 'Suivi de consommation', "R�capitulatif\nwww.geg.fr", array(2,64,128));
+$pdf->SetHeaderData('linky.jpg', 30, 'Suivi de consommation', "Récapitulatif\nwww.geg.fr", array(2,64,128));
 
 // set header and footer fonts
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -58,24 +58,25 @@ $pdf->ImageSVG($file='img/img.svg', $x=20, $y=50, $w='', $link='', $h='', $palig
 //New lines
 $pdf->Ln(150);
 
-$pdf->Image($file='img/screenShotEcophile.png', $x=20, $y=200, $w='', $link='', $h='', $palign='', $border=1, $fitonpage=false);
+//$pdf->Image($file='img/screenShotEcophile.png', $x=20, $y=200, $w='', $link='', $h='', $palign='', $border=1, $fitonpage=false);
 
 //Declared variables
-$jours = 9;
-$mois = 'Janvier';
-$kwhMois = 460;
-$heureProduction = 1;
-$watt = 1;
-
+$energieVar = $_GET['energieVar'];
+$megaWatt = 2;
+$jourVar = $_GET['jourVar'];
+$nbHeureVar = $_GET['nbHeureVar'];
+$precedentVar = $_GET['precedentVar'];
+$annee = $_GET['annee'];
+$mois = $_GET['mois'];
 //Html content
-//$html = '<div style="color: black; font-size: 14px; border: 1px solid #33CC33; text-align: center; ">
-//<br>Jusqu\'� pr�sent vous avez consomm� <span class="energie"></span> kWh en moins par rapport au mois dernier.<br>
-//Cela represente <b>'.$jours.' jours</b> de production d\'�lectricit� par panneau solaire de 1m sur 1m.<br><br>
-//En <b>'.$mois.'</b> vous avez consomm� au total <b>'.$kwhMois.'kWh</b>. Cela represente <b>'.$heureProduction.'h</b> de production d\'une eolienne terrestre de <b>'.$watt.' MegaWatt</b>.<br>
-//</div>';
+$html = '<div style="color: black; font-size: 14px; border: 1px solid #33CC33; text-align: center; ">
+<br>Jusqu\'à présent vous avez consommé <span style="color: red;"><b>'.$energieVar.' </b></span> en moins par rapport au mois <span style="color: red;"><b>'.$mois.'</b></span>.<br>
+Cela represente, par rapport au mois précédent, <span style="color: red;"><b>'.$jourVar.' jours</b></span> de production d\'électricité par panneau solaire de 1m sur 1m.<br><br>
+En <span style="color: red;"><b>'.$mois.' </b></span> vous avez consommé au total <span style="color: red;"><b>'.$precedentVar.' kwh</b></span>. Cela represente <span style="color: red;"><b>'.$nbHeureVar.' h</b></span> de production d\'une éolienne terrestre de <span style="color: red;"><b> '.$megaWatt.' MegaWatt</b></span>.<br>
+</div>';
 //
 //
-//$pdf->writeHTML($html, true, false, true, false, '');
+$pdf->writeHTML($html, true, false, true, false, '');
 
 //End of page
 $pdf->lastPage();

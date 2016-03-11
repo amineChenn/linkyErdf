@@ -314,7 +314,7 @@ function newPreactiveChart() {
             type: 'area'},
 
         title: {
-            text: "Puissance reactive entre "+dateS+ " et "+ dateE ,
+            text: "Puissance réactive entre "+dateS+ " et "+ dateE ,
             x: -20 //center
         },
 
@@ -364,7 +364,7 @@ function newPreactiveChart() {
             }
         },
         series : [{
-            name : 'Puissance reactive ',
+            name : 'Puissance réactive ',
             data : (function () {
                 // generate an array of random data
                 var data = [],  i, sum = getPuissanceReactive(), dateOfYear = [];
@@ -478,7 +478,7 @@ function newIntensiteChart() {
         },
 
         title: {
-            text: "Intensite soutiree entre "+dateS+ " et "+ dateE ,
+            text: "Intensité soutirée entre "+dateS+ " et "+ dateE ,
             x: -20 //center
         },
 
@@ -528,7 +528,7 @@ function newIntensiteChart() {
             }
         },
         series : [{
-            name : 'Intensite ',
+            name : 'Intensité ',
             data : (function () {
                 // generate an array of random data
                 var data = [],  i, sum = getIntensite(), dateOfYear = [];
@@ -640,7 +640,7 @@ function newTensionChart() {
         chart: { renderTo: 'tensionEnergiphile' },
 
         title: {
-            text: "Tension soutiree entre "+dateS+ " et "+ dateE ,
+            text: "Tension soutirée entre "+dateS+ " et "+ dateE ,
             x: -20 //center
         },
 
@@ -833,7 +833,7 @@ function newChartEnergie() {
             type : 'column'},
 
         title: {
-            text: "Energie consommee entre " + dateS + " et " + dateE,
+            text: "Energie consommée entre " + dateS + " et " + dateE,
             x: -20 //center
         },
 

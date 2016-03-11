@@ -104,7 +104,7 @@ function newChart() {
         chart: { renderTo: 'technophile' },
 
         title: {
-            text: "Puissance consommee entre "+dateS+ " et "+ dateE ,
+            text: "Puissance consommée entre "+dateS+ " et "+ dateE ,
             x: -20 //center
         },
 
@@ -137,7 +137,7 @@ function newChart() {
         },
         yAxis: {
             title: {
-                text: 'Watt'
+                text: 'VA'
             },
             plotLines: [{
                 value: 0,
@@ -146,7 +146,7 @@ function newChart() {
             }]
         },
         tooltip: {
-            valueSuffix: ' Watt'
+            valueSuffix: ' VA'
         },
         plotOptions: {
             series: {
@@ -310,7 +310,7 @@ function newChartEnergie() {
         },
 
         title: {
-            text: "Energie consommee entre " + dateS + " et " + dateE,
+            text: "Energie consommée entre " + dateS + " et " + dateE,
             x: -20 //center
         },
 

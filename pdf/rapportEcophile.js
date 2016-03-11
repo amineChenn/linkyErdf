@@ -113,7 +113,15 @@ function getMonth() {
 
 /**
  * Refresh graphics and display graphic's component
+ *
  */
+
+var energieVar = "";
+var jourVar = "";
+var precedentVar = "";
+var nbHeureVar = "";
+var annee = "";
+var mois = "";
 function refreshGraphic() {
 
     annee = document.getElementById("annee").value;
@@ -122,7 +130,6 @@ function refreshGraphic() {
     var energie = getEnergieTotalConsommee();
     var energiePrecedent = getEnergieConsommeeMoisPrecedent();
 
-
     if (annee != "" && mois != "") {
         elems = document.getElementById("divEcophile");
         $('.annee').html(annee);
@@ -130,23 +137,36 @@ function refreshGraphic() {
         if (energie < 0) {
             $('.energie').html(-((Math.round(energie * 1000) / 1000)) + " KWh en moins");
             $('.nbJours').html(parseInt(-(energie / 125) / 24));
+             energieVar = (-((Math.round(energie * 1000) / 1000)) + " KWh en moins");
+             jourVar = parseInt(-(energie / 125) / 24);
         }
         else {
             $('.energie').html(((Math.round(energie * 1000) / 1000)) + " KWh en plus");
             $('.nbJours').html(parseInt((energie / 125) / 24));
+            energieVar = (((Math.round(energie * 1000) / 1000)) + " KWh en moins");
+            jourVar = (parseInt((energie / 125) / 24));
+
         }
         var total = Math.round(energiePrecedent * 1000) / 1000;
         //var kwh = total * 1000;
         $('.precedent').html(total);
         $('.nbHeure').html(Math.round(total / 2000));
+        nbHeureVar= Math.round(total / 2000);
+        precedentVar= total;
 
         if (elems.style.display = 'none') {
             elems.style.display = 'block';
         }
 
     }
-}
 
+
+}
+function bla() {
+    window.location.href = 'pdf/rapportEcophile.php?energieVar=' + energieVar + '&jourVar=' + jourVar + '&nbHeureVar=' + nbHeureVar
+        + '&precedentVar=' + precedentVar + '&annee=' + annee + '&mois=' + mois;
+
+}
 function getAjax(dateFin, dateDebut) {
     return $.ajax({
         type: "GET",
@@ -719,7 +739,8 @@ function newChart() {
     $.ajax({
         type: 'POST',
         url: 'pdf/rapportEcophileSvg.php',
-        data: {test: svg} //le code "texte" du svg
+        data: {test: svg,
+        test1 : "dfddvdcv"} //le code "texte" du svg
 
 
     });
@@ -757,8 +778,9 @@ function displaySelection() {
         });
     }
     else {
-        refreshGraphic();
         newChart();
+        refreshGraphic();
+
 
     }
 }

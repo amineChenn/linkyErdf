@@ -417,7 +417,7 @@ function newChart() {
         },
 
         title: {
-            text: "Comparaison energie consommee au mois " + document.getElementById("mois").value + " " + document.getElementById("annee").value,
+            text: "Comparaison énergie consommée au mois " + document.getElementById("mois").value + " " + document.getElementById("annee").value,
             x: -20 //center
         },
 
@@ -457,7 +457,7 @@ function newChart() {
         //    }
         //},
         series: [{
-            name: 'Energie consommee ' + document.getElementById("mois").value,
+            name: 'Energie consommée ' + document.getElementById("mois").value,
             data: (function () {
                 // generate an array of random data
                 annee = document.getElementById("annee").value;
@@ -531,7 +531,7 @@ function newChart() {
             }())
         },
             {
-                name: 'Energie consommee du mois actuel',
+                name: 'Energie consommée du mois actuel',
                 data: (function () {
                     // generate an array of random data
                     var date = new Date();

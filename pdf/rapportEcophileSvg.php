@@ -1,6 +1,7 @@
 
 <?php
 $img = $_POST['test'];
+$img = $_POST['test'];
 
 //$image = $_POST['image'];
 //$filedir = $_POST['filedir'];
@@ -16,3 +17,5 @@ file_put_contents('img/img.svg', $img);
 
 
 ?>
+
+click bouton -> creer image en local ->
